@@ -8,7 +8,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 
- import util from './utils'
+import util from './utils'
 
 export var Mediator = (function () {
     let _getTasks = undefined;
@@ -177,16 +177,22 @@ export var Mediator = (function () {
         }
 
         // ## Install Pub/Sub functions to an object
-        installTo(obj, force) {
+        installTo(obj, force = false) {
+            const props = Object.getOwnPropertyNames(Mediator.prototype)
+                .filter(x => x !== 'constructor').concat(Object.getOwnPropertyNames(this));
             if (typeof obj === "object") {
-                for (let k in this) {
+                for (let k of props) {
                     const v = this[k];
                     if (force) {
-                    obj[k] = v;
-                    } else { if (obj[k] == null) { obj[k] = v; } }
+                        obj[k] = v;
+                    } else {
+                        if (obj[k] == null) {
+                            obj[k] = v;
+                        }
+                    }
                 }
             }
-            return this;
+            //return this;
         }
 
         pipe(src, target, mediator) {

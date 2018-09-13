@@ -44,6 +44,7 @@ export function bootstrap(rootComponent, rootNode, options) {
 
     return ready(window).then(doc => {
         const app = startApp(rootComponent, rootNode, options);
+        window.app = app;
         // setTimeout(() => {
         //     app.stop();
 

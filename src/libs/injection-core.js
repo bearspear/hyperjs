@@ -1,6 +1,6 @@
 import { Core } from './core';
 import { Sandbox } from './sandbox';
-import { container, singleton, dependencies } from 'needlepoint';
+import { container } from 'needlepoint';
 
 export class InjectionCore extends Core {
     constructor() {
@@ -36,10 +36,7 @@ export class InjectionCore extends Core {
             iOpts['domNode'] = iOpts['domNode'] || o.domNode;
         }
 
-        let _Sandbox =
-            typeof o.sandbox === 'function' ? o.sandbox
-                : this.Sandbox;
-
+        let _Sandbox = typeof o.sandbox === 'function' ? o.sandbox : this.Sandbox;
         let sb = new _Sandbox(this, id, iOpts, moduleId);
 
         return this._runSandboxPlugins('init', sb, err => {

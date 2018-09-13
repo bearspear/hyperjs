@@ -1,15 +1,12 @@
+import { InjectionCore } from './injection-core';
 import { Mediator } from './mediator';
 import util from './utils';
-import { Core } from './core';
 import Dom from '../core/plugins/dom';
 import Util from '../core/plugins/util';
 import Mvc from '../core/plugins/mvc';
 import EJS from '../core/plugins/microtemplate';
 import Cookies from '../core/plugins/cookie';
 import $ from 'jquery';
-import { InjectionCore } from './injection-core';
-import { Sandbox } from './sandbox';
-import { singleton } from 'needlepoint';
 
 export class Component extends InjectionCore {
   constructor() {
@@ -368,7 +365,7 @@ export class Component extends InjectionCore {
 
   setModel(data) {
     this.props = new this.Model(data);
-    this.model.change(() => {
+    this.props.change(() => {
       this.render();
     }, this);
   };
@@ -382,7 +379,7 @@ export class Component extends InjectionCore {
     }
   }
 
-  _preInit(sandbox) { //embedInSanbox
+  _preInit(sandbox) { //embedInSandbox
     this.sandbox = sandbox
     this.hasSandbox = this.sandbox != null;
     this.hasTemplate = this.template != null;
@@ -414,6 +411,7 @@ export class Component extends InjectionCore {
 
   init(options, done) {
     this.props = options || {};
+    let errors = [];
 
     let tasks = [
       (next) => {
@@ -449,12 +447,19 @@ export class Component extends InjectionCore {
         next();
       }
     ];
-    util.runSeries(tasks, () => {
-      this._onEvent('onInit', (err) => {
-        if (err) console.error(err);
-        done(err);
+
+    util.runSeries(tasks, (err) => {
+      if (err != null) {
+        errors = err;
+      }
+      this._onEvent('onInit', (err2) => {
+        if (err2) {
+          errors.concat(err2);
+        }
+        if (errors.length > 0) console.error(errors);
+        done(errors.length > 0 ? errors : null);
       });
-    }, true);
+    }, false);
     console.log("created:", this)
     return this;
   }
