@@ -27,7 +27,7 @@ function startApp(rootComponent, rootNode, options) {
             console.error(err);
         } else {
             console.log(core);
-            console.log('bootstrapped !!!');
+            console.log('bootstrapped');
         }
     });
     return core;
@@ -45,6 +45,9 @@ export function bootstrap(rootComponent, rootNode, options) {
     return ready(window).then(doc => {
         const app = startApp(rootComponent, rootNode, options);
         window.app = app;
+        app.restart = () => {
+            app.start('app-root', rootNode);
+        }
         // setTimeout(() => {
         //     app.stop();
 

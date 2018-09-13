@@ -186,7 +186,17 @@ export class Core {
 
   _startAll(mods, cb) {
 
-    if (mods == null) { mods = m; }
+    //if (mods == null) { mods = m; }
+    if (mods == null) {
+      mods = (function() {
+        var _results = [];
+        for (const m in this._modules) {
+          _results.push(m);
+        }
+        return _results;
+      }).call(this);
+    }
+
     const startAction = (m, next) => this.start(m, this._modules[m].options, next);
 
     const done = function (err) {
