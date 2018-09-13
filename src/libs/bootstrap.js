@@ -1,5 +1,5 @@
-import {InjectionCore} from './injection-core';
-import {Sandbox} from './sandbox';
+import { InjectionCore } from './injection-core';
+import { Sandbox } from './sandbox';
 
 let core = new InjectionCore(Sandbox);
 
@@ -20,7 +20,7 @@ function ready(global) {
     });
 }
 
-function startApp(rootComponent, rootNode, options) {	
+function startApp(rootComponent, rootNode, options) {
     core.register('app-root', rootComponent);
     core.start('app-root', rootNode, (err) => {
         if (err) {
@@ -33,7 +33,7 @@ function startApp(rootComponent, rootNode, options) {
     return core;
 }
 
-export function createAppCore(sandbox=Sandbox){
+export function createAppCore(sandbox = Sandbox) {
     return new InjectionCore(Sandbox);
 }
 

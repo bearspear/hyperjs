@@ -1,10 +1,12 @@
-import { Core, Mediator, util } from 'scaleapp';
-import Dom from 'scaleapp/plugins/scaleApp.dom';
-import Util from 'scaleapp/plugins/scaleApp.util';
-import Mvc from 'scaleapp/plugins/scaleApp.mvc';
-import EJS from 'scaleapp/plugins/scaleApp.microtemplate';
-import Cookies from 'scaleapp/plugins/scaleApp.cookie';
-//import $ from 'jquery';
+import { Mediator } from './mediator';
+import util from './utils';
+import { Core } from './core';
+import Dom from '../core/plugins/dom';
+import Util from '../core/plugins/util';
+import Mvc from '../core/plugins/mvc';
+import EJS from '../core/plugins/microtemplate';
+import Cookies from '../core/plugins/cookie';
+import $ from 'jquery';
 import { InjectionCore } from './injection-core';
 import { Sandbox } from './sandbox';
 import { singleton } from 'needlepoint';
@@ -16,11 +18,12 @@ export class Component extends InjectionCore {
     //this._mediator.cascadeChannels = true;
     this.eventHub = new Mediator();
     this.boundElements = this.boundElements || [];
-    if (jQuery == null) {
-      throw "jQuery  not found"
-    }
+    //if (jQuery == null) {
+    //throw "jQuery  not found"
+    //}
     this.$ = $;
     $.hyperjs = true;
+
 
     this._registerComponents(); //init?
     this.use([Util, Mvc, EJS, Dom, Cookies]);

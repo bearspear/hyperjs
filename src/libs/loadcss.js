@@ -1,4 +1,4 @@
-import {util} from 'scaleapp';
+import util from './utils';
 import $ from 'jquery';
 
 // Some aliases

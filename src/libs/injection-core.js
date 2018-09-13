@@ -1,4 +1,4 @@
-import { Core } from 'scaleapp';
+import { Core } from './core';
 import { Sandbox } from './sandbox';
 import { container, singleton, dependencies } from 'needlepoint';
 

@@ -1,16 +1,4 @@
-﻿export function View(str, embed = true) {
-    return function (target) {
-        if (typeof str === 'string') {
-            target.prototype.template = str;
-            target.prototype.embedTemplate = embed;
-        } else {
-            throw new Error(`Not a template`);
-        }
-    }
-}
-
-
-export function View2(options) {
+﻿export function View(options) {
     return function (target) {
         if (options.template) {
             if (typeof options.template === 'string') {

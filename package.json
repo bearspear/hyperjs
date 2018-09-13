@@ -1,6 +1,6 @@
 {
   "name": "hyperjs",
-  "version": "0.0.11",
+  "version": "2.0.0",
   "main": "./dist/hyperjs.js",
   "scripts": {
     "build2": "webpack -p --progress --colors --config webpack.config.js",
@@ -18,8 +18,7 @@
     "js"
   ],
   "dependencies": {
-    "scaleapp": "git+ssh://git@esspde-gitlab.ssn.hpe.com:behringe/scaleapp.git#master",
-    "jquery": "=2.2.4",
+    "jquery": "^3.0.0",
     "needlepoint": "^1.0.5",
     "router5": "^3.0.3",
     "router5-history": "^3.0.4",
@@ -48,8 +47,5 @@
     "eslint": "1.7.2",
     "eslint-loader": "1.1.0",
     "yargs": "3.32.0"
-  },
-  "publishConfig": {
-    "registry": "http://nexus3.essdev.local:8086/repository/essdev-npm-snapshots/"
   }
 }

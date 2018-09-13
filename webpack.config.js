@@ -40,10 +40,10 @@ var config = {
 	},
 	resolve: {
 		root: path.resolve('./src'),
-		extensions: ['', '.js'],
-		alias: {
-			'scaleapp/plugins': path.resolve('./node_modules/scaleapp/dist/plugins'),
-		}
+		extensions: ['', '.js']
+		// alias: {
+		// 	'scaleapp/plugins': path.resolve('./node_modules/scaleapp/dist/plugins'),
+		// }
 	},
 	plugins: plugins
 };
