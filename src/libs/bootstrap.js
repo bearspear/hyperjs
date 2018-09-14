@@ -1,5 +1,5 @@
-import { InjectionCore } from './injection-core';
-import { Sandbox } from './sandbox';
+import { InjectionCore } from '../core/injection';
+import { Sandbox } from '../core/sandbox';
 
 let core = new InjectionCore(Sandbox);
 
@@ -47,10 +47,9 @@ export function bootstrap(rootComponent, rootNode, options) {
         window.app = app;
         app.restart = () => {
             app.start('app-root', rootNode);
-        }
+        };
         // setTimeout(() => {
         //     app.stop();
-
         // }, 5000);
 
         // setTimeout(() => {

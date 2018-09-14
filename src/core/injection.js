@@ -1,5 +1,5 @@
-import { Core } from './core';
-import { Sandbox } from './sandbox';
+import { Core } from '../core';
+import { Sandbox } from '../core/sandbox';
 import { container } from 'needlepoint';
 
 export class InjectionCore extends Core {

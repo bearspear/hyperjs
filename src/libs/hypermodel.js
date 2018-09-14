@@ -2,7 +2,7 @@
 // copyright chris wanstrath
 // https://github.com/defunkt/jquery-pjax
 
-import { Mediator } from './mediator';
+import { Mediator } from '../core/mediator';
 import $ from 'jquery';
 
 let defaults = $.extend(true, {}, $.ajaxSettings, {
