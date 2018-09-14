@@ -1,11 +1,11 @@
-import { InjectionCore } from '../core/injection';
-import { Mediator } from '../core/mediator';
-import util from './utils';
-import Dom from '../core/plugins/dom';
-import Util from '../core/plugins/util';
-import Mvc from '../core/plugins/mvc';
-import EJS from '../core/plugins/microtemplate';
-import Cookies from '../core/plugins/cookie';
+import { InjectionCore } from './core/injection';
+import { Mediator } from './core/mediator';
+import util from './libs/utils';
+import Dom from './core/plugins/dom';
+import Util from './core/plugins/util';
+import Mvc from './core/plugins/mvc';
+import EJS from './core/plugins/microtemplate';
+import Cookies from './core/plugins/cookie';
 import $ from 'jquery';
 
 export class Component extends InjectionCore {

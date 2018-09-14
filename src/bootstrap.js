@@ -1,5 +1,5 @@
-import { InjectionCore } from '../core/injection';
-import { Sandbox } from '../core/sandbox';
+import { InjectionCore } from './core/injection';
+import { Sandbox } from './core/sandbox';
 
 let core = new InjectionCore(Sandbox);
 

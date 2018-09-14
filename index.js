@@ -1,10 +1,10 @@
 import $ from 'jquery'
 import util from './src/libs/utils';
 
-export * from './src/libs/bootstrap';
+export * from './src/bootstrap';
 export * from './src/core';
 export * from './src/core/mediator';
-export * from './src/libs/component';
+export * from './src/component';
 export * from './src/libs/hypermodel';
 export * from './src/libs/loadcss';
 export { dependencies as Dependencies } from 'needlepoint';
@@ -15,4 +15,4 @@ export * from './src/decorators/router';
 export { util };
 export { $ }
 
-//swindow.$ = $;
+//window.$ = $;
