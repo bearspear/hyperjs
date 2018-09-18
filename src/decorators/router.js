@@ -20,8 +20,6 @@ export const defaultRoutes = [
   { name: 'section', path: '/:section' }
 ];
 
-//STATE MACHINE
-
 export function Router(routes, options = {}) {
 
   if (!(routes instanceof Array)) {
@@ -33,10 +31,10 @@ export function Router(routes, options = {}) {
   let d = Object.assign({}, defaultRouteOptions);
   const mergedOptions = Object.assign(d, options);
 
-  return (Component) => class RouteredComponent extends Component {
+  return (_Class) => class RouteredComponent extends _Class {
     constructor() {
       super();
-      this.setupRouter();
+      this._setupRouter();
     }
 
     init(options, done) {
@@ -104,7 +102,7 @@ export function Router(routes, options = {}) {
       done();
     }
 
-    setupRouter() {
+    _setupRouter() {
       this.history = [];
       this.router = new Router5(routes, mergedOptions)
         .usePlugin(loggerPlugin())

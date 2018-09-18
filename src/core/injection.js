@@ -1,6 +1,7 @@
 import { Core } from '../core';
 import { Sandbox } from '../core/sandbox';
-import { container } from 'needlepoint';
+//import { container } from 'needlepoint';
+import { Container } from 'aurelia-dependency-injection';
 
 export class InjectionCore extends Core {
     constructor() {
@@ -9,7 +10,8 @@ export class InjectionCore extends Core {
 
     _resolveInstance(creator, sb) {
         //creator.prototype.sandbox = sb;
-        return container.resolve(creator);
+        let container = new Container();
+        return container.get(creator);
     }
 
     // updated to accommodate an injector

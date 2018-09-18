@@ -12,6 +12,7 @@ export * from './src/decorators/registry';
 export * from './src/decorators/styles';
 export * from './src/decorators/view';
 export * from './src/decorators/router';
+export * from './src/decorators/component';
 export { util };
 export { $ }
 

@@ -1,7 +1,6 @@
 import { InjectionCore } from './core/injection';
-import { Sandbox } from './core/sandbox';
 
-let core = new InjectionCore(Sandbox);
+let core = new InjectionCore();
 
 function ready(global) {
     return new Promise((resolve, reject) => {
@@ -34,7 +33,7 @@ function startApp(rootComponent, rootNode, options) {
 }
 
 export function createAppCore(sandbox = Sandbox) {
-    return new InjectionCore(Sandbox);
+    return new InjectionCore();
 }
 
 export function bootstrap(rootComponent, rootNode, options) {

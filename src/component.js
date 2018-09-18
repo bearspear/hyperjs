@@ -8,24 +8,7 @@ import EJS from './core/plugins/microtemplate';
 import Cookies from './core/plugins/cookie';
 import $ from 'jquery';
 
-export class Component extends InjectionCore {
-  constructor() {
-    super(); // possible sandbox for child components
-
-    //this._mediator.cascadeChannels = true;
-    this.eventHub = new Mediator();
-    this.boundElements = this.boundElements || [];
-    //if (jQuery == null) {
-    //throw "jQuery  not found"
-    //}
-    this.$ = $;
-    $.hyperjs = true;
-
-
-    this._registerComponents(); //init?
-    this.use([Util, Mvc, EJS, Dom, Cookies]);
-  }
-
+export class Component {
   find(selector, dom = false) {
     let els = $(this.domNode).find(selector);
     return dom ? els.get() : els;
@@ -78,7 +61,7 @@ export class Component extends InjectionCore {
   }
 
   listenToChildren(channel, cb) {
-    return this._mediator.on(channel, cb);
+    return this.core._mediator.on(channel, cb);
   }
 
   pipeUp(channel, cb) {
@@ -123,12 +106,12 @@ export class Component extends InjectionCore {
     };
     if (id === '*' || id == null) {
       for (const key of Object.keys(this._running)) {
-        this._mediator.emit(`${channel}/${key}`, event, cb);
+        this.core._mediator.emit(`${channel}/${key}`, event, cb);
       }
     } else {
       for (const id of ids) {
         event.id = this.instanceId;
-        this._mediator.emit(`${channel}/${id}`, event, cb);
+        this.core._mediator.emit(`${channel}/${id}`, event, cb);
       }
     }
   }
@@ -192,7 +175,7 @@ export class Component extends InjectionCore {
   }
 
   _setRootAttributes() {
-    this.id = `component-${this.uniqueId()}`;
+    this.id = `component-${this.core.uniqueId()}`;
     this.domNode.setAttribute('data-component-id', this.id);
     this.domNode.setAttribute('data-instance-id', this.instanceId);
   }
@@ -223,7 +206,7 @@ export class Component extends InjectionCore {
 
   _unsubscribe() {
     // stop listening to children
-    this._mediator.off();
+    this.core._mediator.off();
     // stop listening to parent
     if (this.sandbox) {
       this.sandbox.off();
@@ -234,14 +217,14 @@ export class Component extends InjectionCore {
   }
 
   _detach() {
-    this._mediator.detach();
+    this.core._mediator.detach();
     if (this.sandbox) {
       this.sandbox.detach();
     }
   }
 
   _attach() {
-    this._mediator.attach();
+    this.core._mediator.attach();
     if (this.sandbox) {
       this.sandbox.attach();
     }
@@ -280,18 +263,17 @@ export class Component extends InjectionCore {
     return this._modules[id];
   }
 
-
   _registerComponents() {
     this.registry = this.registry || new Map();
     for (const [key, value] of this.registry.entries()) {
-      this.register(key, value)
+      this.core.register(key, value)
     }
   }
 
   startPage(page, opt, done = () => { }) {
     if (this.page != null) {
       let taskStop = (next) => {
-        this.stop(this.page, next);
+        this.core.stop(this.page, next);
       };
 
       let taskStart = (next) => {
@@ -300,7 +282,7 @@ export class Component extends InjectionCore {
       };
       util.runSeries([taskStop, taskStart], done, true);
     } else {
-      this.start(page, opt, done);
+      this.core.start(page, opt, done);
       this.page = page;
     }
   }
@@ -348,7 +330,7 @@ export class Component extends InjectionCore {
   }
 
   setProps(props) {
-    this.props = new this.Model(props);
+    this.props = new this.core.Model(props);
   }
 
   activateProps() {
@@ -364,7 +346,7 @@ export class Component extends InjectionCore {
   }
 
   setModel(data) {
-    this.props = new this.Model(data);
+    this.props = new this.core.Model(data);
     this.props.change(() => {
       this.render();
     }, this);
@@ -380,6 +362,20 @@ export class Component extends InjectionCore {
   }
 
   _preInit(sandbox) { //embedInSandbox
+    this.core = new InjectionCore();
+    this.core.use([Util, Mvc, EJS, Dom, Cookies]);
+
+    //this._mediator.cascadeChannels = true;
+    this.eventHub = new Mediator();
+    this.boundElements = this.boundElements || [];
+    //if (jQuery == null) {
+    //throw "jQuery  not found"
+    //}
+    this.$ = $;
+    $.hyperjs = true;
+
+    this._registerComponents(); //init?
+
     this.sandbox = sandbox
     this.hasSandbox = this.sandbox != null;
     this.hasTemplate = this.template != null;
@@ -418,12 +414,12 @@ export class Component extends InjectionCore {
         this._onEvent('onPreInit', next);
       },
       (next) => {
-        this.boot(() => {
+        this.core.boot(() => {
           this._onEvent('onBoot', next);
         });
       },
       (next) => {
-        this.id = `component-${this.uniqueId()}`;
+        this.id = `component-${this.core.uniqueId()}`;
         this._setRootAttributes();
         next()
       },
@@ -434,7 +430,7 @@ export class Component extends InjectionCore {
         next();
       },
       (next) => {
-        this.id = `component-${this.uniqueId()}`;
+        this.id = `component-${this.core.uniqueId()}`;
         this._setRootAttributes();
         next();
       },
@@ -499,9 +495,9 @@ export class Component extends InjectionCore {
   initComponents() {
     for (const id of Object.keys(this._modules)) {
       let el = this.find('#' + id).get(0) || this.find(id).get(0);
-      const rand = this.uniqueId();
+      const rand = this.core.uniqueId();
       if (el && !this._checkForComponent(el)) {
-        this.start(id, {
+        this.core.start(id, {
           instanceId: `${id}-${rand}`,
           options: {
             domNode: el
@@ -513,22 +509,26 @@ export class Component extends InjectionCore {
 
   startChildren(children, initEvent) {
     for (const child of children) {
-      this.start(child[0], child[1]);
+      this.core.start(child[0], child[1]);
     }
     if (initEvent != null) {
       this.emitToChildren('*', initEvent[0], initEvent[1]);
     }
   }
 
-  startComponents(id, opts, cb) {
-    let options = opts;
-    if (opts instanceof HTMLElement) {
-      let node = opts;
-      options = {
-        domNode: node
-      };
-    }
-    this.start(id, options, cb);
+  // startComponents(id, opts, cb) {
+  //   let options = opts;
+  //   if (opts instanceof HTMLElement) {
+  //     let node = opts;
+  //     options = {
+  //       domNode: node
+  //     };
+  //   }
+  //   this.core.start(id, options, cb);
+  // }
+
+  startComponents(...args) {
+    this.core.start(...args);
   }
 
   stopComponents(id, done) {
@@ -536,7 +536,7 @@ export class Component extends InjectionCore {
     let tasks = [];
     for (const id of ids) {
       tasks.push((next) => {
-        this.stop(id, next);
+        this.core.stop(id, next);
       })
     }
     util.runParallel(tasks, done);
