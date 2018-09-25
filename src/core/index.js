@@ -188,7 +188,7 @@ export class Core {
 
     //if (mods == null) { mods = m; }
     if (mods == null) {
-      mods = (function() {
+      mods = (function () {
         var _results = [];
         for (const m in this._modules) {
           _results.push(m);

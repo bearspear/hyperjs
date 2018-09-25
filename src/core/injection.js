@@ -1,7 +1,9 @@
 import { Core } from '../core';
 import { Sandbox } from '../core/sandbox';
 //import { container } from 'needlepoint';
+import { createHyperComponent } from '../decorators/component'
 import { Container } from 'aurelia-dependency-injection';
+class A { }
 
 export class InjectionCore extends Core {
     constructor() {
@@ -9,7 +11,12 @@ export class InjectionCore extends Core {
     }
 
     _resolveInstance(creator, sb) {
-        //creator.prototype.sandbox = sb;
+        if (creator.isComponent) {
+            creator = createHyperComponent(creator);
+        } else {
+            return new Error("not component class");
+        }
+
         let container = new Container();
         return container.get(creator);
     }
@@ -43,9 +50,10 @@ export class InjectionCore extends Core {
 
         return this._runSandboxPlugins('init', sb, err => {
             let instance = this._resolveInstance(module.creator, sb);
-
             if (typeof instance._preInit === "function") {
                 instance._preInit(sb);
+            } else {
+
             }
 
             if (typeof instance.init !== "function") {
@@ -56,4 +64,7 @@ export class InjectionCore extends Core {
             return cb(null, instance, iOpts);
         });
     }
+
+
+
 }

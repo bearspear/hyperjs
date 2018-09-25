@@ -37,12 +37,12 @@ export function Router(routes, options = {}) {
       this._setupRouter();
     }
 
-    init(options, done) {
-      super.init(options, () => {
-        this._startRouter();
-        done();
-      });
-    }
+    // init(options, done) {
+    //   super.init(options, () => {
+    //     this._startRouter();
+    //     done();
+    //   });
+    // }
 
     _startRouter() {
       this.router.start((err, state) => {
@@ -92,7 +92,6 @@ export function Router(routes, options = {}) {
     }
 
     addRoute(...args) {
-
       this.router.add(...args)
     }
 

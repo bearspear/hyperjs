@@ -7,8 +7,39 @@ import Mvc from '../core/plugins/mvc';
 import EJS from '../core/plugins/microtemplate';
 import Cookies from '../core/plugins/cookie';
 import $ from 'jquery';
+import { makeClassDecorator, ANNOTATIONS, PROP_METADATA } from './decorators'
 
-export function Component2(options = {}) {
+
+export function stopBubbles(event) {
+  event.preventDefault();
+  event.stopPropagation();
+};
+
+export function listenToRoot(rootNode, events, selector, callback, bubbles = true) {
+  //var _this = this;
+  if (typeof selector === 'function') {
+    bubbles = callback;
+    callback = selector;
+    return $(rootNode).on(events, function (e, ...params) {
+      if (!bubbles) stopBubble(e);
+      callback(this, e, ...params)
+    });
+
+  } else {
+    return $(rootNode).on(events, selector, function (e, ...params) {
+      if (!bubbles) stopBubble(e);
+      callback(this, e, ...params)
+    });
+  }
+};
+
+
+
+export function stopListenToRoot(rootNode) {
+  $(rootNode).off();
+}
+
+export function componentMetaData(options = {}) {
   let template, embedTemplate = false, registry = new Map(), autorun = false;
 
   if (options.template != null) {
@@ -19,6 +50,7 @@ export function Component2(options = {}) {
       template = options.template[0] || null;
       embedTemplate = options.template[1];
     }
+
   }
   if (options.registry != null) {
     registry = new Map(options.registry);
@@ -28,7 +60,28 @@ export function Component2(options = {}) {
     autorun = options.autorun;
   }
 
-  return (_Class) => class HyperComponent extends _Class {
+  return {
+    template: template,
+    embedTemplate: embedTemplate,
+    registry: registry,
+    autorun: autorun
+  }
+}
+
+export function Component2(options = {}) {
+  return makeClassDecorator(componentMetaData(options));
+}
+
+export function createHyperComponent(_Class) {
+
+  let bindings = null;
+  if (_Class[PROP_METADATA] && _Class[PROP_METADATA].RootListener) {
+    bindings = _Class[PROP_METADATA].RootListener;
+  }
+
+  const _metadata = Object.assign(_Class[ANNOTATIONS], { bindings: bindings });
+
+  return class HyperComponent extends _Class {
 
     find(selector, dom = false) {
       let els = $(this.domNode).find(selector);
@@ -40,31 +93,43 @@ export function Component2(options = {}) {
       return dom ? el.get(0) : el.eq(0);
     }
 
-    //listenToRoot (delegated)
-    listenToRoot(events, selector, callback, bubbles = true) {
-      var _this = this;
-      if (typeof selector === 'function') {
-        bubbles = callback;
-        callback = selector;
-        return $(this.domNode).on(events, function (e, ...params) {
-          if (!bubbles) _this.sandbox.stopBubble(e);
-          callback(this, e, ...params)
-        });
-
-      } else {
-        return $(this.domNode).on(events, selector, function (e, ...params) {
-          if (!bubbles) _this.sandbox.stopBubble(e);
-          callback(this, e, ...params)
-        });
-      }
+    html(html) {
+      this.$instance.html(html);
     }
+
+    append(a) {
+      this.$instance.append(a);
+    }
+
+    getElementById(id) {
+      return this.instance.querySelector('#' + id);
+    }
+
+    //listenToRoot (delegated)
+    // listenToRoot(events, selector, callback, bubbles = true) {
+    //   var _this = this;
+    //   if (typeof selector === 'function') {
+    //     bubbles = callback;
+    //     callback = selector;
+    //     return $(this.domNode).on(events, function (e, ...params) {
+    //       if (!bubbles) _this.sandbox.stopBubble(e);
+    //       callback(this, e, ...params)
+    //     });
+
+    //   } else {
+    //     return $(this.domNode).on(events, selector, function (e, ...params) {
+    //       if (!bubbles) _this.sandbox.stopBubble(e);
+    //       callback(this, e, ...params)
+    //     });
+    //   }
+    // }
 
     // this might be rare (maybe)
     listenToElement(events, selector, callback, bubbles = true) {
       // selector as array [element, ]
       var _this = this;
       let $els = $(selector).on(events, function (e) {
-        if (!bubbles) _this.sandbox.stopBubble(e);
+        if (!bubbles) stopBubble(e);
         callback(this, e)
       });
       this.boundElements.push($els); //WeakMap/Map ?
@@ -187,9 +252,19 @@ export function Component2(options = {}) {
     }
 
     _bind() {
+      console.log('test', HyperComponent.test)
+      //const bindings = HyperComponent.__prop_metadata__.RootListener;
+
+      if (Array.isArray(_metadata.bindings)) {
+        for (const binding of _metadata.bindings) {
+          //listenToRoot(this.domNode, ...binding);
+          listenToRoot(this.domNode, binding[1][0], binding[1][1], binding[2].bind(this));
+        }
+      }
+
       if (typeof this.onBind === 'function') {
         this.onBind(
-          (...args) => this.listenToRoot(...args), // allow for arrays
+          (...args) => listenToRoot(this.domNode, ...args), // allow for arrays
           (...args) => this.listenToElement(...args)
         );
       }
@@ -285,7 +360,7 @@ export function Component2(options = {}) {
     }
 
     _registerComponents() {
-      registry = registry || new Map();
+      const registry = _metadata.registry || new Map();
       for (const [key, value] of registry.entries()) {
         this.core.register(key, value)
       }
@@ -399,8 +474,8 @@ export function Component2(options = {}) {
 
       this.sandbox = sandbox
       this.hasSandbox = this.sandbox != null;
-      this.hasTemplate = template != null;
-      //this.embedTemplate = this.embedTemplate ! || false;
+      this.hasTemplate = _metadata.template != null;
+      this.embedTemplate = _metadata.embedTemplate || false;
 
       this.log = console;
 
@@ -421,8 +496,8 @@ export function Component2(options = {}) {
       }
       this.instanceId = this.sandbox.instanceId;
 
-      if (this.hasTemplate && embedTemplate) {
-        this.domNode.innerHTML = template;
+      if (this.hasTemplate && this.embedTemplate) {
+        this.domNode.innerHTML = _metadata.template;
       }
     }
 
@@ -464,7 +539,7 @@ export function Component2(options = {}) {
           next();
         },
         (next) => {
-          if (autorun) {
+          if (_metadata.autorun) {
             this.startComponents();
           }
           next();

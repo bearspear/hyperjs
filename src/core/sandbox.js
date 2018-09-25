@@ -10,23 +10,9 @@ export function Sandbox(core, instanceId, options, moduleId) {
   this.instance = options.domNode || document.getElementById(instanceId) || parent.querySelector(instanceId);
   this.$instance = $(this.instance);
 
-  this.getElementById = (id) => {
-    return this.instance.querySelector('#' + id);
-  }
-  this.html = function (html) {
-    this.$instance.html(html);
-  };
-  this.append = function (a) {
-    this.$instance.append(a);
-  };
-  this.stopBubble = function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  if (options.html != null) {
-    this.html(options.html);
-  }
+  // if (options.html != null) {
+  //   this.html(options.html);
+  // }
   this.moduleId = moduleId;
   this.err = function (err) { if (err) { console.error(err); } };
   core._mediator.installTo(this);
