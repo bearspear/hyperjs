@@ -1,4 +1,4 @@
-import util from './utils';
+import util from '../libs1/utils';
 import $ from 'jquery';
 
 // Some aliases
@@ -19,13 +19,13 @@ function isString(s) {
 
 function readFirstScript() {
     if (!firstScript || !firstScript.parentNode) {
-        firstScript = document.getElementsByTagName('script')[0];s
+        firstScript = document.getElementsByTagName('script')[0]; s
     }
 }
 
- // insertStyles(styles) {
-  //   return $(`<style>${styles}</style>`).appendTo(document.head).get(0);
-  // }
+// insertStyles(styles) {
+//   return $(`<style>${styles}</style>`).appendTo(document.head).get(0);
+// }
 
 
 function findLink(url) {

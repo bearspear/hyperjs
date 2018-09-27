@@ -1,74 +1,14 @@
-import { InjectionCore } from '../core/injection';
-import { Mediator } from '../core/mediator';
-import util from '../libs/utils';
-import Dom from '../core/plugins/dom';
-import Util from '../core/plugins/util';
-import Mvc from '../core/plugins/mvc';
-import EJS from '../core/plugins/microtemplate';
-import Cookies from '../core/plugins/cookie';
+import { InjectionCore } from './injection';
+import { Mediator } from './mediator';
+import { listenToRoot, stopListenToRoot } from '../utils/listeners';
+import Dom from './plugins/dom';
+import Util from './plugins/util';
+import Mvc from './plugins/mvc';
+import EJS from './plugins/microtemplate';
+import Cookies from './plugins/cookie';
 import $ from 'jquery';
-import { makeClassDecorator, ANNOTATIONS, PROP_METADATA } from './decorators'
-
-
-export function stopBubbles(event) {
-  event.preventDefault();
-  event.stopPropagation();
-};
-
-export function listenToRoot(rootNode, events, selector, callback, bubbles = true) {
-  //var _this = this;
-  if (typeof selector === 'function') {
-    bubbles = callback;
-    callback = selector;
-    return $(rootNode).on(events, function (e, ...params) {
-      if (!bubbles) stopBubble(e);
-      callback(this, e, ...params)
-    });
-
-  } else {
-    return $(rootNode).on(events, selector, function (e, ...params) {
-      if (!bubbles) stopBubble(e);
-      callback(this, e, ...params)
-    });
-  }
-};
-
-export function stopListenToRoot(rootNode) {
-  $(rootNode).off();
-};
-
-export function componentMetaData(options = {}) {
-  let template, embedTemplate = false, registry = new Map(), autorun = false;
-
-  if (options.template != null) {
-    if (typeof options.template === 'string') {
-      template = options.template;
-      embedTemplate = true;
-    } else {
-      template = options.template[0] || null;
-      embedTemplate = options.template[1];
-    }
-
-  }
-  if (options.registry != null) {
-    registry = new Map(options.registry);
-  }
-
-  if (options.autorun) {
-    autorun = options.autorun;
-  }
-
-  return {
-    template: template,
-    embedTemplate: embedTemplate,
-    registry: registry,
-    autorun: autorun
-  }
-};
-
-export function Component2(options = {}) {
-  return makeClassDecorator(componentMetaData(options));
-};
+import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators'
+import util from '../utils/tasks';
 
 export function createHyperComponent(_Class) {
 
@@ -202,9 +142,9 @@ export function createHyperComponent(_Class) {
     }
 
     // stop listening to Root
-    _stopListenToRoot() {
-      $(this.domNode).off();
-    }
+    // _stopListenToRoot() {
+    //   $(this.domNode).off();
+    // }
 
 
     createComponentEvent(onEvent) {
@@ -261,7 +201,7 @@ export function createHyperComponent(_Class) {
     }
 
     _unbind() {
-      this._stopListenToRoot();
+      stopListenToRoot(this.domNode);
       this._stopListenToElements();
       this.eventHub.off();
       if (typeof this.onUnbind === 'function') {

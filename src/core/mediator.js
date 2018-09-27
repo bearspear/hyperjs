@@ -8,7 +8,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 
-import util from '../libs/utils'
+import util from '../utils/tasks';
 
 export var Mediator = (function () {
     let _getTasks = undefined;

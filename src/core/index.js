@@ -9,7 +9,7 @@
  */
 
 import { Mediator } from './mediator';
-import util from '../libs/utils';
+import util from '../utils/tasks';
 
 const checkType = function (type, val, name) {
   if (typeof val !== type) { return `${name} has to be a ${type}`; }

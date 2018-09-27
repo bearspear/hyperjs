@@ -1,6 +1,6 @@
 import { Core } from '../core';
 import { Sandbox } from '../core/sandbox';
-import { createHyperComponent } from '../decorators/component'
+import { createHyperComponent } from './component'
 import { Container } from 'aurelia-dependency-injection';
 class A { }
 
@@ -10,7 +10,7 @@ export class InjectionCore extends Core {
     }
 
     _resolveInstance(creator, sb) {
-        if (creator.isComponent) {
+        if (creator["type"] === "Component") {
             creator = createHyperComponent(creator);
         } else {
             return new Error("not component class");

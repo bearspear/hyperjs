@@ -1,10 +1,9 @@
-import { classMixin } from '../libs/mixins';
+import { classMixin } from './mixins';
 
-export const METADATA = '_metadata';
 export const PROP_METADATA = '__prop_metadata__';
 export const ANNOTATIONS = '__annotations__';
 
-export function makeClassDecorator(options = {}, mixins = {}) {
+export function makeClassDecorator(type, options = {}, mixins = {}) {
 
     return function (cls) {
         options["_name"] = cls.name;
@@ -13,7 +12,7 @@ export function makeClassDecorator(options = {}, mixins = {}) {
             Object.defineProperty(cls, ANNOTATIONS, { value: {}, writable: true })[ANNOTATIONS];
 
         cls[ANNOTATIONS] = Object.assign(cls[ANNOTATIONS], options);
-        cls.isComponent = true;
+        cls["type"] = type;
 
         //console.log(cls[ANNOTATIONS])
 

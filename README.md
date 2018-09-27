@@ -1,1 +1,1 @@
-# hyperjs
+# HyperJS

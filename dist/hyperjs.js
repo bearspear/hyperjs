@@ -49,7 +49,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.$ = exports.util = exports.inject = exports.error = undefined;
+	exports.$ = exports.inject = exports.error = undefined;
 	
 	var _bootstrap = __webpack_require__(1);
 	
@@ -87,67 +87,31 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  });
 	});
 	
-	var _component = __webpack_require__(19);
+	var _decorators = __webpack_require__(20);
 	
-	Object.keys(_component).forEach(function (key) {
+	Object.keys(_decorators).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
 	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _component[key];
+	      return _decorators[key];
 	    }
 	  });
 	});
 	
-	var _hypermodel = __webpack_require__(20);
+	var _listeners = __webpack_require__(9);
 	
-	Object.keys(_hypermodel).forEach(function (key) {
+	Object.keys(_listeners).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
 	  Object.defineProperty(exports, key, {
 	    enumerable: true,
 	    get: function get() {
-	      return _hypermodel[key];
+	      return _listeners[key];
 	    }
 	  });
 	});
 	
-	var _router = __webpack_require__(21);
-	
-	Object.keys(_router).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _router[key];
-	    }
-	  });
-	});
-	
-	var _component2 = __webpack_require__(8);
-	
-	Object.keys(_component2).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _component2[key];
-	    }
-	  });
-	});
-	
-	var _rootListener = __webpack_require__(36);
-	
-	Object.keys(_rootListener).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _rootListener[key];
-	    }
-	  });
-	});
-	
-	var _javascriptDecorators = __webpack_require__(37);
+	var _javascriptDecorators = __webpack_require__(21);
 	
 	Object.defineProperty(exports, 'error', {
 	  enumerable: true,
@@ -156,7 +120,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _aureliaDependencyInjection = __webpack_require__(16);
+	var _aureliaDependencyInjection = __webpack_require__(17);
 	
 	Object.defineProperty(exports, 'inject', {
 	  enumerable: true,
@@ -169,13 +133,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _utils = __webpack_require__(5);
-	
-	var _utils2 = _interopRequireDefault(_utils);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.util = _utils2.default;
+	//export { util };
 	exports.$ = _jquery2.default;
 	
 	//window.$ = $;
@@ -193,8 +153,6 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.bootstrap = bootstrap;
 	
 	var _injection = __webpack_require__(2);
-	
-	//import { HyperComponent } from './decorators/component';
 	
 	var core = new _injection.InjectionCore();
 	
@@ -274,15 +232,13 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	var _component = __webpack_require__(8);
 	
-	var _aureliaDependencyInjection = __webpack_require__(16);
+	var _aureliaDependencyInjection = __webpack_require__(17);
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	//import { container } from 'needlepoint';
-	
 	
 	var A = function A() {
 	    _classCallCheck(this, A);
@@ -300,7 +256,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	    _createClass(InjectionCore, [{
 	        key: '_resolveInstance',
 	        value: function _resolveInstance(creator, sb) {
-	            if (creator.isComponent) {
+	            if (creator["type"] === "Component") {
 	                creator = (0, _component.createHyperComponent)(creator);
 	            } else {
 	                return new Error("not component class");
@@ -387,9 +343,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	var _mediator = __webpack_require__(4);
 	
-	var _utils = __webpack_require__(5);
+	var _tasks = __webpack_require__(5);
 	
-	var _utils2 = _interopRequireDefault(_utils);
+	var _tasks2 = _interopRequireDefault(_tasks);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -521,7 +477,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	          return _this._startFail(err, cb);
 	        }
 	        try {
-	          if (_utils2.default.hasArgument(instance.init, 2)) {
+	          if (_tasks2.default.hasArgument(instance.init, 2)) {
 	            // the module wants to init in an asynchronous way
 	            // therefore define a callback
 	            return instance.init(opt, function (err) {
@@ -606,7 +562,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	        return function (p) {
 	          var fn = p.plugin[ev];
 	          return function (next) {
-	            if (_utils2.default.hasArgument(fn, 3)) {
+	            if (_tasks2.default.hasArgument(fn, 3)) {
 	              return fn(sb, p.options, next);
 	            } else {
 	              fn(sb, p.options);
@@ -615,7 +571,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	          };
 	        }(p);
 	      });
-	      return _utils2.default.runSeries(tasks, cb, true);
+	      return _tasks2.default.runSeries(tasks, cb, true);
 	    }
 	  }, {
 	    key: '_startAll',
@@ -654,7 +610,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	        }
 	        return typeof cb === 'function' ? cb(e) : undefined;
 	      };
-	      _utils2.default.doForAll(mods, startAction, done, true);
+	      _tasks2.default.doForAll(mods, startAction, done, true);
 	      return this;
 	    }
 	  }, {
@@ -667,7 +623,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	        cb = function cb() {};
 	      }
 	      if (arguments.length === 0 || typeof id === "function") {
-	        _utils2.default.doForAll(function () {
+	        _tasks2.default.doForAll(function () {
 	          var result = [];
 	          for (var x in _this4._instances) {
 	            result.push(x);
@@ -683,7 +639,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	        this._mediator.off(instance);
 	        this._runSandboxPlugins('destroy', this._sandboxes[id], function (err) {
 	          // if the module wants destroy in an asynchronous way
-	          if (_utils2.default.hasArgument(instance.destroy)) {
+	          if (_tasks2.default.hasArgument(instance.destroy)) {
 	            return instance.destroy(function (err2) {
 	              delete _this4._running[id];
 	              return cb(err || err2);
@@ -755,7 +711,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	        return p.booted !== true;
 	      }).map(function (p) {
 	        return function (p) {
-	          if (_utils2.default.hasArgument(p.creator, 3)) {
+	          if (_tasks2.default.hasArgument(p.creator, 3)) {
 	            return function (next) {
 	              var plugin = void 0;
 	              return plugin = p.creator(core, p.options, function (err) {
@@ -775,7 +731,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	          }
 	        }(p);
 	      });
-	      _utils2.default.runSeries(tasks, cb, true);
+	      _tasks2.default.runSeries(tasks, cb, true);
 	      return this;
 	    }
 	  }]);
@@ -808,9 +764,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _utils = __webpack_require__(5);
+	var _tasks = __webpack_require__(5);
 	
-	var _utils2 = _interopRequireDefault(_utils);
+	var _tasks2 = _interopRequireDefault(_tasks);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -829,7 +785,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	                        return function (sub) {
 	                            return function (next) {
 	                                try {
-	                                    if (_utils2.default.hasArgument(sub.callback, 3)) {
+	                                    if (_tasks2.default.hasArgument(sub.callback, 3)) {
 	                                        return sub.callback.apply(sub.context, [data, originalChannel, next]);
 	                                    } else {
 	                                        return next(null, sub.callback.apply(sub.context, [data, originalChannel]));
@@ -978,7 +934,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	                var tasks = _getTasks(data, channel, originalChannel, this);
 	
-	                _utils2.default.runSeries(tasks, function (errors, results) {
+	                _tasks2.default.runSeries(tasks, function (errors, results) {
 	                    var e = void 0;
 	                    if (errors) {
 	                        e = new Error(function () {
@@ -1049,7 +1005,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	                }
 	                var tasks = _getTasks(data, channel, channel, this);
 	
-	                _utils2.default.runFirst(tasks, function (errors, result) {
+	                _tasks2.default.runFirst(tasks, function (errors, result) {
 	                    if (errors) {
 	                        var e = new Error(function () {
 	                            var result1 = [];
@@ -11826,37 +11782,29 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	exports.stopBubbles = stopBubbles;
-	exports.listenToRoot = listenToRoot;
-	exports.stopListenToRoot = stopListenToRoot;
-	exports.componentMetaData = componentMetaData;
-	exports.Component2 = Component2;
-	
 	var _injection = __webpack_require__(2);
 	
 	var _mediator = __webpack_require__(4);
 	
-	var _utils = __webpack_require__(5);
+	var _listeners = __webpack_require__(9);
 	
-	var _utils2 = _interopRequireDefault(_utils);
-	
-	var _dom = __webpack_require__(9);
+	var _dom = __webpack_require__(10);
 	
 	var _dom2 = _interopRequireDefault(_dom);
 	
-	var _util = __webpack_require__(10);
+	var _util = __webpack_require__(11);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
-	var _mvc = __webpack_require__(11);
+	var _mvc = __webpack_require__(12);
 	
 	var _mvc2 = _interopRequireDefault(_mvc);
 	
-	var _microtemplate = __webpack_require__(12);
+	var _microtemplate = __webpack_require__(13);
 	
 	var _microtemplate2 = _interopRequireDefault(_microtemplate);
 	
-	var _cookie = __webpack_require__(13);
+	var _cookie = __webpack_require__(14);
 	
 	var _cookie2 = _interopRequireDefault(_cookie);
 	
@@ -11864,7 +11812,11 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _decorators = __webpack_require__(14);
+	var _decorators = __webpack_require__(15);
+	
+	var _tasks = __webpack_require__(5);
+	
+	var _tasks2 = _interopRequireDefault(_tasks);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -11873,83 +11825,6 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	function stopBubbles(event) {
-	  event.preventDefault();
-	  event.stopPropagation();
-	};
-	
-	function listenToRoot(rootNode, events, selector, callback) {
-	  var bubbles = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
-	
-	  //var _this = this;
-	  if (typeof selector === 'function') {
-	    bubbles = callback;
-	    callback = selector;
-	    return (0, _jquery2.default)(rootNode).on(events, function (e) {
-	      if (!bubbles) stopBubble(e);
-	
-	      for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        params[_key - 1] = arguments[_key];
-	      }
-	
-	      callback.apply(undefined, [this, e].concat(params));
-	    });
-	  } else {
-	    return (0, _jquery2.default)(rootNode).on(events, selector, function (e) {
-	      if (!bubbles) stopBubble(e);
-	
-	      for (var _len2 = arguments.length, params = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-	        params[_key2 - 1] = arguments[_key2];
-	      }
-	
-	      callback.apply(undefined, [this, e].concat(params));
-	    });
-	  }
-	};
-	
-	function stopListenToRoot(rootNode) {
-	  (0, _jquery2.default)(rootNode).off();
-	}
-	
-	function componentMetaData() {
-	  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	
-	  var template = void 0,
-	      embedTemplate = false,
-	      registry = new Map(),
-	      autorun = false;
-	
-	  if (options.template != null) {
-	    if (typeof options.template === 'string') {
-	      template = options.template;
-	      embedTemplate = true;
-	    } else {
-	      template = options.template[0] || null;
-	      embedTemplate = options.template[1];
-	    }
-	  }
-	  if (options.registry != null) {
-	    registry = new Map(options.registry);
-	  }
-	
-	  if (options.autorun) {
-	    autorun = options.autorun;
-	  }
-	
-	  return {
-	    template: template,
-	    embedTemplate: embedTemplate,
-	    registry: registry,
-	    autorun: autorun
-	  };
-	}
-	
-	function Component2() {
-	  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	
-	  return (0, _decorators.makeClassDecorator)(componentMetaData(options));
-	}
 	
 	function createHyperComponent(_Class) {
 	
@@ -12000,25 +11875,6 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	      value: function getElementById(id) {
 	        return this.instance.querySelector('#' + id);
 	      }
-	
-	      //listenToRoot (delegated)
-	      // listenToRoot(events, selector, callback, bubbles = true) {
-	      //   var _this = this;
-	      //   if (typeof selector === 'function') {
-	      //     bubbles = callback;
-	      //     callback = selector;
-	      //     return $(this.domNode).on(events, function (e, ...params) {
-	      //       if (!bubbles) _this.sandbox.stopBubble(e);
-	      //       callback(this, e, ...params)
-	      //     });
-	
-	      //   } else {
-	      //     return $(this.domNode).on(events, selector, function (e, ...params) {
-	      //       if (!bubbles) _this.sandbox.stopBubble(e);
-	      //       callback(this, e, ...params)
-	      //     });
-	      //   }
-	      // }
 	
 	      // this might be rare (maybe)
 	
@@ -12203,12 +12059,11 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	      }
 	
 	      // stop listening to Root
+	      // _stopListenToRoot() {
+	      //   $(this.domNode).off();
+	      // }
 	
-	    }, {
-	      key: '_stopListenToRoot',
-	      value: function _stopListenToRoot() {
-	        (0, _jquery2.default)(this.domNode).off();
-	      }
+	
 	    }, {
 	      key: 'createComponentEvent',
 	      value: function createComponentEvent(onEvent) {
@@ -12262,7 +12117,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	              var binding = _step4.value;
 	
 	              //listenToRoot(this.domNode, ...binding);
-	              listenToRoot(this.domNode, binding[1][0], binding[1][1], binding[2].bind(this));
+	              (0, _listeners.listenToRoot)(this.domNode, binding[1][0], binding[1][1], binding[2].bind(this));
 	            }
 	          } catch (err) {
 	            _didIteratorError4 = true;
@@ -12282,11 +12137,11 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	        if (typeof this.onBind === 'function') {
 	          this.onBind(function () {
-	            for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-	              args[_key3] = arguments[_key3];
+	            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	              args[_key] = arguments[_key];
 	            }
 	
-	            return listenToRoot.apply(undefined, [_this6.domNode].concat(args));
+	            return _listeners.listenToRoot.apply(undefined, [_this6.domNode].concat(args));
 	          }, // allow for arrays
 	          function () {
 	            return _this6.listenToElement.apply(_this6, arguments);
@@ -12309,7 +12164,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	    }, {
 	      key: '_unbind',
 	      value: function _unbind() {
-	        this._stopListenToRoot();
+	        (0, _listeners.stopListenToRoot)(this.domNode);
 	        this._stopListenToElements();
 	        this.eventHub.off();
 	        if (typeof this.onUnbind === 'function') {
@@ -12446,7 +12301,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	            _this8.startComponents(page, opt, next);
 	            _this8.page = page;
 	          };
-	          _utils2.default.runSeries([taskStop, taskStart], done, true);
+	          _tasks2.default.runSeries([taskStop, taskStart], done, true);
 	        } else {
 	          this.core.start(page, opt, done);
 	          this.page = page;
@@ -12465,7 +12320,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	      key: '_onEvent',
 	      value: function _onEvent(event, done) {
 	        if (typeof this[event] === 'function') {
-	          if (_utils2.default.getArgumentNames(this[event]).length !== 0) {
+	          if (_tasks2.default.getArgumentNames(this[event]).length !== 0) {
 	            try {
 	              this[event](done);
 	            } catch (err) {
@@ -12624,7 +12479,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	          next();
 	        }];
 	
-	        _utils2.default.runSeries(tasks, function (err) {
+	        _tasks2.default.runSeries(tasks, function (err) {
 	          if (err != null) {
 	            errors = err;
 	          }
@@ -12660,7 +12515,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	          }
 	          next();
 	        }];
-	        _utils2.default.runSeries(tasks, done, true);
+	        _tasks2.default.runSeries(tasks, done, true);
 	        this._removeRootAttributes();
 	        console.log("destroyed:", this);
 	      }
@@ -12795,7 +12650,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	          }
 	        }
 	
-	        _utils2.default.runParallel(tasks, done);
+	        _tasks2.default.runParallel(tasks, done);
 	      }
 	    }, {
 	      key: 'show',
@@ -12813,11 +12668,68 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	    return HyperComponent;
 	  }(_Class);
-	}
-	exports.createHyperComponent = createHyperComponent;
+	}exports.createHyperComponent = createHyperComponent;
+	;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.stopBubbles = stopBubbles;
+	exports.listenToRoot = listenToRoot;
+	exports.stopListenToRoot = stopListenToRoot;
+	
+	var _jquery = __webpack_require__(7);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function stopBubbles(event) {
+	    event.preventDefault();
+	    event.stopPropagation();
+	};
+	
+	function listenToRoot(rootNode, events, selector, callback) {
+	    var bubbles = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
+	
+	    //var _this = this;
+	    if (typeof selector === 'function') {
+	        bubbles = callback;
+	        callback = selector;
+	        return (0, _jquery2.default)(rootNode).on(events, function (e) {
+	            if (!bubbles) stopBubble(e);
+	
+	            for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	                params[_key - 1] = arguments[_key];
+	            }
+	
+	            callback.apply(undefined, [this, e].concat(params));
+	        });
+	    } else {
+	        return (0, _jquery2.default)(rootNode).on(events, selector, function (e) {
+	            if (!bubbles) stopBubble(e);
+	
+	            for (var _len2 = arguments.length, params = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	                params[_key2 - 1] = arguments[_key2];
+	            }
+	
+	            callback.apply(undefined, [this, e].concat(params));
+	        });
+	    }
+	};
+	
+	function stopListenToRoot(rootNode) {
+	    (0, _jquery2.default)(rootNode).off();
+	};
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -12858,7 +12770,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -13064,7 +12976,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -13221,7 +13133,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -13254,7 +13166,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -13323,7 +13235,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13331,20 +13243,19 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.ANNOTATIONS = exports.PROP_METADATA = exports.METADATA = undefined;
+	exports.ANNOTATIONS = exports.PROP_METADATA = undefined;
 	exports.makeClassDecorator = makeClassDecorator;
 	exports.makeParamDecorator = makeParamDecorator;
 	exports.makePropDecorator = makePropDecorator;
 	
-	var _mixins = __webpack_require__(15);
+	var _mixins = __webpack_require__(16);
 	
-	var METADATA = exports.METADATA = '_metadata';
 	var PROP_METADATA = exports.PROP_METADATA = '__prop_metadata__';
 	var ANNOTATIONS = exports.ANNOTATIONS = '__annotations__';
 	
-	function makeClassDecorator() {
-	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	    var mixins = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	function makeClassDecorator(type) {
+	    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	    var mixins = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 	
 	
 	    return function (cls) {
@@ -13352,7 +13263,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	        var annotations = cls.hasOwnProperty(ANNOTATIONS) ? cls[ANNOTATIONS] : Object.defineProperty(cls, ANNOTATIONS, { value: {}, writable: true })[ANNOTATIONS];
 	
 	        cls[ANNOTATIONS] = Object.assign(cls[ANNOTATIONS], options);
-	        cls.isComponent = true;
+	        cls["type"] = type;
 	
 	        //console.log(cls[ANNOTATIONS])
 	
@@ -13380,7 +13291,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -13538,7 +13449,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13565,9 +13476,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.autoinject = autoinject;
 	exports.inject = inject;
 	
-	var _aureliaMetadata = __webpack_require__(17);
+	var _aureliaMetadata = __webpack_require__(18);
 	
-	var _aureliaPal = __webpack_require__(18);
+	var _aureliaPal = __webpack_require__(19);
 	
 	
 	
@@ -14295,7 +14206,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14314,7 +14225,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.mixin = mixin;
 	exports.protocol = protocol;
 	
-	var _aureliaPal = __webpack_require__(18);
+	var _aureliaPal = __webpack_require__(19);
 	
 	
 	
@@ -14571,7 +14482,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -14677,868 +14588,6 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.Component = undefined;
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _injection = __webpack_require__(2);
-	
-	var _mediator = __webpack_require__(4);
-	
-	var _utils = __webpack_require__(5);
-	
-	var _utils2 = _interopRequireDefault(_utils);
-	
-	var _dom = __webpack_require__(9);
-	
-	var _dom2 = _interopRequireDefault(_dom);
-	
-	var _util = __webpack_require__(10);
-	
-	var _util2 = _interopRequireDefault(_util);
-	
-	var _mvc = __webpack_require__(11);
-	
-	var _mvc2 = _interopRequireDefault(_mvc);
-	
-	var _microtemplate = __webpack_require__(12);
-	
-	var _microtemplate2 = _interopRequireDefault(_microtemplate);
-	
-	var _cookie = __webpack_require__(13);
-	
-	var _cookie2 = _interopRequireDefault(_cookie);
-	
-	var _jquery = __webpack_require__(7);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Component = exports.Component = function () {
-	  function Component() {
-	    _classCallCheck(this, Component);
-	  }
-	
-	  _createClass(Component, [{
-	    key: 'find',
-	    value: function find(selector) {
-	      var dom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-	
-	      var els = (0, _jquery2.default)(this.domNode).find(selector);
-	      return dom ? els.get() : els;
-	    }
-	  }, {
-	    key: 'findOne',
-	    value: function findOne(selector) {
-	      var dom = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-	
-	      var el = this.find(selector);
-	      return dom ? el.get(0) : el.eq(0);
-	    }
-	
-	    //listenToRoot (delegated)
-	
-	  }, {
-	    key: 'listenToRoot',
-	    value: function listenToRoot(events, selector, callback) {
-	      var bubbles = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-	
-	      var _this = this;
-	      if (typeof selector === 'function') {
-	        bubbles = callback;
-	        callback = selector;
-	        return (0, _jquery2.default)(this.domNode).on(events, function (e) {
-	          if (!bubbles) _this.sandbox.stopBubble(e);
-	
-	          for (var _len = arguments.length, params = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	            params[_key - 1] = arguments[_key];
-	          }
-	
-	          callback.apply(undefined, [this, e].concat(params));
-	        });
-	      } else {
-	        return (0, _jquery2.default)(this.domNode).on(events, selector, function (e) {
-	          if (!bubbles) _this.sandbox.stopBubble(e);
-	
-	          for (var _len2 = arguments.length, params = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-	            params[_key2 - 1] = arguments[_key2];
-	          }
-	
-	          callback.apply(undefined, [this, e].concat(params));
-	        });
-	      }
-	    }
-	
-	    // this might be rare (maybe)
-	
-	  }, {
-	    key: 'listenToElement',
-	    value: function listenToElement(events, selector, callback) {
-	      var bubbles = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-	
-	      // selector as array [element, ]
-	      var _this = this;
-	      var $els = (0, _jquery2.default)(selector).on(events, function (e) {
-	        if (!bubbles) _this.sandbox.stopBubble(e);
-	        callback(this, e);
-	      });
-	      this.boundElements.push($els); //WeakMap/Map ?
-	      return $els;
-	    }
-	  }, {
-	    key: '_stopListenToElements',
-	    value: function _stopListenToElements() {
-	      var _iteratorNormalCompletion = true;
-	      var _didIteratorError = false;
-	      var _iteratorError = undefined;
-	
-	      try {
-	        for (var _iterator = this.boundElements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var $el = _step.value;
-	
-	          $el.off();
-	        }
-	      } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion && _iterator.return) {
-	            _iterator.return();
-	          }
-	        } finally {
-	          if (_didIteratorError) {
-	            throw _iteratorError;
-	          }
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'listenToParent',
-	    value: function listenToParent(channel, cb) {
-	      return this.sandbox.on(channel + '/' + this.instanceId, cb);
-	    }
-	  }, {
-	    key: 'listenToChildren',
-	    value: function listenToChildren(channel, cb) {
-	      return this.core._mediator.on(channel, cb);
-	    }
-	  }, {
-	    key: 'pipeUp',
-	    value: function pipeUp(channel, cb) {
-	      var _this2 = this;
-	
-	      this.listenToChildren(channel, function (data) {
-	        _this2.emitToParent(channel, data.data || data, cb);
-	      });
-	    }
-	  }, {
-	    key: 'pipeDown',
-	    value: function pipeDown(channel, cb) {
-	      var _this3 = this;
-	
-	      this.listenToParent(channel, function (data) {
-	        _this3.emitToChildren('*', channel, data.data || data, cb);
-	      });
-	    }
-	    //internal events
-	
-	  }, {
-	    key: 'emit',
-	    value: function emit(channel, event, cb) {
-	      this.eventHub.emit(channel, event, cb);
-	    }
-	  }, {
-	    key: 'listen',
-	    value: function listen(channel, event, cb) {
-	      this.eventHub.on(channel, event, cb);
-	    }
-	  }, {
-	    key: 'off',
-	    value: function off(channel, cb) {
-	      this.eventHub.off(channel, cb);
-	    }
-	  }, {
-	    key: 'emitToChildren',
-	    value: function emitToChildren(id, channel, data, cb) {
-	      if (typeof cb !== 'function') {
-	        cb = function cb(err) {
-	          if (err != null) {
-	            //throw new Error(err)
-	            console.error(err);
-	          }
-	        };
-	      }
-	
-	      var ids = id instanceof Array ? id : [id];
-	      var event = {
-	        target: 'child',
-	        channel: channel,
-	        data: data
-	      };
-	      if (id === '*' || id == null) {
-	        var _iteratorNormalCompletion2 = true;
-	        var _didIteratorError2 = false;
-	        var _iteratorError2 = undefined;
-	
-	        try {
-	          for (var _iterator2 = Object.keys(this._running)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var key = _step2.value;
-	
-	            this.core._mediator.emit(channel + '/' + key, event, cb);
-	          }
-	        } catch (err) {
-	          _didIteratorError2 = true;
-	          _iteratorError2 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	              _iterator2.return();
-	            }
-	          } finally {
-	            if (_didIteratorError2) {
-	              throw _iteratorError2;
-	            }
-	          }
-	        }
-	      } else {
-	        var _iteratorNormalCompletion3 = true;
-	        var _didIteratorError3 = false;
-	        var _iteratorError3 = undefined;
-	
-	        try {
-	          for (var _iterator3 = ids[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	            var _id = _step3.value;
-	
-	            event.id = this.instanceId;
-	            this.core._mediator.emit(channel + '/' + _id, event, cb);
-	          }
-	        } catch (err) {
-	          _didIteratorError3 = true;
-	          _iteratorError3 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	              _iterator3.return();
-	            }
-	          } finally {
-	            if (_didIteratorError3) {
-	              throw _iteratorError3;
-	            }
-	          }
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'emitToParent',
-	    value: function emitToParent(channel, data, cb) {
-	      if (typeof cb !== 'function') {
-	        cb = function cb(err) {
-	          if (err != null) {
-	            //throw new Error(err)
-	            console.error(err);
-	          }
-	        };
-	      }
-	
-	      var id = this.instanceId;
-	      var event = {
-	        target: 'parent',
-	        channel: channel,
-	        data: data,
-	        id: id
-	      };
-	      this.sandbox.emit(channel, event, cb);
-	    }
-	
-	    // stop listening to Root
-	
-	  }, {
-	    key: '_stopListenToRoot',
-	    value: function _stopListenToRoot() {
-	      (0, _jquery2.default)(this.domNode).off();
-	    }
-	  }, {
-	    key: 'createComponentEvent',
-	    value: function createComponentEvent(onEvent) {
-	      if (this[onEvent]) {
-	        //console.error(onEvent, ': event or variable already exists')
-	      } else {
-	        this[onEvent] = function () {};
-	      }
-	    }
-	  }, {
-	    key: '_setupBasicComponentChannels',
-	    value: function _setupBasicComponentChannels() {
-	      var _this4 = this;
-	
-	      if (this.sandbox) {
-	        this.listenToParent('hide', function () {
-	          _this4.hide();
-	        });
-	        this.listenToParent('show', function () {
-	          _this4.show();
-	        });
-	        this.listenToParent('data', function (data) {
-	          //this.model.set(data)s
-	        });
-	        this.pipeUp('broadcast');
-	        this.pipeDown('broadcast');
-	        this.createComponentEvent('onBroadcast');
-	        this.listenToParent('broadcast', function (event) {
-	          return _this4.onBroadcast(event.data, 'down');
-	        });
-	        this.listenToChildren('broadcast', function (event) {
-	          return _this4.onBroadcast(event.data, 'up');
-	        });
-	      }
-	    }
-	  }, {
-	    key: '_bind',
-	    value: function _bind() {
-	      var _this5 = this;
-	
-	      if (typeof this.onBind === 'function') {
-	        this.onBind(function () {
-	          return _this5.listenToRoot.apply(_this5, arguments);
-	        }, // allow for arrays
-	        function () {
-	          return _this5.listenToElement.apply(_this5, arguments);
-	        });
-	      }
-	    }
-	  }, {
-	    key: '_setRootAttributes',
-	    value: function _setRootAttributes() {
-	      this.id = 'component-' + this.core.uniqueId();
-	      this.domNode.setAttribute('data-component-id', this.id);
-	      this.domNode.setAttribute('data-instance-id', this.instanceId);
-	    }
-	  }, {
-	    key: '_removeRootAttributes',
-	    value: function _removeRootAttributes() {
-	      this.domNode.removeAttribute('data-component-id');
-	      this.domNode.removeAttribute('data-instance-id');
-	    }
-	  }, {
-	    key: '_unbind',
-	    value: function _unbind() {
-	      this._stopListenToRoot();
-	      this._stopListenToElements();
-	      this.eventHub.off();
-	      if (typeof this.onUnbind === 'function') {
-	        this.onUnbind();
-	      }
-	    }
-	  }, {
-	    key: '_subscribe',
-	    value: function _subscribe() {
-	      var _this6 = this;
-	
-	      this._setupBasicComponentChannels();
-	      if (typeof this.onSubscribe === 'function') {
-	        this.onSubscribe(function (channel, cb) {
-	          return _this6.listenToParent(channel, cb);
-	        }, function (channel, cb) {
-	          return _this6.listenToChildren(channel, cb);
-	        });
-	      }
-	    }
-	  }, {
-	    key: '_unsubscribe',
-	    value: function _unsubscribe() {
-	      // stop listening to children
-	      this.core._mediator.off();
-	      // stop listening to parent
-	      if (this.sandbox) {
-	        this.sandbox.off();
-	      }
-	      if (typeof this.onUnsubscribe === 'function') {
-	        this.onUnsubscribe();
-	      }
-	    }
-	  }, {
-	    key: '_detach',
-	    value: function _detach() {
-	      this.core._mediator.detach();
-	      if (this.sandbox) {
-	        this.sandbox.detach();
-	      }
-	    }
-	  }, {
-	    key: '_attach',
-	    value: function _attach() {
-	      this.core._mediator.attach();
-	      if (this.sandbox) {
-	        this.sandbox.attach();
-	      }
-	    }
-	  }, {
-	    key: '_render',
-	    value: function _render() {
-	      //tasks??
-	      if (this.hasTemplate) {
-	        if (typeof this.onPreRender === 'function') {
-	          this.onPreRender();
-	        }
-	        if (typeof this.onRender === 'function') {
-	          this.onRender();
-	        } else {
-	          //assume ejs default - this.model.toJSON
-	          if (!this.embedTemplate) {
-	            this.domNode.innerHTML = this.sandbox.render(this.template, this.model.toJSON() || {});
-	          }
-	        }
-	        if (typeof this.onPostRender === 'function') {
-	          this.onPostRender();
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      //this._detach();
-	      this._unbind();
-	      this._render();
-	      this._bind();
-	      //this._attach();
-	    }
-	  }, {
-	    key: 'getInstance',
-	    value: function getInstance(id) {
-	      return this._instances[id];
-	    }
-	  }, {
-	    key: 'getModuleClass',
-	    value: function getModuleClass(id) {
-	      return this._modules[id];
-	    }
-	  }, {
-	    key: '_registerComponents',
-	    value: function _registerComponents() {
-	      this.registry = this.registry || new Map();
-	      var _iteratorNormalCompletion4 = true;
-	      var _didIteratorError4 = false;
-	      var _iteratorError4 = undefined;
-	
-	      try {
-	        for (var _iterator4 = this.registry.entries()[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	          var _step4$value = _slicedToArray(_step4.value, 2),
-	              key = _step4$value[0],
-	              value = _step4$value[1];
-	
-	          this.core.register(key, value);
-	        }
-	      } catch (err) {
-	        _didIteratorError4 = true;
-	        _iteratorError4 = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	            _iterator4.return();
-	          }
-	        } finally {
-	          if (_didIteratorError4) {
-	            throw _iteratorError4;
-	          }
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'startPage',
-	    value: function startPage(page, opt) {
-	      var _this7 = this;
-	
-	      var done = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
-	
-	      if (this.page != null) {
-	        var taskStop = function taskStop(next) {
-	          _this7.core.stop(_this7.page, next);
-	        };
-	
-	        var taskStart = function taskStart(next) {
-	          _this7.startComponents(page, opt, next);
-	          _this7.page = page;
-	        };
-	        _utils2.default.runSeries([taskStop, taskStart], done, true);
-	      } else {
-	        this.core.start(page, opt, done);
-	        this.page = page;
-	      }
-	    }
-	  }, {
-	    key: '_tryEvent',
-	    value: function _tryEvent(event, done) {
-	      try {
-	        this[event](done);
-	      } catch (err) {
-	        done(err);
-	      }
-	    }
-	  }, {
-	    key: '_onEvent',
-	    value: function _onEvent(event, done) {
-	      if (typeof this[event] === 'function') {
-	        if (_utils2.default.getArgumentNames(this[event]).length !== 0) {
-	          try {
-	            this[event](done);
-	          } catch (err) {
-	            done(err);
-	          }
-	        } else {
-	          try {
-	            this[event]();
-	            done();
-	          } catch (err) {
-	            done(err);
-	          }
-	        }
-	      } else {
-	        done();
-	      }
-	    }
-	  }, {
-	    key: 'broadcast',
-	    value: function broadcast(direction, action, value) {
-	      // to parent
-	      if (direction === 'up' || direction === "*") {
-	        this.emitToParent('broadcast', { action: action, value: value });
-	      }
-	      // to children
-	      if (direction === 'down' || direction === '*') {
-	        this.emitToChildren('*', 'broadcast', { action: action, value: value });
-	      } else if (direction !== 'up' || direction !== 'down' || direction !== "*") {
-	        this.emitToChildren(direction, 'broadcast', { action: action, value: value });
-	      }
-	    }
-	  }, {
-	    key: 'setProps',
-	    value: function setProps(props) {
-	      this.props = new this.core.Model(props);
-	    }
-	  }, {
-	    key: 'activateProps',
-	    value: function activateProps() {
-	      var _arguments = arguments,
-	          _this8 = this;
-	
-	      this.props.change(function () {
-	        console.log(_arguments);
-	        if (typeof _this8.onPropsChange === 'function') {
-	          _this8.onPropsChange(props);
-	        }
-	      });
-	      this.listenToParent("props", function (props) {
-	        _this8.setProps(props);
-	      });
-	    }
-	  }, {
-	    key: 'setModel',
-	    value: function setModel(data) {
-	      var _this9 = this;
-	
-	      this.props = new this.core.Model(data);
-	      this.props.change(function () {
-	        _this9.render();
-	      }, this);
-	    }
-	  }, {
-	    key: 'update',
-	    value: function update(id, props) {
-	      if ((typeof id === 'undefined' ? 'undefined' : _typeof(id)) === 'object') {
-	        props = id;
-	        this.emitToChildren('*', "props", props);
-	      } else {
-	        this.emitToChildren(id, "props", props);
-	      }
-	    }
-	  }, {
-	    key: '_preInit',
-	    value: function _preInit(sandbox) {
-	      //embedInSandbox
-	      this.core = new _injection.InjectionCore();
-	      this.core.use([_util2.default, _mvc2.default, _microtemplate2.default, _dom2.default, _cookie2.default]);
-	
-	      //this._mediator.cascadeChannels = true;
-	      this.eventHub = new _mediator.Mediator();
-	      this.boundElements = this.boundElements || [];
-	      //if (jQuery == null) {
-	      //throw "jQuery  not found"
-	      //}
-	      this.$ = _jquery2.default;
-	      _jquery2.default.hyperjs = true;
-	
-	      this._registerComponents(); //init?
-	
-	      this.sandbox = sandbox;
-	      this.hasSandbox = this.sandbox != null;
-	      this.hasTemplate = this.template != null;
-	      //this.embedTemplate = this.embedTemplate ! || false;
-	
-	      this.log = console;
-	
-	      if (this.hasSandbox) {
-	        this.domNode = this.sandbox.instance;
-	        this.instance = this.element = this.domNode;
-	        //console.log('Child component: uses sandbox')
-	      } else {
-	          //throw new Error('error', this)
-	        }
-	
-	      if (this.instance) {
-	        this.hasRoot = true;
-	        this.instance = this.element = this.domNode;
-	        this.$instance = (0, _jquery2.default)(this.instance);
-	      } else {
-	        this.hasRoot = false;
-	      }
-	      this.instanceId = this.sandbox.instanceId;
-	
-	      if (this.hasTemplate && this.embedTemplate) {
-	        this.domNode.innerHTML = this.template;
-	      }
-	    }
-	  }, {
-	    key: 'init',
-	    value: function init(options, done) {
-	      var _this10 = this;
-	
-	      this.props = options || {};
-	      var errors = [];
-	
-	      var tasks = [function (next) {
-	        _this10._onEvent('onPreInit', next);
-	      }, function (next) {
-	        _this10.core.boot(function () {
-	          _this10._onEvent('onBoot', next);
-	        });
-	      }, function (next) {
-	        _this10.id = 'component-' + _this10.core.uniqueId();
-	        _this10._setRootAttributes();
-	        next();
-	      }, function (next) {
-	        _this10.data = _this10.props || {};
-	        _this10.setModel(_this10.data);
-	        _this10._render();
-	        next();
-	      }, function (next) {
-	        _this10.id = 'component-' + _this10.core.uniqueId();
-	        _this10._setRootAttributes();
-	        next();
-	      }, function (next) {
-	        _this10._bind();
-	        next();
-	      }, function (next) {
-	        _this10._subscribe();
-	        next();
-	      }];
-	
-	      _utils2.default.runSeries(tasks, function (err) {
-	        if (err != null) {
-	          errors = err;
-	        }
-	        _this10._onEvent('onInit', function (err2) {
-	          if (err2) {
-	            errors.concat(err2);
-	          }
-	          if (errors.length > 0) console.error(errors);
-	          done(errors.length > 0 ? errors : null);
-	        });
-	      }, false);
-	      console.log("created:", this);
-	      return this;
-	    }
-	  }, {
-	    key: 'destroy',
-	    value: function destroy(done) {
-	      var _this11 = this;
-	
-	      var tasks = [function (next) {
-	        _this11._onEvent('onDestroy', next);
-	      }, function (next) {
-	        _this11.stop(next);
-	      }, function (next) {
-	        _this11._unsubscribe();
-	        next();
-	      }, function (next) {
-	        _this11._unbind();
-	        next();
-	      }, function (next) {
-	        if (_this11.hasTemplate) {
-	          _this11.domNode.innerHTML = '';
-	        }
-	        next();
-	      }];
-	      _utils2.default.runSeries(tasks, done, true);
-	      this._removeRootAttributes();
-	      console.log("destroyed:", this);
-	    }
-	  }, {
-	    key: '_checkForComponent',
-	    value: function _checkForComponent(node) {
-	      return !this.find(node).data('component-id') && this.find(node).find('[data-component-id]').length > 0;
-	    }
-	  }, {
-	    key: 'initComponents',
-	    value: function initComponents() {
-	      var _iteratorNormalCompletion5 = true;
-	      var _didIteratorError5 = false;
-	      var _iteratorError5 = undefined;
-	
-	      try {
-	        for (var _iterator5 = Object.keys(this._modules)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	          var id = _step5.value;
-	
-	          var el = this.find('#' + id).get(0) || this.find(id).get(0);
-	          var rand = this.core.uniqueId();
-	          if (el && !this._checkForComponent(el)) {
-	            this.core.start(id, {
-	              instanceId: id + '-' + rand,
-	              options: {
-	                domNode: el
-	              }
-	            });
-	          }
-	        }
-	      } catch (err) {
-	        _didIteratorError5 = true;
-	        _iteratorError5 = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion5 && _iterator5.return) {
-	            _iterator5.return();
-	          }
-	        } finally {
-	          if (_didIteratorError5) {
-	            throw _iteratorError5;
-	          }
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'startChildren',
-	    value: function startChildren(children, initEvent) {
-	      var _iteratorNormalCompletion6 = true;
-	      var _didIteratorError6 = false;
-	      var _iteratorError6 = undefined;
-	
-	      try {
-	        for (var _iterator6 = children[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-	          var child = _step6.value;
-	
-	          this.core.start(child[0], child[1]);
-	        }
-	      } catch (err) {
-	        _didIteratorError6 = true;
-	        _iteratorError6 = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion6 && _iterator6.return) {
-	            _iterator6.return();
-	          }
-	        } finally {
-	          if (_didIteratorError6) {
-	            throw _iteratorError6;
-	          }
-	        }
-	      }
-	
-	      if (initEvent != null) {
-	        this.emitToChildren('*', initEvent[0], initEvent[1]);
-	      }
-	    }
-	
-	    // startComponents(id, opts, cb) {
-	    //   let options = opts;
-	    //   if (opts instanceof HTMLElement) {
-	    //     let node = opts;
-	    //     options = {
-	    //       domNode: node
-	    //     };
-	    //   }
-	    //   this.core.start(id, options, cb);
-	    // }
-	
-	  }, {
-	    key: 'startComponents',
-	    value: function startComponents() {
-	      var _core;
-	
-	      (_core = this.core).start.apply(_core, arguments);
-	    }
-	  }, {
-	    key: 'stopComponents',
-	    value: function stopComponents(id, done) {
-	      var _this12 = this;
-	
-	      var ids = id instanceof Array ? id : [id];
-	      var tasks = [];
-	      var _iteratorNormalCompletion7 = true;
-	      var _didIteratorError7 = false;
-	      var _iteratorError7 = undefined;
-	
-	      try {
-	        var _loop = function _loop() {
-	          var id = _step7.value;
-	
-	          tasks.push(function (next) {
-	            _this12.core.stop(id, next);
-	          });
-	        };
-	
-	        for (var _iterator7 = ids[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-	          _loop();
-	        }
-	      } catch (err) {
-	        _didIteratorError7 = true;
-	        _iteratorError7 = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion7 && _iterator7.return) {
-	            _iterator7.return();
-	          }
-	        } finally {
-	          if (_didIteratorError7) {
-	            throw _iteratorError7;
-	          }
-	        }
-	      }
-	
-	      _utils2.default.runParallel(tasks, done);
-	    }
-	  }, {
-	    key: 'show',
-	    value: function show() {
-	      this.domNode.style.display = "block";
-	      return this;
-	    }
-	  }, {
-	    key: 'hide',
-	    value: function hide() {
-	      this.domNode.style.display = "none";
-	      return this;
-	    }
-	  }]);
-
-	  return Component;
-	}();
-
-/***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15547,646 +14596,75 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.HyperModel = undefined;
+	exports.componentMetaData = componentMetaData;
+	exports.Component = Component;
+	exports.Service = Service;
+	exports.Module = Module;
+	exports.RootListener = RootListener;
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	var _decorators = __webpack_require__(15);
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	function componentMetaData() {
+	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	
-	var _mediator = __webpack_require__(4);
+	    var template = void 0,
+	        embedTemplate = false,
+	        registry = new Map(),
+	        autorun = false;
 	
-	var _jquery = __webpack_require__(7);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Based originally on jquery.pjax.js
-	// copyright chris wanstrath
-	// https://github.com/defunkt/jquery-pjax
-	
-	var defaults = _jquery2.default.extend(true, {}, _jquery2.default.ajaxSettings, {
-	    timeout: 120000,
-	    push: true,
-	    replace: false,
-	    type: "GET",
-	    dataType: "html",
-	    scrollTo: 0,
-	    maxCacheLength: 20,
-	    data: {}
-	});
-	
-	function parseURL(url) {
-	    var a;
-	    a = document.createElement("a");
-	    a.href = url;
-	    return a;
-	}
-	
-	// _pjax: true
-	
-	var events = {};
-	
-	var HyperModel = exports.HyperModel = function (_Mediator) {
-	    _inherits(HyperModel, _Mediator);
-	
-	    function HyperModel(options) {
-	        _classCallCheck(this, HyperModel);
-	
-	        // get dom ref
-	        // resource url
-	        // create ajax object
-	        // essentially the constructor binds to a resource
-	        // can return a JSON model, another reason for calling it 'Hyper'
-	        // check all events on itemprop, itemscope etc when in dom
-	
-	        // @_ref
-	        var _this = _possibleConstructorReturn(this, (HyperModel.__proto__ || Object.getPrototypeOf(HyperModel)).call(this));
-	
-	        options = options || {};
-	        _this._options = {}; //$.extend(true, {}, $.ajaxSettings, defaults, options)}
-	        _this._headers = {};
-	        var redirect = options.redirectOnError || false;
-	
-	        _this._hash = parseURL(options.url).hash;
-	        // @_options.data = {} unless options.data
-	        // @_options.data._pjax = "true"
-	        //this._timeoutTimer;
-	        _this._successCb = function () {};
-	
-	        // callbacks
-	        _this._options.beforeSend = function (xhr, settings) {
-	            // No timeout for non-GET requests
-	            // Its not safe to request the resource again with a fallback method.
-	            if (settings.type !== "GET") {
-	                settings.timeout = 0;
-	            }
-	
-	            xhr.setRequestHeader("X-PJAX", "true");
-	
-	            if (options.isMobile) {
-	                xhr.setRequestHeader("X-Mobile", "true");
-	            }
-	
-	            for (var field in _this._headers) {
-	                var value = _this._headers[field];
-	                xhr.setRequestHeader(field, value);
-	            }
-	
-	            // xhr.setRequestHeader "X-PJAX-Container", @_context.selector
-	
-	            if (!_this._fire("pjax:beforeSend", [xhr, settings])) {
-	                return false;
-	            }
-	
-	            if (settings.timeout > 0) {
-	                _this._timeoutTimer = setTimeout(function () {
-	                    if (_this._fire("pjax:timeout", [xhr, options])) {
-	                        return xhr.abort("timeout");
-	                    }
-	                }, settings.timeout);
-	
-	                // Clear timeout setting so jquerys internal timeout isn't invoked
-	                settings.timeout = 0;
-	            }
-	
-	            return _this._requestUrl = parseURL(settings.url).href;
-	        };
-	
-	        _this._options.complete = function (xhr, textStatus) {
-	            if (_this._timeoutTimer) {
-	                clearTimeout(_this._timeoutTimer);
-	            }
-	            _this._fire("pjax:complete", [xhr, textStatus, _this._options]);
-	            return _this._fire("pjax:end", [xhr, _this._options]);
-	        };
-	
-	        _this._options.success = function (data, status, xhr) {
-	            if (xhr.status !== 204 && data != null) {
-	                var container = _this._extractContainer(data, xhr, options);
-	
-	                // TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	                // If the new response is missing a body, hard load the page
-	                // unless container.contents
-	                // @_locationReplace container.url
-	                // return
-	
-	                // @_state =
-	                //   id: options.id or core.uniqueId()
-	                //   url: container.url
-	                //   title: container.title
-	                //   container: @_context.selector
-	                //   fragment: @_options.fragment
-	                //   timeout: @_options.timeout
-	
-	                // window.history.replaceState @_state, container.title, container.url  if options.push or options.replace
-	                // @navigate container.url, { replace: true }, @_state  if @_options.push or @_options.replace
-	
-	                // Clear out any focused controls before inserting new page contents.
-	
-	                // document.activeElement.blur()
-	                if (container.title) {
-	                    document.title = container.title;
-	                }
-	            }
-	
-	            // @_context.html container.contents
-	
-	            // FF bug: Won't autofocus fields that are inserted via JS.
-	            // This behavior is incorrect. So if theres no current focus, autofocus
-	            // the last field.
-	            //
-	            // http://www.w3.org/html/wg/drafts/html/master/forms.html
-	            // autofocusEl = @_context.find("input[autofocus], textarea[autofocus]").last()[0]
-	            // autofocusEl.focus()  if autofocusEl and document.activeElement isnt autofocusEl
-	
-	            // Scroll to top by default
-	            // $(window).scrollTop options.scrollTo if typeof options.scrollTo is "number"
-	
-	            // If the URL has a hash in it, make sure the browser
-	            // knows to navigate to the hash.
-	            // if @_hash isnt ""
-	
-	            // Avoid using simple hash set here. Will add another history
-	            // entry. Replace the url with replaceState and scroll to target
-	            // by hand.
-	            //
-	            //   window.location.hash = hash
-	            // url = core.parseURL(container.url)
-	            // url.hash = @_hash
-	            // @_state.url = url.href
-	
-	            // window.history.replaceState @_state, container.title, url.href
-	
-	            // @navigate url.href, { replace: true }, @_state
-	
-	            // target = $(url.hash)
-	
-	            // $(window).scrollTop target.offset().top  if target.length
-	
-	            // console.log data
-	            _this._fire("pjax:success", [container, status, xhr, _this._options]);
-	            return _this._successCb(container, status, xhr, _this._options);
-	        };
-	
-	        _this._options.error = function (xhr, textStatus, errorThrown) {
-	            var container = _this._extractContainer("", xhr, _this._options);
-	
-	            var status = xhr.status;
-	
-	            _this._errorCb(xhr, textStatus, errorThrown, _this._options);
-	            _this._fire("pjax:error", [xhr, textStatus, errorThrown, _this._options]);
-	            // reload page
-	            // handle this better
-	            if (status === 401) {
-	                return location.href = xhr.getResponseHeader("X-LOGIN-URL");
-	            } else if (redirect && (status === 0 || _this._options.type === "GET" && textStatus !== "abort")) {
-	                return _this._locationReplace(container.url);
-	            }
-	        };
-	        return _this;
+	    if (options.template != null) {
+	        if (typeof options.template === 'string') {
+	            template = options.template;
+	            embedTemplate = true;
+	        } else {
+	            template = options.template[0] || null;
+	            embedTemplate = options.template[1];
+	        }
+	    }
+	    if (options.registry != null) {
+	        registry = new Map(options.registry);
 	    }
 	
-	    _createClass(HyperModel, [{
-	        key: '_pjax',
-	        value: function _pjax(options) {
-	            options = _jquery2.default.extend(true, {}, options, this._options);
+	    if (options.autorun) {
+	        autorun = options.autorun;
+	    }
 	
-	            var xhr = this._xhr;
+	    return {
+	        template: template,
+	        embedTemplate: embedTemplate,
+	        registry: registry,
+	        autorun: autorun
+	    };
+	};
 	
-	            // stop current call if any
-	            if (xhr && xhr.readyState < 4) {
-	                xhr.onreadystatechange = function () {};
-	                xhr.abort();
-	            }
+	function Component() {
+	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	
-	            xhr = this._xhr = _jquery2.default.ajax(options);
+	    return (0, _decorators.makeClassDecorator)("Component", componentMetaData(options));
+	};
 	
-	            if (xhr.readyState > 0) {
-	                this._fire("pjax:start", [xhr, options]);
-	                this._fire("pjax:send", [xhr, options]);
-	            }
-	            return this._xhr;
-	        }
-	    }, {
-	        key: '_setCallbacks',
-	        value: function _setCallbacks(options) {
-	            this._successCb = options.success || function () {};
-	            this._completeCb = options.complete || function () {};
-	            this._errorCb = options.error || function () {};
+	function Service() {
+	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	
-	            // remove callbacks before we merge with global options
-	            if (options.success != null) {
-	                delete options.success;
-	            }
-	            if (options.error != null) {
-	                delete options.error;
-	            }
-	            if (options.complete != null) {
-	                return delete options.complete;
-	            }
-	        }
-	    }, {
-	        key: 'get',
-	        value: function get() {
-	            var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	            var verb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'GET';
+	    return (0, _decorators.makeClassDecorator)("Service", options);
+	};
 	
-	            if (options.url == null) {
-	                return;
-	            }
-	            this._setCallbacks(options);
-	            options.type = verb;
-	            return this._pjax(_jquery2.default.extend({}, defaults, options));
-	        }
-	    }, {
-	        key: 'put',
-	        value: function put(options) {
-	            if (options.url == null) {
-	                return;
-	            }
-	            this._setCallbacks(options);
-	            options.type = "PUT";
-	            return this._pjax(_jquery2.default.extend({}, defaults, options));
-	        }
-	    }, {
-	        key: 'post',
-	        value: function post(options) {
-	            if (options.url == null) {
-	                return;
-	            }
-	            this._setCallbacks(options);
-	            options.type = "POST";
-	            return this._pjax(_jquery2.default.extend({}, defaults, options));
-	        }
-	    }, {
-	        key: 'detele',
-	        value: function detele(form, options) {}
-	    }, {
-	        key: 'patch',
-	        value: function patch(form, options) {
-	            return this._handleSubmit(form, "PATCH", options);
-	        }
-	    }, {
-	        key: 'head',
-	        value: function head() {
-	            var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	function Module() {
+	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	
-	            return this.get(options, "HEAD");
-	        }
-	    }, {
-	        key: 'submit',
-	        value: function submit(form, options) {
-	            return this._handleSubmit(form, undefined, options);
-	        }
-	    }, {
-	        key: 'stop',
-	        value: function stop(form, options) {
-	            return this._xhr.abort();
-	        }
-	    }, {
-	        key: 'toJSON',
-	        value: function toJSON() {
-	            return {};
-	        }
-	    }, {
-	        key: 'setHeader',
-	        value: function setHeader(field, value) {
-	            return this._headers[field] = value;
-	        }
-	    }, {
-	        key: 'removeHeader',
-	        value: function removeHeader(field) {
-	            return delete this._headers[field];
-	        }
-	    }, {
-	        key: '_handleSubmit',
-	        value: function _handleSubmit(form, method) {
-	            var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+	    return (0, _decorators.makeClassDecorator)("Module", options);
+	};
 	
-	            form = form.tagName.toUpperCase() === "FORM" ? form : (0, _jquery2.default)(form).find("form").get(0);
-	            if ((typeof form === 'undefined' ? 'undefined' : _typeof(form)) !== 'object') {
-	                throw "$.pjax.submit requires a form element";
-	            }
-	
-	            var settings = {
-	                type: method || form.method.toUpperCase(),
-	                url: form.action,
-	                data: options.data || (0, _jquery2.default)(form).serializeArray(),
-	                // container: $(form).attr("data-pjax")
-	                target: form
-	            };
-	
-	            this._setCallbacks(options);
-	            return this._pjax(_jquery2.default.extend({}, defaults, settings, options));
-	        }
-	        // event.preventDefault()
-	
-	    }, {
-	        key: '_fire',
-	        value: function _fire(type, args) {
-	            return this.emit(type, args);
-	        }
-	    }, {
-	        key: '_locationReplace',
-	        value: function _locationReplace(url) {
-	            window.history.replaceState(null, "", "#");
-	            return window.location.replace(url);
-	        }
-	    }, {
-	        key: '_stripPjaxParam',
-	        value: function _stripPjaxParam(url) {
-	            return url.replace(/\?_pjax=[^&]+&?/, "?").replace(/_pjax=[^&]+&?/, "").replace(/[\?&]$/, "");
-	        }
-	    }, {
-	        key: 'findAll',
-	        value: function findAll(elems, selector) {
-	            return elems.filter(selector).add(elems.find(selector));
-	        }
-	    }, {
-	        key: 'parseHTML',
-	        value: function parseHTML(html) {
-	            return _jquery2.default.parseHTML(html, document, true);
-	        }
-	    }, {
-	        key: '$html',
-	        value: function $html(html) {
-	            return (0, _jquery2.default)(this.parseHTML(html));
-	        }
-	    }, {
-	        key: '_extractContainer',
-	        value: function _extractContainer(data, xhr, options) {
-	            var obj = {};
-	            var isPjaxSnippet = false;
-	            // Prefer X-PJAX-URL header if it was set, otherwise fallback to
-	            // using the original requested url.
-	            obj.url = this._stripPjaxParam(xhr.getResponseHeader("X-PJAX-URL") || this._requestUrl);
-	
-	            if (/<div class="pjax/i.test(data)) {
-	                isPjaxSnippet = true;
-	            }
-	
-	            if (/<html/i.test(data)) {
-	                var $head = (0, _jquery2.default)(this.parseHTML(data.match(/<head[^>]*>([\s\S.]*)<\/head>/i)[0]));
-	                var $body = (0, _jquery2.default)(this.parseHTML(data.match(/<body[^>]*>([\s\S.]*)<\/body>/i)[0]));
-	            } else {
-	                var $body;
-	                var $head = $body = (0, _jquery2.default)(this.parseHTML(data));
-	            }
-	
-	            // $body = data
-	
-	
-	            // If response data is empty, return fast
-	            if ($body.length === 0) {
-	                return obj;
-	            }
-	
-	            if (options.fragment && !isPjaxSnippet) {
-	
-	                // If they specified a fragment, look for it in the response
-	                // and pull it out.
-	                if (options.fragment === "body") {
-	                    var $fragment = $body;
-	                } else {
-	                    var $fragment = this.findAll($body, options.fragment).first();
-	                }
-	
-	                if ($fragment.length) {
-	                    obj.contents = $fragment.contents();
-	
-	                    // If there's no title, look for data-title and title attributes
-	                    // on the fragment
-	                    if (!obj.title) {
-	                        obj.title = $fragment.attr("title") || $fragment.data("title");
-	                    }
-	                }
-	            } else {
-	                obj.contents = $body;
-	            }
-	
-	            obj.title = ''; //$.trim(obj.title)  if obj.title
-	            if (this._hash !== "") {
-	                obj.hash = this._hash;
-	            }
-	            obj.html = data;
-	            return obj;
-	        }
-	    }]);
-	
-	    return HyperModel;
-	}(_mediator.Mediator);
+	function RootListener(events, selector) {
+	    return (0, _decorators.makePropDecorator)("RootListener", [events, selector]);
+	}
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.StateMachine = exports.defaultRoutes = exports.defaultRouteOptions = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-	exports.Router = Router;
-	
-	var _router3 = __webpack_require__(22);
-	
-	var _router4 = _interopRequireDefault(_router3);
-	
-	var _router5LinkInterceptor = __webpack_require__(32);
-	
-	var _router5LinkInterceptor2 = _interopRequireDefault(_router5LinkInterceptor);
-	
-	var _router5History = __webpack_require__(33);
-	
-	var _router5History2 = _interopRequireDefault(_router5History);
-	
-	var _router5Listeners = __webpack_require__(35);
-	
-	var _router5Listeners2 = _interopRequireDefault(_router5Listeners);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var defaultRouteOptions = exports.defaultRouteOptions = {
-	  internal: false,
-	  internalStateHistory: true,
-	  useHash: true,
-	  defaultRoute: 'home',
-	  defaultParams: { section: '' },
-	  base: '',
-	  trailingSlash: false,
-	  autoCleanUp: true,
-	  strictQueryParams: false
-	};
-	
-	var defaultRoutes = exports.defaultRoutes = [{ name: 'home', path: '/' }, { name: 'section', path: '/:section' }];
-	
-	function Router(routes) {
-	  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	
-	
-	  if (!(routes instanceof Array)) {
-	    if (routes != null) {
-	      options = Object.assign({}, routes);
-	    }
-	    routes = defaultRoutes;
-	  }
-	  var d = Object.assign({}, defaultRouteOptions);
-	  var mergedOptions = Object.assign(d, options);
-	
-	  return function (_Class) {
-	    return function (_Class2) {
-	      _inherits(RouteredComponent, _Class2);
-	
-	      function RouteredComponent() {
-	        _classCallCheck(this, RouteredComponent);
-	
-	        var _this = _possibleConstructorReturn(this, (RouteredComponent.__proto__ || Object.getPrototypeOf(RouteredComponent)).call(this));
-	
-	        _this._setupRouter();
-	        return _this;
-	      }
-	
-	      // init(options, done) {
-	      //   super.init(options, () => {
-	      //     this._startRouter();
-	      //     done();
-	      //   });
-	      // }
-	
-	      _createClass(RouteredComponent, [{
-	        key: '_startRouter',
-	        value: function _startRouter() {
-	          var _this2 = this;
-	
-	          this.router.start(function (err, state) {
-	            if (err) console.error('error ', err);
-	            var loadPath = state.path === "/" ? "index" : state.path;
-	
-	            if (typeof _this2.routerStarted === 'function') {
-	              _this2.routerStarted(err, state, _this2.router);
-	            }
-	            console.log('START_state ', state);
-	          });
-	        }
-	      }, {
-	        key: '_bind',
-	        value: function _bind() {
-	          var _this3 = this;
-	
-	          _get(RouteredComponent.prototype.__proto__ || Object.getPrototypeOf(RouteredComponent.prototype), '_bind', this).call(this);
-	          if (mergedOptions.internal) {
-	            this.listenToRoot("click", "a", function (element, event) {
-	              event.stopPropagation();
-	              event.preventDefault();
-	              var hash = element.hash.replace('#/', '');
-	              //console.log(hash);
-	              _this3.router.navigate('section', { section: hash }, { reload: true });
-	            });
-	          }
-	        }
-	      }, {
-	        key: '_setRootAttributes',
-	        value: function _setRootAttributes() {
-	          _get(RouteredComponent.prototype.__proto__ || Object.getPrototypeOf(RouteredComponent.prototype), '_setRootAttributes', this).call(this);
-	          this.domNode.setAttribute('data-state', '/');
-	        }
-	      }, {
-	        key: '_removeRootAttributes',
-	        value: function _removeRootAttributes() {
-	          _get(RouteredComponent.prototype.__proto__ || Object.getPrototypeOf(RouteredComponent.prototype), '_removeRootAttributes', this).call(this);
-	          this.domNode.removeAttribute('data-state');
-	        }
-	      }, {
-	        key: 'setState',
-	        value: function setState(state) {
-	          this.domNode.setAttribute('data-state', state.path);
-	          if (mergedOptions.internalStateHistory) {
-	            this.history.push(state);
-	          }
-	        }
-	      }, {
-	        key: 'navigate',
-	        value: function navigate() {
-	          var _router;
-	
-	          (_router = this.router).navigate.apply(_router, arguments);
-	        }
-	      }, {
-	        key: 'addRoute',
-	        value: function addRoute() {
-	          var _router2;
-	
-	          (_router2 = this.router).add.apply(_router2, arguments);
-	        }
-	      }, {
-	        key: 'destroy',
-	        value: function destroy(done) {
-	          this.router.stop();
-	          this.routerStopped(this.router);
-	          done();
-	        }
-	      }, {
-	        key: '_setupRouter',
-	        value: function _setupRouter() {
-	          var _this4 = this;
-	
-	          this.history = [];
-	          this.router = new _router4.default(routes, mergedOptions).usePlugin((0, _router3.loggerPlugin)()).usePlugin((0, _router5Listeners2.default)());
-	
-	          if (!mergedOptions.useHash) {
-	            this.router.usePlugin((0, _router5LinkInterceptor2.default)({ reload: true }, function (err) {
-	              if (err) {
-	                if (err.code === 'SAME_STATES') {
-	                  // same route, maybe scroll page to the top?
-	                } else {
-	                  console.error(err);
-	                }
-	              }
-	            }));
-	          }
-	
-	          if (!mergedOptions.internal) {
-	            this.router.usePlugin((0, _router5History2.default)({ forceDeactivate: false }));
-	          }
-	
-	          console.log(this.router);
-	
-	          this.router.addListener(function (toState, fromState) {
-	            var page = toState.params.section || 'reports';
-	            _this4.setState(toState);
-	            if (typeof _this4.onRouterTransition === 'function') {
-	              _this4.onRouterTransition(toState, fromState);
-	            }
-	          });
-	
-	          if (typeof this.routerInitialized === 'function') {
-	            this.routerInitialized(this.router);
-	          }
-	        }
-	      }]);
-	
-	      return RouteredComponent;
-	    }(_Class);
-	  };
-	}
-	
-	exports.StateMachine = Router;
+	module.exports = __webpack_require__( 22 );
+
 
 /***/ }),
 /* 22 */
@@ -16195,2371 +14673,10 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.transitionPath = exports.errCodes = exports.loggerPlugin = exports.RouteNode = exports.Router5 = undefined;
-	
-	var _router = __webpack_require__(23);
-	
-	var _router2 = _interopRequireDefault(_router);
-	
-	var _routeNode = __webpack_require__(24);
-	
-	var _routeNode2 = _interopRequireDefault(_routeNode);
-	
-	var _logger = __webpack_require__(31);
-	
-	var _logger2 = _interopRequireDefault(_logger);
-	
-	var _router3 = __webpack_require__(28);
-	
-	var _router4 = _interopRequireDefault(_router3);
-	
-	var _constants = __webpack_require__(30);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _router2.default;
-	exports.Router5 = _router2.default;
-	exports.RouteNode = _routeNode2.default;
-	exports.loggerPlugin = _logger2.default;
-	exports.errCodes = _constants2.default;
-	exports.transitionPath = _router4.default;
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _routeNode = __webpack_require__(24);
-	
-	var _routeNode2 = _interopRequireDefault(_routeNode);
-	
-	var _transition2 = __webpack_require__(27);
-	
-	var _transition3 = _interopRequireDefault(_transition2);
-	
-	var _constants = __webpack_require__(30);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var noop = function noop() {};
-	var ifNot = function ifNot(condition, error) {
-	    if (!condition) throw new Error(error);
-	};
-	
-	var makeState = function makeState(name, params, path, _meta) {
-	    var state = {};
-	    var setProp = function setProp(key, value) {
-	        return Object.defineProperty(state, key, { value: value, enumerable: true });
-	    };
-	    setProp('name', name);
-	    setProp('params', params);
-	    setProp('path', path);
-	    if (_meta) setProp('_meta', _meta);
-	    return state;
-	};
-	
-	var addCanActivate = function addCanActivate(router) {
-	    return function (route) {
-	        if (route.canActivate) router.canActivate(route.name, route.canActivate);
-	    };
-	};
-	
-	var toFunction = function toFunction(val) {
-	    return typeof val === 'function' ? val : function () {
-	        return val;
-	    };
-	};
-	
-	/**
-	 * Create a new Router5 instance
-	 * @class
-	 * @param {RouteNode[]|Object[]|RouteNode|Object} routes The router routes
-	 * @param {Object} [opts={}] The router options: useHash, defaultRoute and defaultParams can be specified.
-	 * @return {Router5} The router instance
-	 */
-	
-	var Router5 = (function () {
-	    function Router5(routes) {
-	        var _this = this;
-	
-	        var opts = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	        _classCallCheck(this, Router5);
-	
-	        this.started = false;
-	        this.mware = null;
-	        this._cbs = {};
-	        this._canAct = {};
-	        this._canDeact = {};
-	        this.lastStateAttempt = null;
-	        this.lastKnownState = null;
-	        this.rootNode = routes instanceof _routeNode2.default ? routes : new _routeNode2.default('', '', routes, addCanActivate(this));
-	        this.options = {
-	            useHash: false,
-	            hashPrefix: '',
-	            base: false,
-	            trailingSlash: 0,
-	            autoCleanUp: true,
-	            strictQueryParams: true
-	        };
-	        Object.keys(opts).forEach(function (opt) {
-	            return _this.options[opt] = opts[opt];
-	        });
-	        this.registeredPlugins = {};
-	        this._extraArgs = [];
-	    }
-	
-	    /**
-	     * Set an option value
-	     * @param  {String} opt The option to set
-	     * @param  {*}      val The option value
-	     * @return {Router5}    The Router5 instance
-	     */
-	
-	    _createClass(Router5, [{
-	        key: 'setOption',
-	        value: function setOption(opt, val) {
-	            this.options[opt] = val;
-	            return this;
-	        }
-	
-	        /**
-	         * Set additional arguments used in lifecycle functions.
-	         * Additional arguments are used in canActivate, canDeactivate and middleware functions in first positions (before `toState`).
-	         * @param  {Array} args The additional arguments
-	         */
-	
-	    }, {
-	        key: 'setAdditionalArgs',
-	        value: function setAdditionalArgs(args) {
-	            this._extraArgs = Array.isArray(args) ? args : [args];
-	            return this;
-	        }
-	
-	        /**
-	         * Return additional arguments used in lifecycle functions
-	         */
-	
-	    }, {
-	        key: 'getAdditionalArgs',
-	        value: function getAdditionalArgs() {
-	            return this._extraArgs;
-	        }
-	
-	        /**
-	         * Add route(s)
-	         * @param  {RouteNode[]|Object[]|RouteNode|Object} routes Route(s) to add
-	         * @return {Router5}  The Router5 instance
-	         */
-	
-	    }, {
-	        key: 'add',
-	        value: function add(routes) {
-	            this.rootNode.add(routes, addCanActivate(this));
-	            return this;
-	        }
-	
-	        /**
-	         * Add a route to the router.
-	         * @param {String}   name          The route name
-	         * @param {String}   path          The route path
-	         * @param {Function} [canActivate] A function to determine if the route can be activated.
-	         *                                 It will be invoked during a transition with `toState`
-	         *                                 and `fromState` parameters.
-	         * @return {Router5}             The Router5 instance
-	         */
-	
-	    }, {
-	        key: 'addNode',
-	        value: function addNode(name, path, canActivate) {
-	            this.rootNode.addNode(name, path);
-	            if (canActivate) this._canAct[name] = canActivate;
-	            return this;
-	        }
-	    }, {
-	        key: 'usePlugin',
-	        value: function usePlugin(pluginFactory) {
-	            var _this2 = this;
-	
-	            ifNot(typeof pluginFactory === 'function', '[router5.usePlugin] Plugins are now functions, see http://router5.github.io/docs/plugins.html.');
-	            var plugin = pluginFactory(this);
-	            var name = plugin.name || pluginFactory.name;
-	            ifNot(name, '[router5.usePlugin] Tried to register an unamed plugin.');
-	
-	            var pluginMethods = ['onStart', 'onStop', 'onTransitionSuccess', 'onTransitionStart', 'onTransitionError', 'onTransitionCancel'];
-	            var defined = pluginMethods.some(function (method) {
-	                return plugin[method] !== undefined;
-	            });
-	
-	            ifNot(defined, '[router5.usePlugin] plugin ' + plugin.name + ' has none of the expected methods implemented');
-	            this.registeredPlugins[name] = plugin;
-	
-	            pluginMethods.forEach(function (method) {
-	                if (plugin[method]) {
-	                    _this2._addListener(method.toLowerCase().replace(/^on/, '$$').replace(/transition/, '$$'), plugin[method]);
-	                }
-	            });
-	
-	            return this;
-	        }
-	
-	        /**
-	         * Set a transition middleware function `.useMiddleware(fn1, fn2, fn3, ...)`
-	         * @param {Function} fn The middleware function
-	         */
-	
-	    }, {
-	        key: 'useMiddleware',
-	        value: function useMiddleware() {
-	            var _this3 = this;
-	
-	            this.mware = Array.prototype.slice.call(arguments).map(function (m) {
-	                var middlewareFn = m(_this3);
-	                ifNot(typeof middlewareFn === 'function', '[router5.usePlugin] Middleware have changed, see http://router5.github.io/docs/middleware.html.');
-	                return middlewareFn;
-	            });
-	            return this;
-	        }
-	
-	        /**
-	         * Start the router
-	         * @param  {String|Object} [startPathOrState] An optional start path or state
-	         *                                            (use it for universal applications)
-	         * @param  {Function}      [done]             An optional callback which will be called
-	         *                                            when starting is done
-	         * @return {Router5}  The router instance
-	         */
-	
-	    }, {
-	        key: 'start',
-	        value: function start() {
-	            var _this4 = this;
-	
-	            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	                args[_key] = arguments[_key];
-	            }
-	
-	            var lastArg = args.slice(-1)[0];
-	            var done = lastArg instanceof Function ? lastArg : noop;
-	            var startPath = undefined,
-	                startState = undefined;
-	
-	            if (this.started) {
-	                done({ code: _constants2.default.ROUTER_ALREADY_STARTED });
-	                return this;
-	            }
-	
-	            this.started = true;
-	            this._invokeListeners('$start');
-	            var opts = this.options;
-	
-	            if (args.length > 0) {
-	                if (typeof args[0] === 'string') startPath = args[0];
-	                if (_typeof(args[0]) === 'object') startState = args[0];
-	            }
-	
-	            // callback
-	            var cb = function cb(err, state) {
-	                var invokeErrCb = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
-	
-	                if (!err) _this4._invokeListeners('$$success', state, null, { replace: true });
-	                if (err && invokeErrCb) _this4._invokeListeners('$$error', state, null, err);
-	                done(err, state);
-	            };
-	
-	            // Get start path
-	            if (startPath === undefined && startState === undefined && this.getLocation) {
-	                startPath = this.getLocation();
-	            }
-	
-	            if (!startState) {
-	                (function () {
-	                    // If no supplied start state, get start state
-	                    startState = startPath === undefined ? null : _this4.matchPath(startPath);
-	                    // Navigate to default function
-	                    var navigateToDefault = function navigateToDefault() {
-	                        return _this4.navigate(opts.defaultRoute, opts.defaultParams, { replace: true }, done);
-	                    };
-	                    var redirect = function redirect(route) {
-	                        return _this4.navigate(route.name, route.params, { replace: true, reload: true }, done);
-	                    };
-	                    // If matched start path
-	                    if (startState) {
-	                        _this4.lastStateAttempt = startState;
-	                        _this4._transition(_this4.lastStateAttempt, _this4.lastKnownState, {}, function (err, state) {
-	                            if (!err) cb(null, state);else if (err.redirect) redirect(err.redirect);else if (opts.defaultRoute) navigateToDefault();else cb(err, null, false);
-	                        });
-	                    } else if (opts.defaultRoute) {
-	                        // If default, navigate to default
-	                        navigateToDefault();
-	                    } else {
-	                        // No start match, no default => do nothing
-	                        cb({ code: _constants2.default.ROUTE_NOT_FOUND, path: startPath }, null);
-	                    }
-	                })();
-	            } else {
-	                // Initialise router with provided start state
-	                this.lastKnownState = startState;
-	                done(null, startState);
-	            }
-	
-	            return this;
-	        }
-	
-	        /**
-	         * Stop the router
-	         * @return {Router5} The router instance
-	         */
-	
-	    }, {
-	        key: 'stop',
-	        value: function stop() {
-	            if (!this.started) return this;
-	            this.lastKnownState = null;
-	            this.lastStateAttempt = null;
-	            this.started = false;
-	            this._invokeListeners('$stop');
-	
-	            return this;
-	        }
-	
-	        /**
-	         * Return the current state object
-	         * @return {Object} The current state
-	         */
-	
-	    }, {
-	        key: 'getState',
-	        value: function getState() {
-	            return this.lastKnownState;
-	        }
-	
-	        /**
-	         * Whether or not the given route name with specified params is active.
-	         * @param  {String}   name             The route name
-	         * @param  {Object}   [params={}]      The route parameters
-	         * @param  {Boolean}  [strictEquality=false] If set to false (default), isActive will return true
-	         *                                           if the provided route name and params are descendants
-	         *                                           of the active state.
-	         * @param  {Boolean}   [ignoreQueryParams=true] Whether or not to ignore URL query parameters when
-	         *                                              comparing the two states together.
-	         *                                              query parameters when comparing two states together.
-	         * @return {Boolean}                    Whether nor not the route is active
-	         */
-	
-	    }, {
-	        key: 'isActive',
-	        value: function isActive(name) {
-	            var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	            var strictEquality = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-	            var ignoreQueryParams = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
-	
-	            var activeState = this.getState();
-	
-	            if (!activeState) return false;
-	
-	            if (strictEquality || activeState.name === name) {
-	                return this.areStatesEqual(makeState(name, params), activeState, ignoreQueryParams);
-	            }
-	
-	            return this.areStatesDescendants(makeState(name, params), activeState);
-	        }
-	
-	        /**
-	         * @private
-	         */
-	
-	    }, {
-	        key: 'areStatesEqual',
-	        value: function areStatesEqual(state1, state2) {
-	            var _this5 = this;
-	
-	            var ignoreQueryParams = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
-	
-	            if (state1.name !== state2.name) return false;
-	
-	            var getUrlParams = function getUrlParams(name) {
-	                return _this5.rootNode.getSegmentsByName(name).map(function (segment) {
-	                    return segment.parser[ignoreQueryParams ? 'urlParams' : 'params'];
-	                }).reduce(function (params, p) {
-	                    return params.concat(p);
-	                }, []);
-	            };
-	
-	            var state1Params = getUrlParams(state1.name);
-	            var state2Params = getUrlParams(state2.name);
-	
-	            return state1Params.length === state2Params.length && state1Params.every(function (p) {
-	                return state1.params[p] === state2.params[p];
-	            });
-	        }
-	
-	        /**
-	         * Whether two states are descendants
-	         * @param  {Object} parentState The parent state
-	         * @param  {Object} childState  The child state
-	         * @return {Boolean}            Whether the two provided states are related
-	         */
-	
-	    }, {
-	        key: 'areStatesDescendants',
-	        value: function areStatesDescendants(parentState, childState) {
-	            var regex = new RegExp('^' + parentState.name + '\\.(.*)$');
-	            if (!regex.test(childState.name)) return false;
-	            // If child state name extends parent state name, and all parent state params
-	            // are in child state params.
-	            return Object.keys(parentState.params).every(function (p) {
-	                return parentState.params[p] === childState.params[p];
-	            });
-	        }
-	
-	        /**
-	         * @private
-	         */
-	
-	    }, {
-	        key: '_invokeListeners',
-	        value: function _invokeListeners(name) {
-	            for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-	                args[_key2 - 1] = arguments[_key2];
-	            }
-	
-	            (this._cbs[name] || []).forEach(function (cb) {
-	                return cb.apply(undefined, args);
-	            });
-	        }
-	
-	        /**
-	         * @private
-	         */
-	
-	    }, {
-	        key: '_addListener',
-	        value: function _addListener(name, cb) {
-	            this._cbs[name] = (this._cbs[name] || []).concat(cb);
-	            return this;
-	        }
-	
-	        /**
-	         * A function to determine whether or not a segment can be deactivated.
-	         * @param  {String}  name          The route segment full name
-	         * @param  {Boolean} canDeactivate Whether the segment can be deactivated or not
-	         * @return {[type]}
-	         */
-	
-	    }, {
-	        key: 'canDeactivate',
-	        value: function canDeactivate(name, _canDeactivate) {
-	            this._canDeact[name] = toFunction(_canDeactivate);
-	            return this;
-	        }
-	
-	        /**
-	         * A function to determine whether or not a segment can be activated.
-	         * @param  {String}   name        The route name to register the canActivate method for
-	         * @param  {Function} canActivate The canActivate function. It should return `true`, `false`
-	         *                                or a promise
-	         * @return {Router5}  The router instance
-	         */
-	
-	    }, {
-	        key: 'canActivate',
-	        value: function canActivate(name, _canActivate) {
-	            this._canAct[name] = toFunction(_canActivate);
-	            return this;
-	        }
-	
-	        /**
-	         * Generates an URL from a route name and route params.
-	         * The generated URL will be prefixed by hash if useHash is set to true
-	         * @param  {String} route  The route name
-	         * @param  {Object} params The route params (key-value pairs)
-	         * @return {String}        The built URL
-	         */
-	
-	    }, {
-	        key: 'buildUrl',
-	        value: function buildUrl(route, params) {
-	            return this._buildUrl(this.buildPath(route, params));
-	        }
-	
-	        /**
-	         * @private
-	         */
-	
-	    }, {
-	        key: '_buildUrl',
-	        value: function _buildUrl(path) {
-	            return (this.options.base || '') + (this.options.useHash ? '#' + this.options.hashPrefix : '') + path;
-	        }
-	
-	        /**
-	         * Build a path from a route name and route params
-	         * The generated URL will be prefixed by hash if useHash is set to true
-	         * @param  {String} route  The route name
-	         * @param  {Object} params The route params (key-value pairs)
-	         * @return {String}        The built Path
-	         */
-	
-	    }, {
-	        key: 'buildPath',
-	        value: function buildPath(route, params) {
-	            return this.rootNode.buildPath(route, params);
-	        }
-	
-	        /**
-	         * Build a state object from a route name and route params
-	         * @param  {String} route  The route name
-	         * @param  {Object} params The route params (key-value pairs)
-	         * @return {String}        The built Path
-	         */
-	
-	    }, {
-	        key: 'buildState',
-	        value: function buildState(route, params) {
-	            return this.rootNode.buildState(route, params);
-	        }
-	
-	        /**
-	         * Match a path against the route tree.
-	         * @param  {String} path   The path to match
-	         * @return {Object}        The matched state object (null if no match)
-	         */
-	
-	    }, {
-	        key: 'matchPath',
-	        value: function matchPath(path) {
-	            var _options = this.options;
-	            var trailingSlash = _options.trailingSlash;
-	            var strictQueryParams = _options.strictQueryParams;
-	
-	            var match = this.rootNode.matchPath(path, { trailingSlash: trailingSlash, strictQueryParams: strictQueryParams });
-	            return match ? makeState(match.name, match.params, path, match._meta) : null;
-	        }
-	
-	        /**
-	         * Parse / extract a path from an url
-	         * @param  {String} url The URL
-	         * @return {String}     The extracted path
-	         */
-	
-	    }, {
-	        key: 'urlToPath',
-	        value: function urlToPath(url) {
-	            var match = url.match(/^(?:http|https)\:\/\/(?:[0-9a-z_\-\.\:]+?)(?=\/)(.*)$/);
-	            var path = match ? match[1] : url;
-	
-	            var pathParts = path.match(/^(.+?)(#.+?)?(\?.+)?$/);
-	
-	            if (!pathParts) throw new Error('[router5] Could not parse url ' + url);
-	
-	            var pathname = pathParts[1];
-	            var hash = pathParts[2] || '';
-	            var search = pathParts[3] || '';
-	            var opts = this.options;
-	
-	            return (opts.useHash ? hash.replace(new RegExp('^#' + opts.hashPrefix), '') : opts.base ? pathname.replace(new RegExp('^' + opts.base), '') : pathname) + search;
-	        }
-	
-	        /**
-	         * Parse path from an url and match it against the route tree.
-	         * @param  {String} url    The URL to match
-	         * @return {Object}        The matched state object (null if no match)
-	         */
-	
-	    }, {
-	        key: 'matchUrl',
-	        value: function matchUrl(url) {
-	            return this.matchPath(this.urlToPath(url));
-	        }
-	
-	        /**
-	         * @private
-	         */
-	
-	    }, {
-	        key: '_transition',
-	        value: function _transition(toState, fromState) {
-	            var _this6 = this;
-	
-	            var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-	            var done = arguments.length <= 3 || arguments[3] === undefined ? noop : arguments[3];
-	
-	            // Cancel current transition
-	            this.cancel();
-	            this._invokeListeners('$$start', toState, fromState);
-	
-	            var tr = (0, _transition3.default)(this, toState, fromState, options, function (err, state) {
-	                state = state || toState;
-	                _this6._tr = null;
-	
-	                if (err) {
-	                    if (err.code === _constants2.default.TRANSITION_CANCELLED) _this6._invokeListeners('$$cancel', toState, fromState);else _this6._invokeListeners('$$error', toState, fromState, err);
-	
-	                    done(err);
-	                    return;
-	                }
-	
-	                _this6.lastKnownState = state; // toState or modified state?
-	
-	                done(null, state);
-	            });
-	
-	            this._tr = tr;
-	            return function () {
-	                return !tr || tr();
-	            };
-	        }
-	
-	        /**
-	         * Undocumented for now
-	         * @private
-	         */
-	
-	    }, {
-	        key: 'cancel',
-	        value: function cancel() {
-	            if (this._tr) this._tr();
-	        }
-	
-	        /**
-	         * Navigate to a specific route
-	         * @param  {String}   name        The route name
-	         * @param  {Object}   [params={}] The route params
-	         * @param  {Object}   [opts={}]   The route options (replace, reload)
-	         * @param  {Function} done        A optional callback(err) to call when transition has been performed
-	         *                                either successfully or unsuccessfully.
-	         * @return {Function}             A cancellation function
-	         */
-	
-	    }, {
-	        key: 'navigate',
-	        value: function navigate(name) {
-	            var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	            var _this7 = this;
-	
-	            var opts = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-	            var done = arguments.length <= 3 || arguments[3] === undefined ? noop : arguments[3];
-	
-	            if (!this.started) {
-	                done({ code: _constants2.default.ROUTER_NOT_STARTED });
-	                return;
-	            }
-	
-	            var toState = this.buildState(name, params);
-	
-	            if (!toState) {
-	                var err = { code: _constants2.default.ROUTE_NOT_FOUND };
-	                done(err);
-	                this._invokeListeners('$$error', null, this.lastKnownState, err);
-	                return;
-	            }
-	
-	            toState.path = this.buildPath(name, params);
-	            this.lastStateAttempt = toState;
-	            var sameStates = this.lastKnownState ? this.areStatesEqual(this.lastKnownState, this.lastStateAttempt, false) : false;
-	
-	            // Do not proceed further if states are the same and no reload
-	            // (no desactivation and no callbacks)
-	            if (sameStates && !opts.reload) {
-	                var err = { code: _constants2.default.SAME_STATES };
-	                done(err);
-	                this._invokeListeners('$$error', toState, this.lastKnownState, err);
-	                return;
-	            }
-	
-	            var fromState = sameStates ? null : this.lastKnownState;
-	
-	            // Transition and amend history
-	            return this._transition(toState, sameStates ? null : this.lastKnownState, opts, function (err, state) {
-	                if (err) {
-	                    if (err.redirect) _this7.navigate(err.redirect.name, err.redirect.params, { reload: true }, done);else done(err);
-	                    return;
-	                }
-	
-	                _this7._invokeListeners('$$success', state, fromState, opts);
-	                done(null, state);
-	            });
-	        }
-	    }]);
-	
-	    return Router5;
-	})();
-	
-	exports.default = Router5;
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _pathParser = __webpack_require__(25);
-	
-	var _pathParser2 = _interopRequireDefault(_pathParser);
-	
-	var _searchParams = __webpack_require__(26);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var noop = function noop() {};
-	
-	var RouteNode = function () {
-	    function RouteNode() {
-	        var name = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-	        var path = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-	        var childRoutes = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
-	        var cb = arguments[3];
-	
-	        _classCallCheck(this, RouteNode);
-	
-	        this.name = name;
-	        this.path = path;
-	        this.parser = path ? new _pathParser2.default(path) : null;
-	        this.children = [];
-	
-	        this.add(childRoutes, cb);
-	
-	        return this;
-	    }
-	
-	    _createClass(RouteNode, [{
-	        key: 'setPath',
-	        value: function setPath() {
-	            var path = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-	
-	            this.path = path;
-	            this.parser = path ? new _pathParser2.default(path) : null;
-	        }
-	    }, {
-	        key: 'add',
-	        value: function add(route) {
-	            var _this = this;
-	
-	            var cb = arguments.length <= 1 || arguments[1] === undefined ? noop : arguments[1];
-	
-	            var originalRoute = void 0;
-	            if (route === undefined || route === null) return;
-	
-	            if (route instanceof Array) {
-	                route.forEach(function (r) {
-	                    return _this.add(r, cb);
-	                });
-	                return;
-	            }
-	
-	            if (!(route instanceof RouteNode) && !(route instanceof Object)) {
-	                throw new Error('RouteNode.add() expects routes to be an Object or an instance of RouteNode.');
-	            }
-	            if (route instanceof Object) {
-	                if (!route.name || !route.path) {
-	                    throw new Error('RouteNode.add() expects routes to have a name and a path defined.');
-	                }
-	                originalRoute = route;
-	                route = new RouteNode(route.name, route.path, route.children, cb);
-	            }
-	
-	            var names = route.name.split('.');
-	
-	            if (names.length === 1) {
-	                // Check duplicated routes
-	                if (this.children.map(function (child) {
-	                    return child.name;
-	                }).indexOf(route.name) !== -1) {
-	                    throw new Error('Alias "' + route.name + '" is already defined in route node');
-	                }
-	
-	                // Check duplicated paths
-	                if (this.children.map(function (child) {
-	                    return child.path;
-	                }).indexOf(route.path) !== -1) {
-	                    throw new Error('Path "' + route.path + '" is already defined in route node');
-	                }
-	
-	                this.children.push(route);
-	                // Push greedy spats to the bottom of the pile
-	                this.children.sort(function (left, right) {
-	                    var leftPath = left.path.split('?')[0].replace(/(.+)\/$/, '$1');
-	                    var rightPath = right.path.split('?')[0].replace(/(.+)\/$/, '$1');
-	                    // '/' last
-	                    if (leftPath === '/') return 1;
-	                    if (rightPath === '/') return -1;
-	                    // Spat params last
-	                    if (left.parser.hasSpatParam) return 1;
-	                    if (right.parser.hasSpatParam) return -1;
-	                    // No spat, number of segments (less segments last)
-	                    var leftSegments = (leftPath.match(/\//g) || []).length;
-	                    var rightSegments = (rightPath.match(/\//g) || []).length;
-	                    if (leftSegments < rightSegments) return 1;
-	                    if (leftSegments > rightSegments) return -1;
-	                    // Same number of segments, number of URL params ascending
-	                    var leftParamsCount = left.parser.urlParams.length;
-	                    var rightParamsCount = right.parser.urlParams.length;
-	                    if (leftParamsCount < rightParamsCount) return -1;
-	                    if (leftParamsCount > rightParamsCount) return 1;
-	                    // Same number of segments and params, last segment length descending
-	                    var leftParamLength = (leftPath.split('/').slice(-1)[0] || '').length;
-	                    var rightParamLength = (rightPath.split('/').slice(-1)[0] || '').length;
-	                    if (leftParamLength < rightParamLength) return 1;
-	                    if (leftParamLength > rightParamLength) return -1;
-	                    // Same last segment length, preserve definition order
-	                    return 0;
-	                });
-	            } else {
-	                // Locate parent node
-	                var segments = this.getSegmentsByName(names.slice(0, -1).join('.'));
-	                if (segments) {
-	                    segments[segments.length - 1].add(new RouteNode(names[names.length - 1], route.path, route.children));
-	                } else {
-	                    throw new Error('Could not add route named \'' + route.name + '\', parent is missing.');
-	                }
-	            }
-	
-	            if (originalRoute) cb(originalRoute);
-	
-	            return this;
-	        }
-	    }, {
-	        key: 'addNode',
-	        value: function addNode(name, params) {
-	            this.add(new RouteNode(name, params));
-	            return this;
-	        }
-	    }, {
-	        key: 'getSegmentsByName',
-	        value: function getSegmentsByName(routeName) {
-	            var findSegmentByName = function findSegmentByName(name, routes) {
-	                var filteredRoutes = routes.filter(function (r) {
-	                    return r.name === name;
-	                });
-	                return filteredRoutes.length ? filteredRoutes[0] : undefined;
-	            };
-	            var segments = [];
-	            var routes = this.parser ? [this] : this.children;
-	            var names = (this.parser ? [''] : []).concat(routeName.split('.'));
-	
-	            var matched = names.every(function (name) {
-	                var segment = findSegmentByName(name, routes);
-	                if (segment) {
-	                    routes = segment.children;
-	                    segments.push(segment);
-	                    return true;
-	                }
-	                return false;
-	            });
-	
-	            return matched ? segments : null;
-	        }
-	    }, {
-	        key: 'getSegmentsMatchingPath',
-	        value: function getSegmentsMatchingPath(path, options) {
-	            var trailingSlash = options.trailingSlash;
-	            var strictQueryParams = options.strictQueryParams;
-	
-	            var matchChildren = function matchChildren(nodes, pathSegment, segments) {
-	                var isRoot = nodes.length === 1 && nodes[0].name === '';
-	                // for (child of node.children) {
-	
-	                var _loop = function _loop(i) {
-	                    var child = nodes[i];
-	                    // Partially match path
-	                    var match = child.parser.partialMatch(pathSegment);
-	                    var remainingPath = void 0;
-	
-	                    if (!match && trailingSlash) {
-	                        // Try with optional trailing slash
-	                        match = child.parser.match(pathSegment, true);
-	                        remainingPath = '';
-	                    } else if (match) {
-	                        // Remove consumed segment from path
-	                        var consumedPath = child.parser.build(match, { ignoreSearch: true });
-	                        remainingPath = pathSegment.replace(consumedPath, '');
-	                        var search = (0, _searchParams.omit)((0, _searchParams.getSearch)(pathSegment.replace(consumedPath, '')), child.parser.queryParams.concat(child.parser.queryParamsBr));
-	                        remainingPath = (0, _searchParams.getPath)(remainingPath) + (search ? '?' + search : '');
-	
-	                        if (trailingSlash && !isRoot && remainingPath === '/' && !/\/$/.test(consumedPath)) {
-	                            remainingPath = '';
-	                        }
-	                    }
-	
-	                    if (match) {
-	                        segments.push(child);
-	                        Object.keys(match).forEach(function (param) {
-	                            return segments.params[param] = match[param];
-	                        });
-	
-	                        if (!isRoot && !remainingPath.length) {
-	                            // fully matched
-	                            return {
-	                                v: segments
-	                            };
-	                        }
-	                        if (!isRoot && !strictQueryParams && remainingPath.indexOf('?') === 0) {
-	                            // unmatched queryParams in non strict mode
-	                            var remainingQueryParams = (0, _searchParams.parse)(remainingPath.slice(1));
-	
-	                            remainingQueryParams.forEach(function (_ref) {
-	                                var name = _ref.name;
-	                                var value = _ref.value;
-	                                return segments.params[name] = value;
-	                            });
-	                            return {
-	                                v: segments
-	                            };
-	                        }
-	                        // If no children to match against but unmatched path left
-	                        if (!child.children.length) {
-	                            return {
-	                                v: null
-	                            };
-	                        }
-	                        // Else: remaining path and children
-	                        return {
-	                            v: matchChildren(child.children, remainingPath, segments)
-	                        };
-	                    }
-	                };
-	
-	                for (var i in nodes) {
-	                    var _ret = _loop(i);
-	
-	                    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-	                }
-	
-	                return null;
-	            };
-	
-	            var startingNodes = this.parser ? [this] : this.children;
-	            var segments = [];
-	            segments.params = {};
-	
-	            var matched = matchChildren(startingNodes, path, segments);
-	            if (matched && matched.length === 1 && matched[0].name === '') return null;
-	            return matched;
-	        }
-	    }, {
-	        key: 'getPathFromSegments',
-	        value: function getPathFromSegments(segments) {
-	            return segments ? segments.map(function (segment) {
-	                return segment.path;
-	            }).join('') : null;
-	        }
-	    }, {
-	        key: 'getPath',
-	        value: function getPath(routeName) {
-	            return this.getPathFromSegments(this.getSegmentsByName(routeName));
-	        }
-	    }, {
-	        key: 'buildPathFromSegments',
-	        value: function buildPathFromSegments(segments) {
-	            var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	            if (!segments) return null;
-	
-	            var searchParams = segments.filter(function (s) {
-	                return s.parser.hasQueryParams;
-	            }).reduce(function (params, s) {
-	                return params.concat(s.parser.queryParams).concat(s.parser.queryParamsBr.map(function (p) {
-	                    return p + '[]';
-	                }));
-	            }, []);
-	
-	            var searchPart = !searchParams.length ? null : searchParams.filter(function (p) {
-	                if (Object.keys(params).indexOf((0, _searchParams.withoutBrackets)(p)) === -1) {
-	                    return false;
-	                }
-	
-	                var val = params[(0, _searchParams.withoutBrackets)(p)];
-	
-	                return val !== undefined && val !== null;
-	            }).map(function (p) {
-	                var val = params[(0, _searchParams.withoutBrackets)(p)];
-	                var encodedVal = Array.isArray(val) ? val.map(encodeURIComponent) : encodeURIComponent(val);
-	
-	                return _pathParser2.default.serialise(p, encodedVal);
-	            }).join('&');
-	
-	            return segments.map(function (segment) {
-	                return segment.parser.build(params, { ignoreSearch: true });
-	            }).join('') + (searchPart ? '?' + searchPart : '');
-	        }
-	    }, {
-	        key: 'getMetaFromSegments',
-	        value: function getMetaFromSegments(segments) {
-	            var accName = '';
-	
-	            return segments.reduce(function (meta, segment) {
-	                var urlParams = segment.parser.urlParams.reduce(function (params, p) {
-	                    params[p] = 'url';
-	                    return params;
-	                }, {});
-	
-	                var allParams = segment.parser.queryParams.reduce(function (params, p) {
-	                    params[p] = 'query';
-	                    return params;
-	                }, urlParams);
-	
-	                if (segment.name !== undefined) {
-	                    accName = accName ? accName + '.' + segment.name : segment.name;
-	                    meta[accName] = allParams;
-	                }
-	                return meta;
-	            }, {});
-	        }
-	    }, {
-	        key: 'buildPath',
-	        value: function buildPath(routeName) {
-	            var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	            return this.buildPathFromSegments(this.getSegmentsByName(routeName), params);
-	        }
-	    }, {
-	        key: 'buildStateFromSegments',
-	        value: function buildStateFromSegments(segments) {
-	            if (!segments || !segments.length) return null;
-	
-	            var name = segments.map(function (segment) {
-	                return segment.name;
-	            }).filter(function (name) {
-	                return name;
-	            }).join('.');
-	            var params = segments.params;
-	
-	            return {
-	                name: name,
-	                params: params,
-	                _meta: this.getMetaFromSegments(segments)
-	            };
-	        }
-	    }, {
-	        key: 'buildState',
-	        value: function buildState(name) {
-	            var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	            var segments = this.getSegmentsByName(name);
-	            if (!segments || !segments.length) return null;
-	
-	            return {
-	                name: name,
-	                params: params,
-	                _meta: this.getMetaFromSegments(segments)
-	            };
-	        }
-	    }, {
-	        key: 'matchPath',
-	        value: function matchPath(path, options) {
-	            var defaultOptions = { trailingSlash: false, strictQueryParams: true };
-	            options = _extends({}, defaultOptions, options);
-	            return this.buildStateFromSegments(this.getSegmentsMatchingPath(path, options));
-	        }
-	    }]);
-	
-	    return RouteNode;
-	}();
-	
-	exports.default = RouteNode;
-	module.exports = exports['default'];
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var defaultOrConstrained = function defaultOrConstrained(match) {
-	    return '(' + (match ? match.replace(/(^<|>$)/g, '') : '[a-zA-Z0-9-_.~%]+') + ')';
-	};
-	
-	var rules = [{
-	    // An URL can contain a parameter :paramName
-	    // - and _ are allowed but not in last position
-	    name: 'url-parameter',
-	    pattern: /^:([a-zA-Z0-9-_]*[a-zA-Z0-9]{1})(<(.+?)>)?/,
-	    regex: function regex(match) {
-	        return new RegExp(defaultOrConstrained(match[2]));
-	    }
-	}, {
-	    // Url parameter (splat)
-	    name: 'url-parameter-splat',
-	    pattern: /^\*([a-zA-Z0-9-_]*[a-zA-Z0-9]{1})/,
-	    regex: /([^\?]*)/
-	}, {
-	    name: 'url-parameter-matrix',
-	    pattern: /^\;([a-zA-Z0-9-_]*[a-zA-Z0-9]{1})(<(.+?)>)?/,
-	    regex: function regex(match) {
-	        return new RegExp(';' + match[1] + '=' + defaultOrConstrained(match[2]));
-	    }
-	}, {
-	    // Query parameter: ?param1&param2
-	    //                   ?:param1&:param2
-	    name: 'query-parameter-bracket',
-	    pattern: /^(?:\?|&)(?:\:)?([a-zA-Z0-9-_]*[a-zA-Z0-9]{1})(?:\[\])/
-	}, // regex:   match => new RegExp('(?=(\?|.*&)' + match[0] + '(?=(\=|&|$)))')
-	{
-	    // Query parameter: ?param1&param2
-	    //                   ?:param1&:param2
-	    name: 'query-parameter',
-	    pattern: /^(?:\?|&)(?:\:)?([a-zA-Z0-9-_]*[a-zA-Z0-9]{1})/
-	}, // regex:   match => new RegExp('(?=(\?|.*&)' + match[0] + '(?=(\=|&|$)))')
-	{
-	    // Delimiter /
-	    name: 'delimiter',
-	    pattern: /^(\/|\?)/,
-	    regex: function regex(match) {
-	        return new RegExp('\\' + match[0]);
-	    }
-	}, {
-	    // Sub delimiters
-	    name: 'sub-delimiter',
-	    pattern: /^(\!|\&|\-|_|\.|;)/,
-	    regex: function regex(match) {
-	        return new RegExp(match[0]);
-	    }
-	}, {
-	    // Unmatched fragment (until delimiter is found)
-	    name: 'fragment',
-	    pattern: /^([0-9a-zA-Z]+)/,
-	    regex: function regex(match) {
-	        return new RegExp(match[0]);
-	    }
-	}];
-	
-	var tokenise = function tokenise(str) {
-	    var tokens = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
-	
-	    // Look for a matching rule
-	    var matched = rules.some(function (rule) {
-	        var match = str.match(rule.pattern);
-	        if (!match) return false;
-	
-	        tokens.push({
-	            type: rule.name,
-	            match: match[0],
-	            val: match.slice(1, 2),
-	            otherVal: match.slice(2),
-	            regex: rule.regex instanceof Function ? rule.regex(match) : rule.regex
-	        });
-	
-	        if (match[0].length < str.length) tokens = tokenise(str.substr(match[0].length), tokens);
-	        return true;
-	    });
-	
-	    // If no rules matched, throw an error (possible malformed path)
-	    if (!matched) {
-	        throw new Error('Could not parse path.');
-	    }
-	    // Return tokens
-	    return tokens;
-	};
-	
-	var optTrailingSlash = function optTrailingSlash(source, trailingSlash) {
-	    if (!trailingSlash) return source;
-	    return source.replace(/\\\/$/, '') + '(?:\\/)?';
-	};
-	
-	var withoutBrackets = function withoutBrackets(param) {
-	    return param.replace(/\[\]$/, '');
-	};
-	
-	var appendQueryParam = function appendQueryParam(params, param) {
-	    var val = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
-	
-	    if (/\[\]$/.test(param)) {
-	        param = withoutBrackets(param);
-	        val = [val];
-	    }
-	    var existingVal = params[param];
-	
-	    if (existingVal === undefined) params[param] = val;else params[param] = Array.isArray(existingVal) ? existingVal.concat(val) : [existingVal, val];
-	
-	    return params;
-	};
-	
-	var parseQueryParams = function parseQueryParams(path) {
-	    var searchPart = path.split('?')[1];
-	    if (!searchPart) return {};
-	
-	    return searchPart.split('&').map(function (_) {
-	        return _.split('=');
-	    }).reduce(function (obj, m) {
-	        return appendQueryParam(obj, m[0], m[1] ? decodeURIComponent(m[1]) : m[1]);
-	    }, {});
-	};
-	
-	var toSerialisable = function toSerialisable(val) {
-	    return val !== undefined && val !== null && val !== '' ? '=' + val : '';
-	};
-	
-	var _serialise = function _serialise(key, val) {
-	    return Array.isArray(val) ? val.map(function (v) {
-	        return _serialise(key, v);
-	    }).join('&') : key + toSerialisable(val);
-	};
-	
-	var Path = (function () {
-	    _createClass(Path, null, [{
-	        key: 'createPath',
-	        value: function createPath(path) {
-	            return new Path(path);
-	        }
-	    }, {
-	        key: 'serialise',
-	        value: function serialise(key, val) {
-	            return _serialise(key, val);
-	        }
-	    }]);
-	
-	    function Path(path) {
-	        _classCallCheck(this, Path);
-	
-	        if (!path) throw new Error('Please supply a path');
-	        this.path = path;
-	        this.tokens = tokenise(path);
-	
-	        this.hasUrlParams = this.tokens.filter(function (t) {
-	            return (/^url-parameter/.test(t.type)
-	            );
-	        }).length > 0;
-	        this.hasSpatParam = this.tokens.filter(function (t) {
-	            return (/splat$/.test(t.type)
-	            );
-	        }).length > 0;
-	        this.hasMatrixParams = this.tokens.filter(function (t) {
-	            return (/matrix$/.test(t.type)
-	            );
-	        }).length > 0;
-	        this.hasQueryParams = this.tokens.filter(function (t) {
-	            return (/^query-parameter/.test(t.type)
-	            );
-	        }).length > 0;
-	        // Extract named parameters from tokens
-	        this.urlParams = !this.hasUrlParams ? [] : this.tokens.filter(function (t) {
-	            return (/^url-parameter/.test(t.type)
-	            );
-	        }).map(function (t) {
-	            return t.val.slice(0, 1);
-	        })
-	        // Flatten
-	        .reduce(function (r, v) {
-	            return r.concat(v);
-	        });
-	        // Query params
-	        this.queryParams = !this.hasQueryParams ? [] : this.tokens.filter(function (t) {
-	            return t.type === 'query-parameter';
-	        }).map(function (t) {
-	            return t.val;
-	        }).reduce(function (r, v) {
-	            return r.concat(v);
-	        }, []);
-	
-	        this.queryParamsBr = !this.hasQueryParams ? [] : this.tokens.filter(function (t) {
-	            return (/-bracket$/.test(t.type)
-	            );
-	        }).map(function (t) {
-	            return t.val;
-	        }).reduce(function (r, v) {
-	            return r.concat(v);
-	        }, []);
-	
-	        this.params = this.urlParams.concat(this.queryParams).concat(this.queryParamsBr);
-	        // Check if hasQueryParams
-	        // Regular expressions for url part only (full and partial match)
-	        this.source = this.tokens.filter(function (t) {
-	            return t.regex !== undefined;
-	        }).map(function (r) {
-	            return r.regex.source;
-	        }).join('');
-	    }
-	
-	    _createClass(Path, [{
-	        key: '_urlMatch',
-	        value: function _urlMatch(path, regex) {
-	            var _this = this;
-	
-	            var match = path.match(regex);
-	            if (!match) return null;else if (!this.urlParams.length) return {};
-	            // Reduce named params to key-value pairs
-	            return match.slice(1, this.urlParams.length + 1).reduce(function (params, m, i) {
-	                params[_this.urlParams[i]] = decodeURIComponent(m);
-	                return params;
-	            }, {});
-	        }
-	    }, {
-	        key: 'match',
-	        value: function match(path) {
-	            var _this2 = this;
-	
-	            var trailingSlash = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-	
-	            // trailingSlash: falsy => non optional, truthy => optional
-	            var source = optTrailingSlash(this.source, trailingSlash);
-	            // Check if exact match
-	            var matched = this._urlMatch(path, new RegExp('^' + source + (this.hasQueryParams ? '(\\?.*$|$)' : '$')));
-	            // If no match, or no query params, no need to go further
-	            if (!matched || !this.hasQueryParams) return matched;
-	            // Extract query params
-	            var queryParams = parseQueryParams(path);
-	            var unexpectedQueryParams = Object.keys(queryParams).filter(function (p) {
-	                return _this2.queryParams.concat(_this2.queryParamsBr).indexOf(p) === -1;
-	            });
-	
-	            if (unexpectedQueryParams.length === 0) {
-	                // Extend url match
-	                Object.keys(queryParams).forEach(function (p) {
-	                    return matched[p] = queryParams[p];
-	                });
-	
-	                return matched;
-	            }
-	
-	            return null;
-	        }
-	    }, {
-	        key: 'partialMatch',
-	        value: function partialMatch(path) {
-	            var _this3 = this;
-	
-	            var trailingSlash = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-	
-	            // Check if partial match (start of given path matches regex)
-	            // trailingSlash: falsy => non optional, truthy => optional
-	            var source = optTrailingSlash(this.source, trailingSlash);
-	            var match = this._urlMatch(path, new RegExp('^' + source));
-	
-	            if (!match) return match;
-	
-	            if (!this.hasQueryParams) return match;
-	
-	            var queryParams = parseQueryParams(path);
-	
-	            Object.keys(queryParams).filter(function (p) {
-	                return _this3.queryParams.concat(_this3.queryParamsBr).indexOf(p) >= 0;
-	            }).forEach(function (p) {
-	                return appendQueryParam(match, p, queryParams[p]);
-	            });
-	
-	            return match;
-	        }
-	    }, {
-	        key: 'build',
-	        value: function build() {
-	            var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	            var opts = arguments.length <= 1 || arguments[1] === undefined ? { ignoreConstraints: false, ignoreSearch: false } : arguments[1];
-	
-	            var encodedParams = Object.keys(params).reduce(function (acc, key) {
-	                // Use encodeURI in case of spats
-	                if (params[key] === undefined) {
-	                    acc[key] = undefined;
-	                } else {
-	                    acc[key] = Array.isArray(params[key]) ? params[key].map(encodeURI) : encodeURI(params[key]);
-	                }
-	                return acc;
-	            }, {});
-	            // Check all params are provided (not search parameters which are optional)
-	            if (this.urlParams.some(function (p) {
-	                return params[p] === undefined;
-	            })) throw new Error('Missing parameters');
-	
-	            // Check constraints
-	            if (!opts.ignoreConstraints) {
-	                var constraintsPassed = this.tokens.filter(function (t) {
-	                    return (/^url-parameter/.test(t.type) && !/-splat$/.test(t.type)
-	                    );
-	                }).every(function (t) {
-	                    return new RegExp('^' + defaultOrConstrained(t.otherVal[0]) + '$').test(encodedParams[t.val]);
-	                });
-	
-	                if (!constraintsPassed) throw new Error('Some parameters are of invalid format');
-	            }
-	
-	            var base = this.tokens.filter(function (t) {
-	                return (/^query-parameter/.test(t.type) === false
-	                );
-	            }).map(function (t) {
-	                if (t.type === 'url-parameter-matrix') return ';' + t.val + '=' + encodedParams[t.val[0]];
-	                return (/^url-parameter/.test(t.type) ? encodedParams[t.val[0]] : t.match
-	                );
-	            }).join('');
-	
-	            if (opts.ignoreSearch) return base;
-	
-	            var queryParams = this.queryParams.concat(this.queryParamsBr.map(function (p) {
-	                return p + '[]';
-	            }));
-	
-	            var searchPart = queryParams.filter(function (p) {
-	                return Object.keys(encodedParams).indexOf(withoutBrackets(p)) !== -1;
-	            }).map(function (p) {
-	                return _serialise(p, encodedParams[withoutBrackets(p)]);
-	            }).join('&');
-	
-	            return base + (searchPart ? '?' + searchPart : '');
-	        }
-	    }]);
-	
-	    return Path;
-	})();
-	
-	exports.default = Path;
-	module.exports = exports['default'];
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	// Split path
-	var getPath = exports.getPath = function getPath(path) {
-	    return path.split('?')[0];
-	};
-	var getSearch = exports.getSearch = function getSearch(path) {
-	    return path.split('?')[1];
-	};
-	
-	// Search param value
-	var isSerialisable = function isSerialisable(val) {
-	    return val !== undefined && val !== null && val !== '';
-	};
-	
-	// Search param name
-	var bracketTest = /\[\]$/;
-	var hasBrackets = exports.hasBrackets = function hasBrackets(paramName) {
-	    return bracketTest.test(paramName);
-	};
-	var withoutBrackets = exports.withoutBrackets = function withoutBrackets(paramName) {
-	    return paramName.replace(bracketTest, '');
-	};
-	
-	/**
-	 * Parse a querystring and return a list of params (Objects with name and value properties)
-	 * @param  {String} querystring The querystring to parse
-	 * @return {Array[Object]}      The list of params
-	 */
-	var parse = exports.parse = function parse(querystring) {
-	    return querystring.split('&').reduce(function (params, param) {
-	        var split = param.split('=');
-	        var name = split[0];
-	        var value = split[1];
-	
-	        return params.concat(split.length === 1 ? { name: name, value: true } : { name: name, value: decodeURIComponent(value) });
-	    }, []);
-	};
-	
-	/**
-	 * Reduce a list of parameters (returned by `.parse()``) to an object (key-value pairs)
-	 * @param  {Array} paramList The list of parameters returned by `.parse()`
-	 * @return {Object}          The object of parameters (key-value pairs)
-	 */
-	var toObject = exports.toObject = function toObject(paramList) {
-	    return paramList.reduce(function (params, _ref) {
-	        var name = _ref.name;
-	        var value = _ref.value;
-	
-	        var isArray = hasBrackets(name);
-	        var currentValue = params[withoutBrackets(name)];
-	
-	        if (currentValue === undefined) {
-	            params[withoutBrackets(name)] = isArray ? [value] : value;
-	        } else {
-	            params[withoutBrackets(name)] = [].concat(currentValue, value);
-	        }
-	
-	        return params;
-	    }, {});
-	};
-	
-	/**
-	 * Build a querystring from a list of parameters
-	 * @param  {Array} paramList The list of parameters (see `.parse()`)
-	 * @return {String}          The querystring
-	 */
-	var build = exports.build = function build(paramList) {
-	    return paramList.filter(function (_ref2) {
-	        var value = _ref2.value;
-	        return value !== undefined && value !== null;
-	    }).map(function (_ref3) {
-	        var name = _ref3.name;
-	        var value = _ref3.value;
-	        return value === true ? name : name + '=' + encodeURIComponent(value);
-	    }).join('&');
-	};
-	
-	/**
-	 * Remove a list of parameters from a querystring
-	 * @param  {String} querystring  The original querystring
-	 * @param  {Array}  paramsToOmit The parameters to omit
-	 * @return {String}              The querystring
-	 */
-	var omit = exports.omit = function omit(querystring, paramsToOmit) {
-	    if (!querystring) return '';
-	
-	    var remainingQueryParams = parse(querystring).filter(function (_ref4) {
-	        var name = _ref4.name;
-	        return paramsToOmit.indexOf(withoutBrackets(name)) === -1;
-	    });
-	    var remainingQueryString = build(remainingQueryParams);
-	
-	    return remainingQueryString || '';
-	};
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _router = __webpack_require__(28);
-	
-	var _router2 = _interopRequireDefault(_router);
-	
-	var _async = __webpack_require__(29);
-	
-	var _async2 = _interopRequireDefault(_async);
-	
-	var _constants = __webpack_require__(30);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	exports.default = transition;
-	
-	function transition(router, toState, fromState, options, callback) {
-	    var cancelled = false;
-	    var additionalArgs = router.getAdditionalArgs();
-	    var isCancelled = function isCancelled() {
-	        return cancelled;
-	    };
-	    var cancel = function cancel() {
-	        return cancelled = true;
-	    };
-	    var done = function done(err, state) {
-	        if (!err && !isCancelled() && router.options.autoCleanUp) {
-	            (function () {
-	                var activeSegments = (0, _router.nameToIDs)(toState.name);
-	                Object.keys(router._canDeact).forEach(function (name) {
-	                    if (activeSegments.indexOf(name) === -1) router._canDeact[name] = undefined;
-	                });
-	            })();
-	        }
-	        callback(isCancelled() ? { code: _constants2.default.TRANSITION_CANCELLED } : err, state || toState);
-	    };
-	    var makeError = function makeError(base, err) {
-	        return _extends({}, base, err instanceof Object ? err : { error: err });
-	    };
-	
-	    var _transitionPath = (0, _router2.default)(toState, fromState);
-	
-	    var toDeactivate = _transitionPath.toDeactivate;
-	    var toActivate = _transitionPath.toActivate;
-	
-	    var asyncBase = { isCancelled: isCancelled, toState: toState, fromState: fromState, additionalArgs: [] };
-	
-	    var canDeactivate = function canDeactivate(toState, fromState, cb) {
-	        var canDeactivateFunctionMap = toDeactivate.filter(function (name) {
-	            return router._canDeact[name];
-	        }).reduce(function (fnMap, name) {
-	            return _extends({}, fnMap, _defineProperty({}, name, router._canDeact[name]));
-	        }, {});
-	
-	        (0, _async2.default)(canDeactivateFunctionMap, _extends({}, asyncBase, { additionalArgs: additionalArgs, errorKey: 'segment' }), function (err) {
-	            return cb(err ? makeError({ code: _constants2.default.CANNOT_DEACTIVATE }, err) : null);
-	        });
-	    };
-	
-	    var canActivate = function canActivate(toState, fromState, cb) {
-	        var canActivateFunctionMap = toActivate.filter(function (name) {
-	            return router._canAct[name];
-	        }).reduce(function (fnMap, name) {
-	            return _extends({}, fnMap, _defineProperty({}, name, router._canAct[name]));
-	        }, {});
-	
-	        (0, _async2.default)(canActivateFunctionMap, _extends({}, asyncBase, { additionalArgs: additionalArgs, errorKey: 'segment' }), function (err) {
-	            return cb(err ? makeError({ code: _constants2.default.CANNOT_ACTIVATE }, err) : null);
-	        });
-	    };
-	
-	    var middlewareFn = router.mware;
-	    var middleware = function middleware(toState, fromState, cb) {
-	        var mwareFunction = Array.isArray(router.mware) ? router.mware : [router.mware];
-	
-	        (0, _async2.default)(mwareFunction, _extends({}, asyncBase, { additionalArgs: additionalArgs }), function (err, state) {
-	            return cb(err ? makeError({ code: _constants2.default.TRANSITION_ERR }, err) : null, state || toState);
-	        });
-	    };
-	
-	    var pipeline = (fromState && !options.forceDeactivate ? [canDeactivate] : []).concat(canActivate).concat(middlewareFn ? middleware : []);
-	
-	    (0, _async2.default)(pipeline, asyncBase, done);
-	
-	    return cancel;
-	}
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.nameToIDs = nameToIDs;
-	
-	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-	
-	function nameToIDs(name) {
-	    return name.split('.').reduce(function (ids, name) {
-	        return ids.concat(ids.length ? ids[ids.length - 1] + '.' + name : name);
-	    }, []);
-	}
-	
-	function extractSegmentParams(name, state) {
-	    if (!state._meta || !state._meta[name]) return {};
-	
-	    return Object.keys(state._meta[name]).reduce(function (params, p) {
-	        params[p] = state.params[p];
-	        return params;
-	    }, {});
-	}
-	
-	function transitionPath(toState, fromState) {
-	    var fromStateIds = fromState ? nameToIDs(fromState.name) : [];
-	    var toStateIds = nameToIDs(toState.name);
-	    var maxI = Math.min(fromStateIds.length, toStateIds.length);
-	
-	    function pointOfDifference() {
-	        var i = undefined;
-	
-	        var _loop = function _loop() {
-	            var left = fromStateIds[i];
-	            var right = toStateIds[i];
-	
-	            if (left !== right) return {
-	                    v: i
-	                };
-	
-	            var leftParams = extractSegmentParams(left, toState);
-	            var rightParams = extractSegmentParams(right, fromState);
-	
-	            if (leftParams.length !== rightParams.length) return {
-	                    v: i
-	                };
-	            if (leftParams.length === 0) return 'continue';
-	
-	            var different = Object.keys(leftParams).some(function (p) {
-	                return rightParams[p] !== leftParams[p];
-	            });
-	            if (different) {
-	                return {
-	                    v: i
-	                };
-	            }
-	        };
-	
-	        for (i = 0; i < maxI; i += 1) {
-	            var _ret = _loop();
-	
-	            switch (_ret) {
-	                case 'continue':
-	                    continue;
-	
-	                default:
-	                    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-	            }
-	        }
-	
-	        return i;
-	    }
-	
-	    var i = undefined;
-	    if (!fromState) {
-	        i = 0;
-	    } else if (!fromState || toState.name === fromState.name && (!toState._meta || !fromState._meta)) {
-	        console.log('[router5.transition-path] Some states are missing metadata, reloading all segments');
-	        i = 0;
-	    } else {
-	        i = pointOfDifference();
-	    }
-	
-	    var toDeactivate = fromStateIds.slice(i).reverse();
-	    var toActivate = toStateIds.slice(i);
-	
-	    var intersection = fromState && i > 0 ? fromStateIds[i - 1] : '';
-	
-	    return {
-	        intersection: intersection,
-	        toDeactivate: toDeactivate,
-	        toActivate: toActivate
-	    };
-	}
-	
-	exports.default = transitionPath;
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = asyncProcess;
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-	
-	function asyncProcess(functions, _ref, callback) {
-	    var isCancelled = _ref.isCancelled;
-	    var toState = _ref.toState;
-	    var fromState = _ref.fromState;
-	    var additionalArgs = _ref.additionalArgs;
-	    var errorKey = _ref.errorKey;
-	
-	    var remainingFunctions = Array.isArray(functions) ? functions : Object.keys(functions);
-	
-	    var isState = function isState(obj) {
-	        return (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj.name !== undefined && obj.params !== undefined && obj.path !== undefined;
-	    };
-	    var hasStateChanged = function hasStateChanged(state) {
-	        return state.name !== toState.name || state.params !== toState.params || state.path !== toState.path;
-	    };
-	
-	    var processFn = function processFn(done) {
-	        if (!remainingFunctions.length) return true;
-	
-	        var isMapped = typeof remainingFunctions[0] === 'string';
-	        var errBase = errorKey && isMapped ? _defineProperty({}, errorKey, remainingFunctions[0]) : {};
-	        var stepFn = isMapped ? functions[remainingFunctions[0]] : remainingFunctions[0];
-	
-	        // const len = stepFn.length;
-	        var res = stepFn.apply(null, additionalArgs.concat([toState, fromState, done]));
-	
-	        if (isCancelled()) {
-	            done(null);
-	        } else if (typeof res === 'boolean') {
-	            done(res ? null : errBase);
-	        } else if (res && typeof res.then === 'function') {
-	            res.then(function (resVal) {
-	                if (resVal instanceof Error) done({ error: resVal }, null);else done(null, resVal);
-	            }, function (err) {
-	                if (err instanceof Error) {
-	                    console.error(err.stack || err);
-	                    done(_extends({}, errBase, { promiseError: err }), null);
-	                } else {
-	                    done((typeof err === 'undefined' ? 'undefined' : _typeof(err)) === 'object' ? _extends({}, errBase, err) : errBase, null);
-	                }
-	            });
-	        }
-	        // else: wait for done to be called
-	
-	        return false;
-	    };
-	
-	    var iterate = function iterate(err, val) {
-	        if (err) callback(err);else {
-	            if (val && isState(val)) {
-	                if (hasStateChanged(val)) console.error('[router5][transition] State values changed during transition process and ignored.');else toState = val;
-	            }
-	            remainingFunctions = remainingFunctions.slice(1);
-	            next();
-	        }
-	    };
-	
-	    var next = function next() {
-	        if (isCancelled()) {
-	            callback(null);
-	        } else {
-	            var finished = processFn(iterate);
-	            if (finished) callback(null, toState);
-	        }
-	    };
-	
-	    next();
-	}
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var constants = {
-	    ROUTER_NOT_STARTED: 'NOT_STARTED',
-	    ROUTER_ALREADY_STARTED: 'ALREADY_STARTED',
-	    ROUTE_NOT_FOUND: 'ROUTE_NOT_FOUND',
-	    SAME_STATES: 'SAME_STATES',
-	    CANNOT_DEACTIVATE: 'CANNOT_DEACTIVATE',
-	    CANNOT_ACTIVATE: 'CANNOT_ACTIVATE',
-	    TRANSITION_ERR: 'TRANSITION_ERR',
-	    TRANSITION_CANCELLED: 'CANCELLED'
-	};
-	
-	exports.default = constants;
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/* istanbul ignore next */
-	var loggerPlugin = function loggerPlugin() {
-	    return function () {
-	        var startGroup = function startGroup() {
-	            return console.group('Router transition');
-	        };
-	        var endGroup = function endGroup() {
-	            return console.groupEnd('Router transition');
-	        };
-	
-	        return {
-	            name: 'LOGGER',
-	            onStart: function onStart() {
-	                console.info('Router started');
-	            },
-	            onStop: function onStop() {
-	                console.info('Router stopped');
-	            },
-	            onTransitionStart: function onTransitionStart(toState, fromState) {
-	                endGroup();
-	                startGroup();
-	                console.log('Transition started from state');
-	                console.log(fromState);
-	                console.log('To state');
-	                console.log(toState);
-	            },
-	            onTransitionCancel: function onTransitionCancel() {
-	                console.warn('Transition cancelled');
-	            },
-	            onTransitionError: function onTransitionError(toState, fromState, err) {
-	                console.warn('Transition error with code ' + err.code);
-	                endGroup();
-	            },
-	            onTransitionSuccess: function onTransitionSuccess() {
-	                console.log('Transition success');
-	                endGroup();
-	            }
-	        };
-	    };
-	};
-	
-	exports.default = loggerPlugin;
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-	/**
-	 * Code based on page.js
-	 * https://github.com/visionmedia/page.js
-	 */
-	
-	'use strict';
-	
-	module.exports = function(opts, cb) {
-	  return function(router) {
-	    var clickEvent = document.ontouchstart ? 'touchstart' : 'click';
-	    var clickHandler = onClick(router, opts, cb);
-	
-	    return {
-	      name: 'LINK_INTERCEPTOR',
-	      onStart: function() {
-	        document.addEventListener(clickEvent, clickHandler, false);
-	      },
-	      onStop: function() {
-	        document.removeEventListener(clickEvent, clickHandler);
-	      }
-	    };
-	  };
-	};
-	
-	function merge(object, other) {
-	  var merged = {};
-	  Object.keys(object || []).forEach(function (key) {
-	    merged[key] = object[key];
-	  });
-	  Object.keys(other || []).forEach(function (key) {
-	    merged[key] = other[key];
-	  });
-	
-	  return merged;
-	}
-	
-	function onClick(router, opts, cb) {
-	  function which(e) {
-	    e = e || window.event;
-	    return null === e.which ? e.button : e.which;
-	  }
-	
-	  function getParams(href) {
-	    var params = {};
-	    var splitHref = href.split('?');
-	
-	    if (splitHref[1] && splitHref[1].length) {
-	      splitHref[1].split('&')
-	        .forEach(function(param) {
-	          var i = param.indexOf('=');
-	
-	          if (i === -1 || i === param.length - 1) {
-	            params[window.decodeURIComponent(param)] = '';
-	            return;
-	          }
-	
-	          var name = window.decodeURIComponent(param.substr(0, i));
-	          var value = window.decodeURIComponent(param.substr(i + 1));
-	          params[name] = value
-	        });
-	    }
-	
-	    return params;
-	  }
-	
-	  return function onclick(e) {
-	    if (1 !== which(e)) return;
-	
-	    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-	    if (e.defaultPrevented) return;
-	
-	
-	    // ensure link
-	    var el = e.target;
-	    while (el && 'A' !== el.nodeName) el = el.parentNode;
-	    if (!el || 'A' !== el.nodeName) return;
-	
-	
-	    // Ignore if tag has
-	    // 1. "download" attribute
-	    // 2. rel="external" attribute
-	    if (el.hasAttribute('download') || el.getAttribute('rel') === 'external') return;
-	
-	
-	    // check target
-	    if (el.target) return;
-	
-	    if (!el.href) return;
-	
-	    var toRouteState = router.matchUrl(el.href);
-	    if (toRouteState) {
-	      e.preventDefault();
-	      var name = toRouteState.name;
-	      var params = merge(getParams(el.href), toRouteState.params);
-	
-	      var finalOpts;
-	      if (typeof opts === 'function') {
-	        finalOpts = opts(name, params);
-	      } else {
-	        finalOpts = opts;
-	      }
-	
-	      router.navigate(name, params, finalOpts, cb);
-	    }
-	  }
-	};
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _browser = __webpack_require__(34);
-	
-	var _browser2 = _interopRequireDefault(_browser);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var pushState = _browser2.default.pushState;
-	var replaceState = _browser2.default.replaceState;
-	var addPopstateListener = _browser2.default.addPopstateListener;
-	var removePopstateListener = _browser2.default.removePopstateListener;
-	var getLocation = _browser2.default.getLocation;
-	var getBase = _browser2.default.getBase;
-	var getState = _browser2.default.getState;
-	
-	var pluginName = 'HISTORY';
-	
-	var historyPlugin = function historyPlugin() {
-	    var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	
-	    var forceDeactivate = _ref.forceDeactivate;
-	    return function (router) {
-	        router.getLocation = function () {
-	            return getLocation(router.options);
-	        };
-	
-	        router.replaceHistoryState = function (name) {
-	            var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	            var state = router.buildState(name, params);
-	            var url = router.buildUrl(name, params);
-	            router.lastKnownState = state;
-	            replaceState(state, '', url);
-	        };
-	
-	        var updateBrowserState = function updateBrowserState(state, url, replace) {
-	            if (replace) replaceState(state, '', url);else pushState(state, '', url);
-	        };
-	
-	        var onPopState = function onPopState(evt) {
-	            // Do nothing if no state or if last know state is poped state (it should never happen)
-	            var newState = !evt.state || !evt.state.name;
-	            var state = newState ? router.matchPath(getLocation(router.options)) : evt.state;
-	            var _router$options = router.options;
-	            var defaultRoute = _router$options.defaultRoute;
-	            var defaultParams = _router$options.defaultParams;
-	
-	
-	            if (!state) {
-	                // If current state is already the default route, we will have a double entry
-	                // Navigating back and forth will emit SAME_STATES error
-	                defaultRoute && router.navigate(defaultRoute, defaultParams, { forceDeactivate: forceDeactivate, reload: true, replace: true });
-	                return;
-	            }
-	            if (router.lastKnownState && router.areStatesEqual(state, router.lastKnownState, false)) {
-	                return;
-	            }
-	
-	            var fromState = _extends({}, router.getState());
-	
-	            router._transition(state, fromState, { forceDeactivate: forceDeactivate }, function (err, toState) {
-	                if (err) {
-	                    if (err.redirect) {
-	                        router.navigate(err.redirect.name, err.redirect.params, { forceDeactivate: forceDeactivate, replace: true });
-	                    } else if (err === 'CANNOT_DEACTIVATE') {
-	                        var url = router.buildUrl(router.lastKnownState.name, router.lastKnownState.params);
-	                        if (!newState) {
-	                            // Keep history state unchanged but use current URL
-	                            updateBrowserState(state, url, true);
-	                        }
-	                        // else do nothing or history will be messed up
-	                        // TODO: history.back()?
-	                    } else {
-	                        // Force navigation to default state
-	                        defaultRoute && router.navigate(defaultRoute, defaultParams, { forceDeactivate: forceDeactivate, reload: true, replace: true });
-	                    }
-	                } else {
-	                    router._invokeListeners('$$success', toState, fromState, { replace: true });
-	                }
-	            });
-	        };
-	
-	        var onStart = function onStart() {
-	            // Guess base
-	            if (router.options.useHash && !router.options.base) {
-	                router.options.base = getBase();
-	            }
-	            addPopstateListener(onPopState);
-	        };
-	
-	        var onStop = function onStop() {
-	            removePopstateListener(onPopState);
-	        };
-	
-	        var onTransitionSuccess = function onTransitionSuccess(toState, fromState, opts) {
-	            var historyState = getState();
-	            var replace = opts.replace || fromState && router.areStatesEqual(toState, fromState, false) || opts.reload && historyState && router.areStatesEqual(toState, historyState, false);
-	            updateBrowserState(toState, router.buildUrl(toState.name, toState.params), replace);
-	        };
-	
-	        return { name: pluginName, onStart: onStart, onStop: onStop, onTransitionSuccess: onTransitionSuccess, onPopState: onPopState };
-	    };
-	};
-	
-	exports.default = historyPlugin;
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	/**
-	 * Dumb functions
-	 */
-	// istanbul ignore next
-	var identity = function identity(arg) {
-	    return function () {
-	        return arg;
-	    };
-	};
-	// istanbul ignore next
-	var noop = function noop() {};
-	
-	/**
-	 * Browser detection
-	 */
-	var isBrowser = typeof window !== 'undefined';
-	
-	/**
-	 * Browser functions needed by router5
-	 */
-	var getBase = function getBase() {
-	    return window.location.pathname.replace(/\/$/, '');
-	};
-	
-	var pushState = function pushState(state, title, path) {
-	    return window.history.pushState(state, title, path);
-	};
-	
-	var replaceState = function replaceState(state, title, path) {
-	    return window.history.replaceState(state, title, path);
-	};
-	
-	var addPopstateListener = function addPopstateListener(fn) {
-	    return window.addEventListener('popstate', fn);
-	};
-	
-	var removePopstateListener = function removePopstateListener(fn) {
-	    return window.removeEventListener('popstate', fn);
-	};
-	
-	var getLocation = function getLocation(opts) {
-	    var path = opts.useHash ? window.location.hash.replace(new RegExp('^#' + opts.hashPrefix), '') : window.location.pathname.replace(new RegExp('^' + opts.base), '');
-	    return (path || '/') + window.location.search;
-	};
-	
-	var getState = function getState() {
-	    return window.history.state;
-	};
-	
-	/**
-	 * Export browser object
-	 */
-	var browser = {};
-	if (isBrowser) {
-	    browser = { getBase: getBase, pushState: pushState, replaceState: replaceState, addPopstateListener: addPopstateListener, removePopstateListener: removePopstateListener, getLocation: getLocation, getState: getState };
-	} else {
-	    // istanbul ignore next
-	    browser = {
-	        getBase: identity(''),
-	        pushState: noop,
-	        replaceState: noop,
-	        addPopstateListener: noop,
-	        removePopstateListener: noop,
-	        getLocation: identity(''),
-	        getState: identity(null)
-	    };
-	}
-	
-	exports.default = browser;
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _router = __webpack_require__(28);
-	
-	var _router2 = _interopRequireDefault(_router);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var pluginName = 'LISTENERS';
-	var defaultOptions = {
-	    autoCleanUp: true
-	};
-	
-	function listenersPlugin() {
-	    var options = arguments.length <= 0 || arguments[0] === undefined ? defaultOptions : arguments[0];
-	
-	    return function plugin(router) {
-	        var listeners = {};
-	
-	        var removeListener = function removeListener(name, cb) {
-	            if (cb) {
-	                if (listeners[name]) listeners[name] = listeners[name].filter(function (callback) {
-	                    return callback !== cb;
-	                });
-	            } else {
-	                listeners[name] = [];
-	            }
-	            return router;
-	        };
-	
-	        var addListener = function addListener(name, cb, replace) {
-	            var normalizedName = name.replace(/^(\*|\^|=)/, '');
-	
-	            if (normalizedName && !/^\$/.test(name)) {
-	                var segments = router.rootNode.getSegmentsByName(normalizedName);
-	                if (!segments) console.warn('No route found for ' + normalizedName + ', listener might never be called!');
-	            }
-	
-	            if (!listeners[name]) listeners[name] = [];
-	            listeners[name] = (replace ? [] : listeners[name]).concat(cb);
-	
-	            return router;
-	        };
-	
-	        router.addListener = function (cb) {
-	            return addListener('*', cb);
-	        };
-	        router.removeListener = function (cb) {
-	            return removeListener('*', cb);
-	        };
-	
-	        router.addNodeListener = function (name, cb) {
-	            return addListener('^' + name, cb, true);
-	        };
-	        router.removeNodeListener = function (name, cb) {
-	            return removeListener('^' + name, cb);
-	        };
-	
-	        router.addRouteListener = function (name, cb) {
-	            return addListener('=' + name, cb);
-	        };
-	        router.removeRouteListener = function (name, cb) {
-	            return removeListener('=' + name, cb);
-	        };
-	
-	        function invokeListeners(name, toState, fromState) {
-	            (listeners[name] || []).forEach(function (cb) {
-	                return cb(toState, fromState);
-	            });
-	        }
-	
-	        function onTransitionSuccess(toState, fromState, opts) {
-	            var _transitionPath = (0, _router2.default)(toState, fromState);
-	
-	            var intersection = _transitionPath.intersection;
-	            var toDeactivate = _transitionPath.toDeactivate;
-	
-	            var intersectionNode = opts.reload ? '' : intersection;
-	            var name = toState.name;
-	
-	            if (options.autoCleanUp) {
-	                toDeactivate.forEach(function (name) {
-	                    return removeListener('^' + name);
-	                });
-	            }
-	
-	            invokeListeners('^' + intersection, toState, fromState);
-	            invokeListeners('=' + name, toState, fromState);
-	            invokeListeners('*', toState, fromState);
-	        }
-	
-	        function flush() {
-	            listeners = {};
-	        }
-	
-	        return { name: pluginName, onTransitionSuccess: onTransitionSuccess, flush: flush, listeners: listeners };
-	    };
-	}
-	
-	exports.default = listenersPlugin;
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.RootListener = RootListener;
-	
-	var _decorators = __webpack_require__(14);
-	
-	function RootListener(events, selector) {
-	    return (0, _decorators.makePropDecorator)("RootListener", [events, selector]);
-	}
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__( 38 );
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	var _immutablors = __webpack_require__(39);
+	var _immutablors = __webpack_require__(23);
 	
 	Object.defineProperty(exports, 'immutable', {
 	  enumerable: true,
@@ -18574,7 +14691,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _validators = __webpack_require__(57);
+	var _validators = __webpack_require__(41);
 	
 	Object.defineProperty(exports, 'acceptsArray', {
 	  enumerable: true,
@@ -18631,7 +14748,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _memoizator = __webpack_require__(58);
+	var _memoizator = __webpack_require__(42);
 	
 	Object.defineProperty(exports, 'memoization', {
 	  enumerable: true,
@@ -18640,7 +14757,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _timers = __webpack_require__(59);
+	var _timers = __webpack_require__(43);
 	
 	Object.defineProperty(exports, 'debounce', {
 	  enumerable: true,
@@ -18661,7 +14778,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _loggers = __webpack_require__(60);
+	var _loggers = __webpack_require__(44);
 	
 	Object.defineProperty(exports, 'loglocalstorage', {
 	  enumerable: true,
@@ -18700,7 +14817,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _executors = __webpack_require__(61);
+	var _executors = __webpack_require__(45);
 	
 	Object.defineProperty(exports, 'once', {
 	  enumerable: true,
@@ -18721,7 +14838,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _stators = __webpack_require__(62);
+	var _stators = __webpack_require__(46);
 	
 	Object.defineProperty(exports, 'readonly', {
 	  enumerable: true,
@@ -18748,7 +14865,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _inheritedfunctions = __webpack_require__(63);
+	var _inheritedfunctions = __webpack_require__(47);
 	
 	Object.defineProperty(exports, 'overridden', {
 	  enumerable: true,
@@ -18763,7 +14880,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _trycatch2 = __webpack_require__(64);
+	var _trycatch2 = __webpack_require__(48);
 	
 	Object.defineProperty(exports, 'trycatch', {
 	  enumerable: true,
@@ -18772,7 +14889,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _multiinheritance = __webpack_require__(65);
+	var _multiinheritance = __webpack_require__(49);
 	
 	Object.defineProperty(exports, 'multiInherit', {
 	  enumerable: true,
@@ -18811,7 +14928,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _passedValuesEqualToNumberOfArguments2 = __webpack_require__(66);
+	var _passedValuesEqualToNumberOfArguments2 = __webpack_require__(50);
 	
 	Object.defineProperty(exports, 'passedValuesEqualToNumberOfArguments', {
 	  enumerable: true,
@@ -18826,7 +14943,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _after2 = __webpack_require__(67);
+	var _after2 = __webpack_require__(51);
 	
 	Object.defineProperty(exports, 'after', {
 	  enumerable: true,
@@ -18835,7 +14952,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _before2 = __webpack_require__(68);
+	var _before2 = __webpack_require__(52);
 	
 	Object.defineProperty(exports, 'before', {
 	  enumerable: true,
@@ -18844,7 +14961,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _deprecated2 = __webpack_require__(69);
+	var _deprecated2 = __webpack_require__(53);
 	
 	Object.defineProperty(exports, 'deprecated', {
 	  enumerable: true,
@@ -18859,7 +14976,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _compose2 = __webpack_require__(70);
+	var _compose2 = __webpack_require__(54);
 	
 	Object.defineProperty(exports, 'compose', {
 	  enumerable: true,
@@ -18880,7 +14997,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _autobind2 = __webpack_require__(71);
+	var _autobind2 = __webpack_require__(55);
 	
 	Object.defineProperty(exports, 'autobind', {
 	  enumerable: true,
@@ -18889,7 +15006,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  }
 	});
 	
-	var _abstract2 = __webpack_require__(72);
+	var _abstract2 = __webpack_require__(56);
 	
 	Object.defineProperty(exports, 'abstract', {
 	  enumerable: true,
@@ -18899,7 +15016,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 
 /***/ }),
-/* 39 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18909,15 +15026,15 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._doesNotMutate = exports._immutable = undefined;
 	
-	var _deepcopy = __webpack_require__(40);
+	var _deepcopy = __webpack_require__(24);
 	
 	var _deepcopy2 = _interopRequireDefault(_deepcopy);
 	
-	var _deepEqual = __webpack_require__(52);
+	var _deepEqual = __webpack_require__(36);
 	
 	var _deepEqual2 = _interopRequireDefault(_deepEqual);
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -18974,14 +15091,14 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 40 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(41).default;
+	module.exports = __webpack_require__(25).default;
 
 
 /***/ }),
-/* 41 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18991,11 +15108,11 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.default = deepcopy;
 	
-	var _detector = __webpack_require__(42);
+	var _detector = __webpack_require__(26);
 	
-	var _collection = __webpack_require__(49);
+	var _collection = __webpack_require__(33);
 	
-	var _copier = __webpack_require__(50);
+	var _copier = __webpack_require__(34);
 	
 	/**
 	 * deepcopy function
@@ -19095,7 +15212,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	//# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 42 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -19105,9 +15222,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.detectType = detectType;
 	
-	var _typeDetect = _interopRequireDefault(__webpack_require__(43));
+	var _typeDetect = _interopRequireDefault(__webpack_require__(27));
 	
-	var _buffer = __webpack_require__(44);
+	var _buffer = __webpack_require__(28);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -19129,7 +15246,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	//# sourceMappingURL=detector.js.map
 
 /***/ }),
-/* 43 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
@@ -19524,7 +15641,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 44 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {"use strict";
@@ -19590,10 +15707,10 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 	exports.copy = copy;
 	//# sourceMappingURL=buffer.js.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29).Buffer))
 
 /***/ }),
-/* 45 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -19606,9 +15723,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(46)
-	var ieee754 = __webpack_require__(47)
-	var isArray = __webpack_require__(48)
+	var base64 = __webpack_require__(30)
+	var ieee754 = __webpack_require__(31)
+	var isArray = __webpack_require__(32)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -21389,7 +17506,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 46 */
+/* 30 */
 /***/ (function(module, exports) {
 
 	'use strict'
@@ -21546,7 +17663,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 47 */
+/* 31 */
 /***/ (function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -21636,7 +17753,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 48 */
+/* 32 */
 /***/ (function(module, exports) {
 
 	var toString = {}.toString;
@@ -21647,7 +17764,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 49 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21659,7 +17776,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.isCollection = isCollection;
 	exports.set = set;
 	
-	var _detector = __webpack_require__(42);
+	var _detector = __webpack_require__(26);
 	
 	/**
 	 * collection types
@@ -21741,7 +17858,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	//# sourceMappingURL=collection.js.map
 
 /***/ }),
-/* 50 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21751,9 +17868,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.copy = copy;
 	
-	var _copy_map = _interopRequireDefault(__webpack_require__(51));
+	var _copy_map = _interopRequireDefault(__webpack_require__(35));
 	
-	var _detector = __webpack_require__(42);
+	var _detector = __webpack_require__(26);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21795,7 +17912,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	//# sourceMappingURL=copier.js.map
 
 /***/ }),
-/* 51 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21805,7 +17922,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.default = void 0;
 	
-	var _buffer = __webpack_require__(44);
+	var _buffer = __webpack_require__(28);
 	
 	const globalObject = Function('return this')();
 	/**
@@ -21983,12 +18100,12 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	//# sourceMappingURL=copy_map.js.map
 
 /***/ }),
-/* 52 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(53);
-	var isArguments = __webpack_require__(54);
+	var objectKeys = __webpack_require__(37);
+	var isArguments = __webpack_require__(38);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -22083,7 +18200,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 53 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -22098,7 +18215,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 54 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -22124,7 +18241,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 55 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22134,7 +18251,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.noop = exports.descriptorIsFunc = undefined;
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
 	var descriptorIsFunc = exports.descriptorIsFunc = function descriptorIsFunc(key, func) {
 	  if (!(0, _validationHelpers._isFunction)(func)) {
@@ -22151,7 +18268,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	var noop = exports.noop = function noop() {};
 
 /***/ }),
-/* 56 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22169,7 +18286,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	                                                                                                                                                                                                                                                                              */
 	
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * Tests if the prop is an Object
@@ -22460,7 +18577,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 57 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22470,7 +18587,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._validateSchema = exports._acceptsString = exports._acceptsPromise = exports._acceptsFunction = exports._acceptsBoolean = exports._acceptsInteger = exports._acceptsNumber = exports._acceptsArray = exports._acceptsObject = undefined;
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
 	/**
 	 * @acceptsObject Decorator
@@ -22624,7 +18741,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 58 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22634,7 +18751,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._memoization = undefined;
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	var _memoization = exports._memoization = function _memoization() {
 	  var cache = new Map();
@@ -22665,7 +18782,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	   */
 
 /***/ }),
-/* 59 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22675,7 +18792,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._defer = exports._debounce = exports._timeout = undefined;
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * Timeout decorator
@@ -22719,7 +18836,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	var _defer = exports._defer = __timeout.bind(undefined, 0);
 
 /***/ }),
-/* 60 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22729,7 +18846,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._donotlog = exports._donotlogerrors = exports._donotlogwarnings = exports._donotlogmessages = exports._donotbase = exports._loglocalstorage = exports._getLocalStorage = exports._log = undefined;
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * Logs the passed arguments and the returned value
@@ -22877,7 +18994,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	var _donotlog = exports._donotlog = _donotbase.bind({}, ['error', 'log', 'warn', 'table']);
 
 /***/ }),
-/* 61 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22887,7 +19004,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._timesCalled = exports._once = exports._times = undefined;
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * Executes a function n times, any repeat call returns
@@ -22962,7 +19079,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	var _timesCalled = exports._timesCalled = __timesCalled;
 
 /***/ }),
-/* 62 */
+/* 46 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -23006,7 +19123,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 63 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23016,7 +19133,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._forceoverridden = exports._overridden = undefined;
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * The method can be called from an instance of the base
@@ -23070,7 +19187,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 64 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23080,9 +19197,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._trycatch = undefined;
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
 	/**
 	 * Try-catch decorator
@@ -23124,7 +19241,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 65 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23134,7 +19251,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._partialyInherit = exports._multiInherit = undefined;
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
 	var __inherit = function __inherit(_clas, _meths, _partially) {
 	  var classes = [].concat(_clas).reverse();
@@ -23200,7 +19317,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 66 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -23237,7 +19354,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 67 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23247,9 +19364,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._after = undefined;
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * Base decorator function for immutability
@@ -23292,7 +19409,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 68 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23302,9 +19419,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._before = undefined;
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * Before function decorator
@@ -23348,7 +19465,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 69 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23358,9 +19475,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._deprecated = undefined;
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
 	/**
 	 * Deprecated decorator
@@ -23400,7 +19517,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 70 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23410,9 +19527,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports._leftCompose = exports._compose = undefined;
 	
-	var _validationHelpers = __webpack_require__(56);
+	var _validationHelpers = __webpack_require__(40);
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	* Compose decorator
@@ -23466,7 +19583,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 71 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23484,7 +19601,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	                                                                                                                                                                                                                                                                  */
 	
 	
-	var _helpers = __webpack_require__(55);
+	var _helpers = __webpack_require__(39);
 	
 	/**
 	 * Autobind function decorator
@@ -23519,7 +19636,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 72 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	"use strict";
