@@ -1,6 +1,5 @@
 import { Core } from '../core';
 import { Sandbox } from '../core/sandbox';
-//import { container } from 'needlepoint';
 import { createHyperComponent } from '../decorators/component'
 import { Container } from 'aurelia-dependency-injection';
 class A { }

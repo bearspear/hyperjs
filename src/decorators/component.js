@@ -33,11 +33,9 @@ export function listenToRoot(rootNode, events, selector, callback, bubbles = tru
   }
 };
 
-
-
 export function stopListenToRoot(rootNode) {
   $(rootNode).off();
-}
+};
 
 export function componentMetaData(options = {}) {
   let template, embedTemplate = false, registry = new Map(), autorun = false;
@@ -66,11 +64,11 @@ export function componentMetaData(options = {}) {
     registry: registry,
     autorun: autorun
   }
-}
+};
 
 export function Component2(options = {}) {
   return makeClassDecorator(componentMetaData(options));
-}
+};
 
 export function createHyperComponent(_Class) {
 
@@ -104,25 +102,6 @@ export function createHyperComponent(_Class) {
     getElementById(id) {
       return this.instance.querySelector('#' + id);
     }
-
-    //listenToRoot (delegated)
-    // listenToRoot(events, selector, callback, bubbles = true) {
-    //   var _this = this;
-    //   if (typeof selector === 'function') {
-    //     bubbles = callback;
-    //     callback = selector;
-    //     return $(this.domNode).on(events, function (e, ...params) {
-    //       if (!bubbles) _this.sandbox.stopBubble(e);
-    //       callback(this, e, ...params)
-    //     });
-
-    //   } else {
-    //     return $(this.domNode).on(events, selector, function (e, ...params) {
-    //       if (!bubbles) _this.sandbox.stopBubble(e);
-    //       callback(this, e, ...params)
-    //     });
-    //   }
-    // }
 
     // this might be rare (maybe)
     listenToElement(events, selector, callback, bubbles = true) {
@@ -655,4 +634,4 @@ export function createHyperComponent(_Class) {
     }
 
   };
-}
+};

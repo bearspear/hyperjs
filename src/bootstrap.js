@@ -1,5 +1,4 @@
 import { InjectionCore } from './core/injection';
-//import { HyperComponent } from './decorators/component';
 
 let core = new InjectionCore();
 
