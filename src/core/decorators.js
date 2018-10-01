@@ -45,4 +45,10 @@ export function RootListener(events, selector) {
     return makePropDecorator("RootListener", [events, selector]);
 }
 
+export function Router(options = {}) {
+    return makeClassDecorator("Router", options);
+};
 
+export function Pjax(options = {}) {
+    return makeClassDecorator("Pjax", options);
+};

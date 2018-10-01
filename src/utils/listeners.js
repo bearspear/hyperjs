@@ -1,4 +1,34 @@
 import $ from 'jquery';
+import { getArgumentNames } from '../utils/tasks';
+
+
+
+export function callMethod(method, ...args) {
+    if (typeof this[method] === 'function') {
+        this[method](...args);
+    }
+};
+
+export function triggerEvent(event, done = () => { }) {
+    if (typeof this[event] === 'function') {
+        if (getArgumentNames(this[event]).length !== 0) {
+            try {
+                this[event](done);
+            } catch (err) {
+                done(err);
+            }
+        } else {
+            try {
+                this[event]();
+                done();
+            } catch (err) {
+                done(err);
+            }
+        }
+    } else {
+        done();
+    }
+};
 
 export function stopBubbles(event) {
     event.preventDefault();
@@ -21,8 +51,14 @@ export function listenToRoot(rootNode, events, selector, callback, bubbles = tru
             callback(this, e, ...params)
         });
     }
+
+    // if bubbles return observable ?
 };
 
 export function stopListenToRoot(rootNode) {
     $(rootNode).off();
 };
+
+export function addCustomEventToRoot() {
+
+}

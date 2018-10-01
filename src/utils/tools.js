@@ -1,10 +1,22 @@
 export function disposeObject(obj) {
     const objs = obj instanceof Array ? obj : [obj];
-    for (const o of objs) {
+    for (let o of objs) {
         if (o != null) {
             o = null;
         }
     }
+};
+
+export function uniqueId(length) {
+    var id;
+    if (length == null) {
+        length = 8;
+    }
+    id = "";
+    while (id.length < length) {
+        id += Math.random().toString(36).substr(2);
+    }
+    return id.substr(0, length);
 };
 
 export function convertHtmlToText(html) {
@@ -63,6 +75,9 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export function noop(){
+
+ }
 
 const authErrors = ['SAS Rejected', 'Invalid Session'];
 

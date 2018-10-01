@@ -137,3 +137,5 @@ export default {
     getArgumentNames,
     hasArgument
 };
+
+export { runParallel, getArgumentNames}

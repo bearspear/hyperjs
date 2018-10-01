@@ -1,23 +1,43 @@
 import { InjectionCore } from './injection';
 import { Mediator } from './mediator';
-import { listenToRoot, stopListenToRoot } from '../utils/listeners';
+import { listenToRoot, stopListenToRoot, triggerEvent } from '../utils/listeners';
 import Dom from './plugins/dom';
 import Util from './plugins/util';
 import Mvc from './plugins/mvc';
 import EJS from './plugins/microtemplate';
 import Cookies from './plugins/cookie';
 import $ from 'jquery';
-import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators'
+import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators';
 import util from '../utils/tasks';
+import { uniqueId, noop } from '../utils/tools';
+
+
+//Todo: attach observable on root for all bubbled events and parent subscription
+
+export function corelessSandbox() {
+  this.instanceId = uniqueId;
+  this.options = {};
+  this.moduleId = this.instanceId;
+
+  this.on = noop;
+  this.emit = noop;
+  this.off = noop;
+  this.attach = noop;
+  this.detach = noop;
+  this.render = noop;
+};
 
 export function createHyperComponent(_Class) {
 
   let bindings = null;
+
   if (_Class[PROP_METADATA] && _Class[PROP_METADATA].RootListener) {
     bindings = _Class[PROP_METADATA].RootListener;
   }
 
   const _metadata = Object.assign(_Class[ANNOTATIONS], { bindings: bindings });
+
+  const tag = _metadata.tag || `hyper-${_Class.name.toLowerCase().replace('component', '')}`;
 
   return class HyperComponent extends _Class {
 
@@ -139,13 +159,9 @@ export function createHyperComponent(_Class) {
         id: id
       };
       this.sandbox.emit(channel, event, cb);
+
+      //TODO: trigger element custom event on root
     }
-
-    // stop listening to Root
-    // _stopListenToRoot() {
-    //   $(this.domNode).off();
-    // }
-
 
     createComponentEvent(onEvent) {
       if (this[onEvent]) {
@@ -188,16 +204,17 @@ export function createHyperComponent(_Class) {
         );
       }
     }
-
     _setRootAttributes() {
-      this.id = `component-${this.core.uniqueId()}`;
+      this.id = `component-${uniqueId()}`;
       this.domNode.setAttribute('data-component-id', this.id);
       this.domNode.setAttribute('data-instance-id', this.instanceId);
+      this.domNode.setAttribute('data-tag', tag);
     }
 
     _removeRootAttributes() {
       this.domNode.removeAttribute('data-component-id');
       this.domNode.removeAttribute('data-instance-id');
+      this.domNode.removeAttribute('data-tag');
     }
 
     _unbind() {
@@ -280,6 +297,7 @@ export function createHyperComponent(_Class) {
 
     _registerComponents() {
       const registry = _metadata.registry || new Map();
+      //TODO: Dom-based
       for (const [key, value] of registry.entries()) {
         this.core.register(key, value)
       }
@@ -299,35 +317,6 @@ export function createHyperComponent(_Class) {
       } else {
         this.core.start(page, opt, done);
         this.page = page;
-      }
-    }
-
-    _tryEvent(event, done) {
-      try {
-        this[event](done);
-      } catch (err) {
-        done(err);
-      }
-    }
-
-    _onEvent(event, done) {
-      if (typeof this[event] === 'function') {
-        if (util.getArgumentNames(this[event]).length !== 0) {
-          try {
-            this[event](done);
-          } catch (err) {
-            done(err);
-          }
-        } else {
-          try {
-            this[event]();
-            done();
-          } catch (err) {
-            done(err);
-          }
-        }
-      } else {
-        done();
       }
     }
 
@@ -376,7 +365,7 @@ export function createHyperComponent(_Class) {
       }
     }
 
-    _preInit(sandbox) { //embedInSandbox
+    _preInit(sandbox = new corelessSandbox()) { //embedInSandbox
       this.core = new InjectionCore();
       this.core.use([Util, Mvc, EJS, Dom, Cookies]);
 
@@ -426,15 +415,15 @@ export function createHyperComponent(_Class) {
 
       let tasks = [
         (next) => {
-          this._onEvent('onPreInit', next);
+          triggerEvent.call(this, 'onPreInit', next);
         },
         (next) => {
           this.core.boot(() => {
-            this._onEvent('onBoot', next);
+            triggerEvent.call(this, 'onBoot', next);
           });
         },
         (next) => {
-          this.id = `component-${this.core.uniqueId()}`;
+          this.id = `component-${uniqueId()}`;
           this._setRootAttributes();
           next()
         },
@@ -445,7 +434,7 @@ export function createHyperComponent(_Class) {
           next();
         },
         (next) => {
-          this.id = `component-${this.core.uniqueId()}`;
+          this.id = `component-${uniqueId()}`;
           this._setRootAttributes();
           next();
         },
@@ -464,12 +453,12 @@ export function createHyperComponent(_Class) {
           next();
         }
       ];
-
+      let _this = this;
       util.runSeries(tasks, (err) => {
         if (err != null) {
           errors = err;
         }
-        this._onEvent('onInit', (err2) => {
+        triggerEvent.call(this, 'onInit', (err2) => {
           if (err2) {
             errors.concat(err2);
           }
@@ -484,7 +473,7 @@ export function createHyperComponent(_Class) {
     destroy(done) {
       let tasks = [
         (next) => {
-          this._onEvent('onDestroy', next);
+          triggerEvent.call(this, 'onDestroy', next);
         },
         (next) => {
           this.core.stop(next);
@@ -516,7 +505,7 @@ export function createHyperComponent(_Class) {
     initComponents() {
       for (const id of Object.keys(this._modules)) {
         let el = this.find('#' + id).get(0) || this.find(id).get(0);
-        const rand = this.core.uniqueId();
+        const rand = uniqueId();
         if (el && !this._checkForComponent(el)) {
           this.core.start(id, {
             instanceId: `${id}-${rand}`,
@@ -572,6 +561,6 @@ export function createHyperComponent(_Class) {
       this.domNode.style.display = "none";
       return this;
     }
-
   };
 };
+

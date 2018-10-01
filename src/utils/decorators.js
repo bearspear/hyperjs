@@ -40,4 +40,3 @@ export function makePropDecorator(metaName, props) {
     }
     return PropDecorator;
 }
-
