@@ -1,6 +1,7 @@
 import { InjectionCore } from './core/injection';
 import { createModule } from './core/module';
-
+import {initialize} from 'aurelia-pal-browser';
+initialize();
 function ready(global) {
     return new Promise((resolve, reject) => {
         if (global.document.readyState === 'complete') {
@@ -19,7 +20,6 @@ function ready(global) {
 }
 
 function startApp(rootComponent, rootNode, options) {
-    //TODO: test for module
     if (rootComponent.type === 'Module') {
         const Module =  createModule(rootComponent);
         const module = new Module();

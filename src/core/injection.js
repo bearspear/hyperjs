@@ -1,23 +1,77 @@
 import { Core } from '../core';
 import { Sandbox } from '../core/sandbox';
 import { createHyperComponent } from './component'
-import { Container } from 'aurelia-dependency-injection';
-class A { }
+import { createPjaxComponent } from './pjax';
+import { createService } from './service'
+import { createModule } from './module';
+import { createCustomElement, registerTag } from './hyperelement'
+import { createPagelet } from './pagelet';
+import { Container, resolver } from 'aurelia-dependency-injection';
+import { uniqueId, noop } from '../utils/tools';
+class Test { }
+
+@resolver()
+export class HyperResolver {
+
+    get(container, key) {
+        const type = key.type;
+
+        switch (type) {
+            case "Component":
+                return container.invoke(createHyperComponent(key));
+            case "Module":
+                return container.invoke(createModule(key));
+            case "Pjax":
+                return container.invoke(createPjaxComponent(key));
+            case "Service":
+                return container.invoke(createService(key));
+            case "CustomElement":
+                return container.invoke(createCustomElement(key));
+            case "Pagelet":
+                return container.invoke(createPagelet(key));
+            // case "Router": //array
+            //     return this.state[0].get(container, key);
+            default:
+                return container.invoke(key)
+            //throw new Error('Invalid');
+        }
+    }
+}
+
+export function generateId(type = 'hyper') {
+    return type.toLowerCase() + "-" + uniqueId;
+}
 
 export class InjectionCore extends Core {
     constructor() {
         super(Sandbox);
+        this.container = new Container();
+        this._services = {};
+        this._elements = {};
+        this.log = console;
+    }
+
+    register(id, creator, options) {
+        const type = creator.type || "generic"
+
+        if (type === "generic" || creator.type === "Service") {
+            this.container.registerResolver(creator, new HyperResolver());
+            this._services[id] = { creator, options, id, type };
+            return this;
+        } else if (type === 'CustomElement') {
+            this._elements[id] = { creator, options, id };
+            const c = createCustomElement(creator)
+            registerTag(c.tag, c);
+            registerTag(c.tag, c);
+            return this;
+        } else {
+            this.container.registerResolver(creator, new HyperResolver());
+            return super.register(id, creator, options)
+        }
     }
 
     _resolveInstance(creator, sb) {
-        if (creator["type"] === "Component") {
-            creator = createHyperComponent(creator);
-        } else {
-            return new Error("not component class");
-        }
-
-        let container = new Container();
-        return container.get(creator);
+        return this.container.get(creator);
     }
 
     // updated to accommodate an injector
@@ -63,7 +117,4 @@ export class InjectionCore extends Core {
             return cb(null, instance, iOpts);
         });
     }
-
-
-
 }

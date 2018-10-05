@@ -1,23 +1,45 @@
 
 import { createHyperComponent } from './component';
 import { HyperModel } from "./hypermodel";
+import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators';
+import $ from 'jquery';
 
 export function createPjaxComponent(_Class) {
 
     const _newClass = createHyperComponent(_Class);
+    const _metadata = Object.assign(_Class[ANNOTATIONS], {});
+    const contentRoot = $(_metadata.main || "main").get(0);
 
     return class PjaxComponent extends _newClass {
+
+        internalState = {
+            currentUrl: '/',
+            breadcrumb: []
+        }
 
         onSuccessPjax(data) {
 
         }
 
-        onBind(domListen, parentListen) {
+        onInit() {
+            this.traverse("http://localhost:8000/")
+        }
+
+        traverse(url) {
+            this.hyperModel.get({
+                url: url
+            });
+        }
+
+        onStateChange(url) {
+            this.traverse(url)
+        }
+
+        onBind(domListen) {
             console.log('pjax binding');
             if (typeof super.onBind === 'function') {
-                super.onBind(domListen, parentListen);
+                super.onBind(domListen);
             }
-
         }
 
         onSubscribe(domListen, parentListen) {
@@ -29,6 +51,17 @@ export function createPjaxComponent(_Class) {
 
         onPjaxInit() {
             console.log("Do Init Pjax stuff!");
+            this.hyperModel = new class extends HyperModel {
+                onComplete(event) {
+                    console.log('event:', event);
+                    const html = event[0].contents;
+                    let url = event[0].url;
+                    $(contentRoot).attr("data-url", url).html(html);
+                }
+                onError() {
+
+                }
+            }();
         }
 
         _preInit(sandbox) {

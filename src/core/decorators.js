@@ -33,6 +33,9 @@ export function Component(options = {}) {
     return makeClassDecorator("Component", componentMetaData(options));
 };
 
+export function Pagelet(options = {}) {
+    return makeClassDecorator("Pagelet", componentMetaData(options));
+};
 export function Service(options = {}) {
     return makeClassDecorator("Service", options);
 };
@@ -41,8 +44,20 @@ export function Module(options = {}) {
     return makeClassDecorator("Module", options);
 };
 
-export function RootListener(events, selector) {
-    return makePropDecorator("RootListener", [events, selector]);
+export function CustomElement(options = {}) {
+    return makeClassDecorator("CustomElement", options);
+};
+
+export function Listen(events, selector) {
+    return makePropDecorator("Listen", [events, selector]);
+}
+
+export function Subscribe(channels) {
+    return makePropDecorator("Subscribe", [channels]);
+}
+
+export function Element(selector) {
+    return makePropDecorator("Element", [selector]);
 }
 
 export function Router(options = {}) {
@@ -51,4 +66,8 @@ export function Router(options = {}) {
 
 export function Pjax(options = {}) {
     return makeClassDecorator("Pjax", options);
+};
+
+export function Modal(options = {}) {
+    return makeClassDecorator("Modal", options);
 };

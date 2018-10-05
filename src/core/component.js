@@ -27,12 +27,28 @@ export function corelessSandbox() {
   this.render = noop;
 };
 
+export function startComponent(selector, creator, options = {}) {
+  options["domNode"] = $(selector).get(0);
+  const inst = new (createHyperComponent(creator))();
+  // will be coreless or rather the "core" will that which started it
+  inst._preInit();
+  return inst.init(options);
+}
+
 export function createHyperComponent(_Class) {
 
-  let bindings = null;
+  let bindings = null, elements = null, subscriptions = null;
 
-  if (_Class[PROP_METADATA] && _Class[PROP_METADATA].RootListener) {
-    bindings = _Class[PROP_METADATA].RootListener;
+  if (_Class[PROP_METADATA] && _Class[PROP_METADATA].Listen) {
+    bindings = _Class[PROP_METADATA].Listen;
+  }
+
+  if (_Class[PROP_METADATA] && _Class[PROP_METADATA].Subscribe) {
+    subscriptions = _Class[PROP_METADATA].Listen;
+  }
+
+  if (_Class[PROP_METADATA] && _Class[PROP_METADATA].Element) {
+    elements = _Class[PROP_METADATA].Element;
   }
 
   const _metadata = Object.assign(_Class[ANNOTATIONS], { bindings: bindings });
@@ -56,7 +72,7 @@ export function createHyperComponent(_Class) {
     }
 
     append(a) {
-      this.$instance.append(a);
+      return this.$instance.append(a);
     }
 
     getElementById(id) {
@@ -187,7 +203,7 @@ export function createHyperComponent(_Class) {
     }
 
     _bind() {
-      console.log('test', HyperComponent.test)
+      //console.log('test', HyperComponent.test)
       //const bindings = HyperComponent.__prop_metadata__.RootListener;
 
       if (Array.isArray(_metadata.bindings)) {
@@ -228,6 +244,16 @@ export function createHyperComponent(_Class) {
 
     _subscribe() {
       this._setupBasicComponentChannels();
+
+      // if (Array.isArray(_metadata.subscriptions)) {
+      //   for (const sub of _metadata.subscriptions) {
+      //     if(sub.dir === 'down')
+      //     this.listenToParent(subchannel, cb),
+      //     this.listenToChildren(channel, cb)
+      //     listenToRoot(this.domNode, binding[1][0], binding[1][1], binding[2].bind(this));
+      //   }
+      // }
+
       if (typeof this.onSubscribe === 'function') {
         this.onSubscribe(
           (channel, cb) => this.listenToParent(channel, cb),
@@ -370,7 +396,7 @@ export function createHyperComponent(_Class) {
       this.core.use([Util, Mvc, EJS, Dom, Cookies]);
 
       //this._mediator.cascadeChannels = true;
-      this.eventHub = new Mediator();
+      this.eventHub = new Mediator(); // really needed??
       this.boundElements = this.boundElements || [];
       //if (jQuery == null) {
       //throw "jQuery  not found"
@@ -378,7 +404,7 @@ export function createHyperComponent(_Class) {
       this.$ = $;
       $.hyperjs = true;
 
-      this._registerComponents(); //init?
+      
 
       this.sandbox = sandbox
       this.hasSandbox = this.sandbox != null;
@@ -407,6 +433,8 @@ export function createHyperComponent(_Class) {
       if (this.hasTemplate && this.embedTemplate) {
         this.domNode.innerHTML = _metadata.template;
       }
+
+      this._registerComponents(); //init?
     }
 
     init(options, done) {

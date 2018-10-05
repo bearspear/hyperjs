@@ -33,8 +33,8 @@ export function capitalizeEachWord(str) {
     });
 };
 
-
 export function getSize(el) {
+    el = $(el).get(0);
     return {
         container: {
             width: $(el).width(),
@@ -61,7 +61,6 @@ export function decodeBase64toJSON(str) {
     return JSON.parse(json);
 }
 
-
 export function getParameterByName(name, url = window.location.href) {
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -75,9 +74,9 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function noop(){
+export function noop() {
 
- }
+}
 
 const authErrors = ['SAS Rejected', 'Invalid Session'];
 

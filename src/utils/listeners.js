@@ -1,7 +1,13 @@
 import $ from 'jquery';
 import { getArgumentNames } from '../utils/tasks';
 
-
+export function tryEvent(event, done) {
+    try {
+        this[event](done);
+    } catch (err) {
+        done(err);
+    }
+};
 
 export function callMethod(method, ...args) {
     if (typeof this[method] === 'function') {
