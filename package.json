@@ -1,7 +1,7 @@
 {
   "name": "hyperjs",
   "version": "2.0.0",
-  "main": "./dist/hyperjs.js",
+  "main": "index.js",
   "scripts": {
     "build2": "webpack -p --progress --colors --config webpack.config.js",
     "build": "webpack --mode=build",
@@ -38,7 +38,9 @@
     "router5-link-interceptor": "^3.0.0",
     "router5-listeners": "^3.0.0",
     "rxjs": "^6.3.3",
+    "skatejs": "^5.2.4",
     "slim-js": "^4.0.1",
+    "tingle.js": "^0.13.2",
     "xstream": "^11.7.0"
   },
   "devDependencies": {

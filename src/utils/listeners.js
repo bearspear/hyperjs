@@ -11,9 +11,12 @@ export function tryEvent(event, done) {
 
 export function callMethod(method, ...args) {
     if (typeof this[method] === 'function') {
-        this[method](...args);
+        return this[method](...args);
     }
+    return null;
 };
+
+export { callMethod as method }
 
 export function triggerEvent(event, done = () => { }) {
     if (typeof this[event] === 'function') {

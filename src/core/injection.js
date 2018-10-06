@@ -2,6 +2,7 @@ import { Core } from '../core';
 import { Sandbox } from '../core/sandbox';
 import { createHyperComponent } from './component'
 import { createPjaxComponent } from './pjax';
+import { createModalComponent } from './modal';
 import { createService } from './service'
 import { createModule } from './module';
 import { createCustomElement, registerTag } from './hyperelement'
@@ -29,6 +30,8 @@ export class HyperResolver {
                 return container.invoke(createCustomElement(key));
             case "Pagelet":
                 return container.invoke(createPagelet(key));
+            case "Modal":
+                return container.invoke(createModalComponent(key));
             // case "Router": //array
             //     return this.state[0].get(container, key);
             default:
@@ -62,7 +65,7 @@ export class InjectionCore extends Core {
             this._elements[id] = { creator, options, id };
             const c = createCustomElement(creator)
             registerTag(c.tag, c);
-            registerTag(c.tag, c);
+            //registerTag(c.tag, c);
             return this;
         } else {
             this.container.registerResolver(creator, new HyperResolver());

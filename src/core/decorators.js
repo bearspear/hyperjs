@@ -36,6 +36,7 @@ export function Component(options = {}) {
 export function Pagelet(options = {}) {
     return makeClassDecorator("Pagelet", componentMetaData(options));
 };
+
 export function Service(options = {}) {
     return makeClassDecorator("Service", options);
 };
@@ -50,15 +51,19 @@ export function CustomElement(options = {}) {
 
 export function Listen(events, selector) {
     return makePropDecorator("Listen", [events, selector]);
-}
+};
 
 export function Subscribe(channels) {
     return makePropDecorator("Subscribe", [channels]);
-}
+};
+
+export function Broadcast(action) {
+    return makePropDecorator("Broadcast", action);
+};
 
 export function Element(selector) {
     return makePropDecorator("Element", [selector]);
-}
+};
 
 export function Router(options = {}) {
     return makeClassDecorator("Router", options);

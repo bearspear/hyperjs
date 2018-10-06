@@ -30,14 +30,14 @@ export function corelessSandbox() {
 export function startComponent(selector, creator, options = {}) {
   options["domNode"] = $(selector).get(0);
   const inst = new (createHyperComponent(creator))();
-  // will be coreless or rather the "core" will that which started it
+  // it will be coreless or rather the "core" will that which started it
   inst._preInit();
   return inst.init(options);
 }
 
 export function createHyperComponent(_Class) {
 
-  let bindings = null, elements = null, subscriptions = null;
+  let bindings = null, elements = null, subscriptions = null, broadcasts = null;
 
   if (_Class[PROP_METADATA] && _Class[PROP_METADATA].Listen) {
     bindings = _Class[PROP_METADATA].Listen;
@@ -49,6 +49,10 @@ export function createHyperComponent(_Class) {
 
   if (_Class[PROP_METADATA] && _Class[PROP_METADATA].Element) {
     elements = _Class[PROP_METADATA].Element;
+  }
+
+  if (_Class[PROP_METADATA] && _Class[PROP_METADATA].Broadcast) {
+    broadcasts = _Class[PROP_METADATA].Broadcast;
   }
 
   const _metadata = Object.assign(_Class[ANNOTATIONS], { bindings: bindings });
@@ -146,7 +150,7 @@ export function createHyperComponent(_Class) {
         data: data
       };
       if (id === '*' || id == null) {
-        for (const key of Object.keys(this._running)) {
+        for (const key of Object.keys(this.core._running)) {
           this.core._mediator.emit(`${channel}/${key}`, event, cb);
         }
       } else {
@@ -187,6 +191,28 @@ export function createHyperComponent(_Class) {
       }
     }
 
+    _setupBroadcasts() {
+      this.createComponentEvent('onBroadcast');
+      this.listenToParent(`broadcast`, (event) => {
+        this.onBroadcast(event.data, 'down');
+        this._checkBroadcasts(event.data);
+      });
+      this.listenToChildren(`broadcast`, (event) => {
+        this.onBroadcast(event.data, 'up');
+        this._checkBroadcasts(event.data);
+      });
+    }
+
+    _checkBroadcasts(event) {
+      if (Array.isArray(broadcasts)) {
+        for (const broadcast of broadcasts) {
+          if (event.action === broadcast[1]) {
+            broadcast[2].call(this, event.value);
+          }
+        }
+      }
+    }
+
     _setupBasicComponentChannels() {
       if (this.sandbox) {
         this.listenToParent(`hide`, () => { this.hide() });
@@ -196,16 +222,11 @@ export function createHyperComponent(_Class) {
         });
         this.pipeUp('broadcast');
         this.pipeDown('broadcast');
-        this.createComponentEvent('onBroadcast')
-        this.listenToParent(`broadcast`, (event) => this.onBroadcast(event.data, 'down'));
-        this.listenToChildren(`broadcast`, (event) => this.onBroadcast(event.data, 'up'));
+        this._setupBroadcasts();
       }
     }
 
-    _bind() {
-      //console.log('test', HyperComponent.test)
-      //const bindings = HyperComponent.__prop_metadata__.RootListener;
-
+    _bind(custom = () => { }) {
       if (Array.isArray(_metadata.bindings)) {
         for (const binding of _metadata.bindings) {
           //listenToRoot(this.domNode, ...binding);
@@ -216,7 +237,8 @@ export function createHyperComponent(_Class) {
       if (typeof this.onBind === 'function') {
         this.onBind(
           (...args) => listenToRoot(this.domNode, ...args), // allow for arrays
-          (...args) => this.listenToElement(...args)
+          (...args) => this.listenToElement(...args),
+          (...args) => custom(...args)
         );
       }
     }
@@ -404,7 +426,7 @@ export function createHyperComponent(_Class) {
       this.$ = $;
       $.hyperjs = true;
 
-      
+
 
       this.sandbox = sandbox
       this.hasSandbox = this.sandbox != null;
@@ -476,9 +498,10 @@ export function createHyperComponent(_Class) {
         },
         (next) => {
           if (_metadata.autorun) {
-            this.startComponents();
+            this.startComponents(next);
+          } else {
+            next();
           }
-          next();
         }
       ];
       let _this = this;
@@ -518,11 +541,12 @@ export function createHyperComponent(_Class) {
           if (this.hasTemplate) {
             this.domNode.innerHTML = '';
           }
+          this._removeRootAttributes();
           next();
         }
       ];
       util.runSeries(tasks, done, true);
-      this._removeRootAttributes();
+
       console.log("destroyed:", this)
     }
 
@@ -565,8 +589,8 @@ export function createHyperComponent(_Class) {
     //   this.core.start(id, options, cb);
     // }
 
-    startComponents(...args) {
-      this.core.start(...args);
+    startComponents(done) {
+      this.core.start(done);
     }
 
     stopComponents(id, done) {

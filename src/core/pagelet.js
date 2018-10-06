@@ -31,9 +31,12 @@ export function createPagelet(_Class) {
 
         onPageletInit(sb) {
             this.root = sb.instance;
-            this.shadowNode = createShadowDom(this.root, template);
+            if (this.root.shadowRoot == null) {
+                this.shadowNode = createShadowDom(this.root, template);
+            } else {
+                this.shadowNode = this.root.shadowRoot;
+            }
         }
-
 
         _registerComponents() {
             const registry = _metadata.registry || new Map();

@@ -2,6 +2,7 @@
 import { createHyperComponent } from './component';
 import { HyperModel } from "./hypermodel";
 import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators';
+import { listenToRoot, stopListenToRoot, triggerEvent, callMethod } from '../utils/listeners';
 import $ from 'jquery';
 
 export function createPjaxComponent(_Class) {
@@ -19,10 +20,6 @@ export function createPjaxComponent(_Class) {
 
         onSuccessPjax(data) {
 
-        }
-
-        onInit() {
-            this.traverse("http://localhost:8000/")
         }
 
         traverse(url) {
@@ -62,6 +59,7 @@ export function createPjaxComponent(_Class) {
 
                 }
             }();
+            this.traverse("http://localhost:8000/")
         }
 
         _preInit(sandbox) {

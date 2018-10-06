@@ -43,7 +43,7 @@ export function createModule(_Class) {
         }
 
         _removeRootAttributes() {
-            $([`data-module-id='${this.id}'`]).removeAttr();
+            $(`[data-module-id="${this.id}"]`).removeAttr('data-module-id');
         }
 
         _startTags() {
@@ -105,10 +105,3 @@ export function createModule(_Class) {
 
     }
 };
-
-
-class FileBag extends HTMLElement {
-    // Define behavior here
-}
-
-window.customElements.define('file-bag', FileBag);
