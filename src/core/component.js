@@ -1,4 +1,4 @@
-import { InjectionCore } from './injection';
+import { InjectionCore, HyperResolver } from './injection';
 import { Mediator } from './mediator';
 import { listenToRoot, stopListenToRoot, triggerEvent } from '../utils/listeners';
 import Dom from './plugins/dom';
@@ -28,11 +28,19 @@ export function corelessSandbox() {
 };
 
 export function startComponent(selector, creator, options = {}) {
+  const container = new Container();
+  container.registerResolver(creator, new HyperResolver());
   options["domNode"] = $(selector).get(0);
-  const inst = new (createHyperComponent(creator))();
+  const inst = container.get(creator);
   // it will be coreless or rather the "core" will that which started it
-  inst._preInit();
-  return inst.init(options);
+  inst._preInit(); //will use  coreless sandbox
+  inst.start = (cb) => {
+    inst.init(options, cb);
+  }
+  inst.stop = (cb) => {
+    inst.destroy(options, cb);
+  }
+  return inst.init(options, cb);
 }
 
 export function createHyperComponent(_Class) {
@@ -59,6 +67,8 @@ export function createHyperComponent(_Class) {
 
   const tag = _metadata.tag || `hyper-${_Class.name.toLowerCase().replace('component', '')}`;
 
+
+  // TODO: separate setup function into another class (?)
   return class HyperComponent extends _Class {
 
     find(selector, dom = false) {
@@ -426,8 +436,6 @@ export function createHyperComponent(_Class) {
       this.$ = $;
       $.hyperjs = true;
 
-
-
       this.sandbox = sandbox
       this.hasSandbox = this.sandbox != null;
       this.hasTemplate = _metadata.template != null;
@@ -457,6 +465,10 @@ export function createHyperComponent(_Class) {
       }
 
       this._registerComponents(); //init?
+    }
+
+    _runInitTasks() {
+
     }
 
     init(options, done) {
@@ -504,7 +516,7 @@ export function createHyperComponent(_Class) {
           }
         }
       ];
-      let _this = this;
+
       util.runSeries(tasks, (err) => {
         if (err != null) {
           errors = err;

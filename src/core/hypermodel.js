@@ -182,7 +182,9 @@ export class HyperModel extends Mediator {
     // }
 
     triggerComplete(textStatus) {
-        if (this._timeoutTimer) { clearTimeout(this._timeoutTimer); }
+        if (this._timeoutTimer) {
+            clearTimeout(this._timeoutTimer);
+        }
         this._fire("pjax:complete", [textStatus, this._options]);
         this._fire("pjax:end", [this._options]);
     }
@@ -221,6 +223,11 @@ export class HyperModel extends Mediator {
     get(options = {}) {
         if (options.url == null) { return; }
         this.executePjax('Get', options)
+    }
+
+    head(options = {}) {
+        if (options.url == null) { return; }
+        this.executePjax("head", options);
     }
 
     executePjax(verb = 'Get', options = {}) {
@@ -302,6 +309,7 @@ export class HyperModel extends Mediator {
     // head(options = {}) {
     //     return this.get(options, "HEAD");
     // }
+
 
     submit(form, options) {
         return this._handleSubmit(form, undefined, options);

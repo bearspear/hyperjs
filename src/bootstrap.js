@@ -1,7 +1,9 @@
 import { InjectionCore } from './core/injection';
 import { createModule } from './core/module';
-import {initialize} from 'aurelia-pal-browser';
+import { initialize } from 'aurelia-pal-browser';
+
 initialize();
+
 function ready(global) {
     return new Promise((resolve, reject) => {
         if (global.document.readyState === 'complete') {
@@ -21,7 +23,7 @@ function ready(global) {
 
 function startApp(rootComponent, rootNode, options) {
     if (rootComponent.type === 'Module') {
-        const Module =  createModule(rootComponent);
+        const Module = createModule(rootComponent);
         const module = new Module();
         return module.start();
     } else {
@@ -58,6 +60,7 @@ export function bootstrap(rootComponent, rootNode, options) {
         const app = startApp(rootComponent, rootNode, options);
         window.app = app;
         app.restart = () => {
+            app.stop();
             app.start('app-root', rootNode);
         };
         // setTimeout(() => {

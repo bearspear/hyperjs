@@ -10,14 +10,23 @@ import { listenToRoot, stopListenToRoot, triggerEvent } from '../utils/listeners
     or a div with a shadowdom. It can though also have a light dom
 *******/
 
-export function createShadowDom(context, template = '<main></main') {
-    const shadowDom = context.attachShadow({ mode: "open" });
+
+export function insertTemplate(shadowDom, template, clear = "false") {
+    if (clear) {
+        shadowDom.innerHTML = '';
+    }
     let templateString = $(template).html();
     templateString = `<div class="root">${templateString}</div>`;
     const templateHtml = $(templateString).get(0);
     shadowDom.appendChild(templateHtml);
+}
+
+export function createShadowDom(context, template = '<main></main') {
+    const shadowDom = context.attachShadow({ mode: "open" });
+    insertTemplate(shadowDom, template, true);
     return shadowDom;
 }
+
 
 export function createPagelet(_Class) {
     // create shadow dom, insert template, ensure listeners properly started
@@ -25,7 +34,7 @@ export function createPagelet(_Class) {
     const _newClass = createHyperComponent(_Class);
     const _metadata = Object.assign(_Class[ANNOTATIONS], {});
     const template = _metadata.template;
-    _metadata.template = null;
+    //_metadata.template = null;
 
     return class Pagelet extends _newClass {
 
@@ -35,6 +44,7 @@ export function createPagelet(_Class) {
                 this.shadowNode = createShadowDom(this.root, template);
             } else {
                 this.shadowNode = this.root.shadowRoot;
+                insertTemplate(this.shadowNode, template, true)
             }
         }
 
@@ -66,8 +76,13 @@ export function createPagelet(_Class) {
             if (typeof this.onSlotChange === 'function') {
 
             }
+        }
 
-
+        destroy(done) {
+            super.destroy((err) => {
+                this.shadowNode.innerHTML = '';
+                done(err);
+            });
         }
     };
 };

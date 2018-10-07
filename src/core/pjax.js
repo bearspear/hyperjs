@@ -2,7 +2,7 @@
 import { createHyperComponent } from './component';
 import { HyperModel } from "./hypermodel";
 import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators';
-import { listenToRoot, stopListenToRoot, triggerEvent, callMethod } from '../utils/listeners';
+import { triggerEvent, method } from '../utils/listeners';
 import $ from 'jquery';
 
 export function createPjaxComponent(_Class) {
@@ -19,7 +19,7 @@ export function createPjaxComponent(_Class) {
         }
 
         onSuccessPjax(data) {
-
+            alert(data)
         }
 
         traverse(url) {
@@ -54,18 +54,18 @@ export function createPjaxComponent(_Class) {
                     const html = event[0].contents;
                     let url = event[0].url;
                     $(contentRoot).attr("data-url", url).html(html);
+                    method.call(this, 'onPjaxSuccess', contentRoot, html, url)
                 }
-                onError() {
-
+                onError(event) {
+                    method.call(this, 'onPjaxError', event, contentRoot)
                 }
             }();
-            this.traverse("http://localhost:8000/")
+            this.traverse("http://localhost:8000/");
         }
 
         _preInit(sandbox) {
             super._preInit(sandbox);
             this.onPjaxInit();
         }
-
     }
 };

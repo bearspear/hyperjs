@@ -15,7 +15,7 @@ if (env === 'build') {
 }
 
 var config = {
-	entry: __dirname + '/index.js',
+	entry: __dirname + '/build.js',
 	devtool: 'source-map',
 	output: {
 		path: __dirname + '/dist',
@@ -30,6 +30,10 @@ var config = {
 				test: /(\.jsx|\.js)$/,
 				loader: 'babel?presets[]=es2015,presets[]=react,presets[]=stage-0,plugins[]=transform-decorators-legacy',
 				exclude: /(node_modules|bower_components)/
+			},
+			{
+				test: /\.css$/,
+				loader: 'style!css!'
 			}
 			// {
 			// 	test: /(\.jsx|\.js)$/,
