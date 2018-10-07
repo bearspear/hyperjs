@@ -1,4 +1,5 @@
-define("hyperjs", [], function() { return /******/ (function(modules) { // webpackBootstrap
+var hyperjs =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -46,24 +47,51 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.$ = exports.CustomElement = exports.Modal = exports.Pjax = exports.Service = exports.Dependencies = exports.Module = exports.Component = exports.startComponent = exports.startRootCore = exports.createAppCore = exports.bootstrap = undefined;
+	
 	var _decorators = __webpack_require__(1);
 	
 	var _ = __webpack_require__(44);
 	
-	var _component = __webpack_require__(52);
+	var _component = __webpack_require__(53);
 	
-	var api = {
-	    bootstrap: _.bootstrap,
-	    startComponent: _component.startComponent,
-	    Component: _decorators.Component,
-	    Dependencies: _decorators.Dependencies,
-	    Service: _decorators.Service,
-	    Pjax: _decorators.Pjax,
-	    Modal: _decorators.Modal,
-	    CustomElement: _decorators.CustomElement
+	var _utils = __webpack_require__(78);
+	
+	var _mixins = __webpack_require__(4);
+	
+	var _tasks = __webpack_require__(50);
+	
+	var _tasks2 = _interopRequireDefault(_tasks);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var utils = {
+	    listen: _utils.listenToRoot,
+	    stopListen: _utils.stopListenToRoot,
+	    Mediator: _utils.Mediator,
+	    doForAll: _tasks2.default.doForAll,
+	    runParallel: _tasks2.default.runParallel,
+	    runSeries: _tasks2.default.runSeries,
+	    runWaterfall: _tasks2.default.runWaterfall,
+	    getArgumentNames: _tasks2.default.getArgumentNames,
+	    hasArgument: _tasks2.default.hasArgument
 	};
 	
-	window.hyperjs = api;
+	exports.bootstrap = _.bootstrap;
+	exports.createAppCore = _.createAppCore;
+	exports.startRootCore = _.startRootCore;
+	exports.startComponent = _component.startComponent;
+	exports.Component = _decorators.Component;
+	exports.Module = _decorators.Module;
+	exports.Dependencies = _decorators.Dependencies;
+	exports.Service = _decorators.Service;
+	exports.Pjax = _decorators.Pjax;
+	exports.Modal = _decorators.Modal;
+	exports.CustomElement = _decorators.CustomElement;
+	exports.$ = _.$;
 
 /***/ }),
 /* 1 */
@@ -6624,7 +6652,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  });
 	});
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -6647,9 +6675,11 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.startRootCore = startRootCore;
 	exports.bootstrap = bootstrap;
 	
-	var _injection = __webpack_require__(46);
+	__webpack_require__(46);
 	
-	var _module = __webpack_require__(73);
+	var _injection = __webpack_require__(47);
+	
+	var _module = __webpack_require__(74);
 	
 	var _aureliaPalBrowser = __webpack_require__(77);
 	
@@ -6734,6 +6764,864 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 	'use strict';
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _aureliaPal = __webpack_require__(43);
+	
+	if (typeof FEATURE_NO_ES2015 === 'undefined') {
+	
+	  (function (Object, GOPS) {
+	    'use strict';
+	
+	    if (GOPS in Object) return;
+	
+	    var setDescriptor,
+	        G = _aureliaPal.PLATFORM.global,
+	        id = 0,
+	        random = '' + Math.random(),
+	        prefix = '__\x01symbol:',
+	        prefixLength = prefix.length,
+	        internalSymbol = '__\x01symbol@@' + random,
+	        DP = 'defineProperty',
+	        DPies = 'defineProperties',
+	        GOPN = 'getOwnPropertyNames',
+	        GOPD = 'getOwnPropertyDescriptor',
+	        PIE = 'propertyIsEnumerable',
+	        gOPN = Object[GOPN],
+	        gOPD = Object[GOPD],
+	        create = Object.create,
+	        keys = Object.keys,
+	        defineProperty = Object[DP],
+	        $defineProperties = Object[DPies],
+	        descriptor = gOPD(Object, GOPN),
+	        ObjectProto = Object.prototype,
+	        hOP = ObjectProto.hasOwnProperty,
+	        pIE = ObjectProto[PIE],
+	        toString = ObjectProto.toString,
+	        indexOf = Array.prototype.indexOf || function (v) {
+	      for (var i = this.length; i-- && this[i] !== v;) {}
+	      return i;
+	    },
+	        addInternalIfNeeded = function addInternalIfNeeded(o, uid, enumerable) {
+	      if (!hOP.call(o, internalSymbol)) {
+	        defineProperty(o, internalSymbol, {
+	          enumerable: false,
+	          configurable: false,
+	          writable: false,
+	          value: {}
+	        });
+	      }
+	      o[internalSymbol]['@@' + uid] = enumerable;
+	    },
+	        createWithSymbols = function createWithSymbols(proto, descriptors) {
+	      var self = create(proto);
+	      if (descriptors !== null && (typeof descriptors === 'undefined' ? 'undefined' : _typeof(descriptors)) === 'object') {
+	        gOPN(descriptors).forEach(function (key) {
+	          if (propertyIsEnumerable.call(descriptors, key)) {
+	            $defineProperty(self, key, descriptors[key]);
+	          }
+	        });
+	      }
+	      return self;
+	    },
+	        copyAsNonEnumerable = function copyAsNonEnumerable(descriptor) {
+	      var newDescriptor = create(descriptor);
+	      newDescriptor.enumerable = false;
+	      return newDescriptor;
+	    },
+	        get = function get() {},
+	        onlyNonSymbols = function onlyNonSymbols(name) {
+	      return name != internalSymbol && !hOP.call(source, name);
+	    },
+	        onlySymbols = function onlySymbols(name) {
+	      return name != internalSymbol && hOP.call(source, name);
+	    },
+	        propertyIsEnumerable = function propertyIsEnumerable(key) {
+	      var uid = '' + key;
+	      return onlySymbols(uid) ? hOP.call(this, uid) && this[internalSymbol] && this[internalSymbol]['@@' + uid] : pIE.call(this, key);
+	    },
+	        setAndGetSymbol = function setAndGetSymbol(uid) {
+	      var descriptor = {
+	        enumerable: false,
+	        configurable: true,
+	        get: get,
+	        set: function set(value) {
+	          setDescriptor(this, uid, {
+	            enumerable: false,
+	            configurable: true,
+	            writable: true,
+	            value: value
+	          });
+	          addInternalIfNeeded(this, uid, true);
+	        }
+	      };
+	      defineProperty(ObjectProto, uid, descriptor);
+	      return source[uid] = defineProperty(Object(uid), 'constructor', sourceConstructor);
+	    },
+	        _Symbol = function _Symbol2(description) {
+	      if (this && this !== G) {
+	        throw new TypeError('Symbol is not a constructor');
+	      }
+	      return setAndGetSymbol(prefix.concat(description || '', random, ++id));
+	    },
+	        source = create(null),
+	        sourceConstructor = { value: _Symbol },
+	        sourceMap = function sourceMap(uid) {
+	      return source[uid];
+	    },
+	        $defineProperty = function defineProp(o, key, descriptor) {
+	      var uid = '' + key;
+	      if (onlySymbols(uid)) {
+	        setDescriptor(o, uid, descriptor.enumerable ? copyAsNonEnumerable(descriptor) : descriptor);
+	        addInternalIfNeeded(o, uid, !!descriptor.enumerable);
+	      } else {
+	        defineProperty(o, key, descriptor);
+	      }
+	      return o;
+	    },
+	        $getOwnPropertySymbols = function getOwnPropertySymbols(o) {
+	      var cof = toString.call(o);
+	      o = cof === '[object String]' ? o.split('') : Object(o);
+	      return gOPN(o).filter(onlySymbols).map(sourceMap);
+	    };
+	
+	    descriptor.value = $defineProperty;
+	    defineProperty(Object, DP, descriptor);
+	
+	    descriptor.value = $getOwnPropertySymbols;
+	    defineProperty(Object, GOPS, descriptor);
+	
+	    var cachedWindowNames = (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' ? Object.getOwnPropertyNames(window) : [];
+	    var originalObjectGetOwnPropertyNames = Object.getOwnPropertyNames;
+	    descriptor.value = function getOwnPropertyNames(o) {
+	      if (toString.call(o) === '[object Window]') {
+	        try {
+	          return originalObjectGetOwnPropertyNames(o);
+	        } catch (e) {
+	          return [].concat([], cachedWindowNames);
+	        }
+	      }
+	      return gOPN(o).filter(onlyNonSymbols);
+	    };
+	    defineProperty(Object, GOPN, descriptor);
+	
+	    descriptor.value = function defineProperties(o, descriptors) {
+	      var symbols = $getOwnPropertySymbols(descriptors);
+	      if (symbols.length) {
+	        keys(descriptors).concat(symbols).forEach(function (uid) {
+	          if (propertyIsEnumerable.call(descriptors, uid)) {
+	            $defineProperty(o, uid, descriptors[uid]);
+	          }
+	        });
+	      } else {
+	        $defineProperties(o, descriptors);
+	      }
+	      return o;
+	    };
+	    defineProperty(Object, DPies, descriptor);
+	
+	    descriptor.value = propertyIsEnumerable;
+	    defineProperty(ObjectProto, PIE, descriptor);
+	
+	    descriptor.value = _Symbol;
+	    defineProperty(G, 'Symbol', descriptor);
+	
+	    descriptor.value = function (key) {
+	      var uid = prefix.concat(prefix, key, random);
+	      return uid in ObjectProto ? source[uid] : setAndGetSymbol(uid);
+	    };
+	    defineProperty(_Symbol, 'for', descriptor);
+	
+	    descriptor.value = function (symbol) {
+	      return hOP.call(source, symbol) ? symbol.slice(prefixLength * 2, -random.length) : void 0;
+	    };
+	    defineProperty(_Symbol, 'keyFor', descriptor);
+	
+	    descriptor.value = function getOwnPropertyDescriptor(o, key) {
+	      var descriptor = gOPD(o, key);
+	      if (descriptor && onlySymbols(key)) {
+	        descriptor.enumerable = propertyIsEnumerable.call(o, key);
+	      }
+	      return descriptor;
+	    };
+	    defineProperty(Object, GOPD, descriptor);
+	
+	    descriptor.value = function (proto, descriptors) {
+	      return arguments.length === 1 ? create(proto) : createWithSymbols(proto, descriptors);
+	    };
+	    defineProperty(Object, 'create', descriptor);
+	
+	    descriptor.value = function () {
+	      var str = toString.call(this);
+	      return str === '[object String]' && onlySymbols(this) ? '[object Symbol]' : str;
+	    };
+	    defineProperty(ObjectProto, 'toString', descriptor);
+	
+	    try {
+	      setDescriptor = create(defineProperty({}, prefix, {
+	        get: function get() {
+	          return defineProperty(this, prefix, { value: false })[prefix];
+	        }
+	      }))[prefix] || defineProperty;
+	    } catch (o_O) {
+	      setDescriptor = function setDescriptor(o, key, descriptor) {
+	        var protoDescriptor = gOPD(ObjectProto, key);
+	        delete ObjectProto[key];
+	        defineProperty(o, key, descriptor);
+	        defineProperty(ObjectProto, key, protoDescriptor);
+	      };
+	    }
+	  })(Object, 'getOwnPropertySymbols');
+	
+	  (function (O, S) {
+	    var dP = O.defineProperty,
+	        ObjectProto = O.prototype,
+	        toString = ObjectProto.toString,
+	        toStringTag = 'toStringTag',
+	        descriptor;
+	    ['iterator', 'match', 'replace', 'search', 'split', 'hasInstance', 'isConcatSpreadable', 'unscopables', 'species', 'toPrimitive', toStringTag].forEach(function (name) {
+	      if (!(name in Symbol)) {
+	        dP(Symbol, name, { value: Symbol(name) });
+	        switch (name) {
+	          case toStringTag:
+	            descriptor = O.getOwnPropertyDescriptor(ObjectProto, 'toString');
+	            descriptor.value = function () {
+	              var str = toString.call(this),
+	                  tst = typeof this === 'undefined' || this === null ? undefined : this[Symbol.toStringTag];
+	              return typeof tst === 'undefined' ? str : '[object ' + tst + ']';
+	            };
+	            dP(ObjectProto, 'toString', descriptor);
+	            break;
+	        }
+	      }
+	    });
+	  })(Object, Symbol);
+	
+	  (function (Si, AP, SP) {
+	
+	    function returnThis() {
+	      return this;
+	    }
+	
+	    if (!AP[Si]) AP[Si] = function () {
+	      var i = 0,
+	          self = this,
+	          iterator = {
+	        next: function next() {
+	          var done = self.length <= i;
+	          return done ? { done: done } : { done: done, value: self[i++] };
+	        }
+	      };
+	      iterator[Si] = returnThis;
+	      return iterator;
+	    };
+	
+	    if (!SP[Si]) SP[Si] = function () {
+	      var fromCodePoint = String.fromCodePoint,
+	          self = this,
+	          i = 0,
+	          length = self.length,
+	          iterator = {
+	        next: function next() {
+	          var done = length <= i,
+	              c = done ? '' : fromCodePoint(self.codePointAt(i));
+	          i += c.length;
+	          return done ? { done: done } : { done: done, value: c };
+	        }
+	      };
+	      iterator[Si] = returnThis;
+	      return iterator;
+	    };
+	  })(Symbol.iterator, Array.prototype, String.prototype);
+	}
+	
+	if (typeof FEATURE_NO_ES2015 === 'undefined') {
+	
+	  Number.isNaN = Number.isNaN || function (value) {
+	    return value !== value;
+	  };
+	
+	  Number.isFinite = Number.isFinite || function (value) {
+	    return typeof value === "number" && isFinite(value);
+	  };
+	}
+	
+	if (!String.prototype.endsWith || function () {
+	  try {
+	    return !"ab".endsWith("a", 1);
+	  } catch (e) {
+	    return true;
+	  }
+	}()) {
+	  String.prototype.endsWith = function (searchString, position) {
+	    var subjectString = this.toString();
+	    if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
+	      position = subjectString.length;
+	    }
+	    position -= searchString.length;
+	    var lastIndex = subjectString.indexOf(searchString, position);
+	    return lastIndex !== -1 && lastIndex === position;
+	  };
+	}
+	
+	if (!String.prototype.startsWith || function () {
+	  try {
+	    return !"ab".startsWith("b", 1);
+	  } catch (e) {
+	    return true;
+	  }
+	}()) {
+	  String.prototype.startsWith = function (searchString, position) {
+	    position = position || 0;
+	    return this.substr(position, searchString.length) === searchString;
+	  };
+	}
+	
+	if (typeof FEATURE_NO_ES2015 === 'undefined') {
+	
+	  if (!Array.from) {
+	    Array.from = function () {
+	      var toInteger = function toInteger(it) {
+	        return isNaN(it = +it) ? 0 : (it > 0 ? Math.floor : Math.ceil)(it);
+	      };
+	      var toLength = function toLength(it) {
+	        return it > 0 ? Math.min(toInteger(it), 0x1fffffffffffff) : 0;
+	      };
+	      var iterCall = function iterCall(iter, fn, val, index) {
+	        try {
+	          return fn(val, index);
+	        } catch (E) {
+	          if (typeof iter.return == 'function') iter.return();
+	          throw E;
+	        }
+	      };
+	
+	      return function from(arrayLike) {
+	        var O = Object(arrayLike),
+	            C = typeof this == 'function' ? this : Array,
+	            aLen = arguments.length,
+	            mapfn = aLen > 1 ? arguments[1] : undefined,
+	            mapping = mapfn !== undefined,
+	            index = 0,
+	            iterFn = O[Symbol.iterator],
+	            length,
+	            result,
+	            step,
+	            iterator;
+	        if (mapping) mapfn = mapfn.bind(aLen > 2 ? arguments[2] : undefined);
+	        if (iterFn != undefined && !Array.isArray(arrayLike)) {
+	          for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
+	            result[index] = mapping ? iterCall(iterator, mapfn, step.value, index) : step.value;
+	          }
+	        } else {
+	          length = toLength(O.length);
+	          for (result = new C(length); length > index; index++) {
+	            result[index] = mapping ? mapfn(O[index], index) : O[index];
+	          }
+	        }
+	        result.length = index;
+	        return result;
+	      };
+	    }();
+	  }
+	
+	  if (!Array.prototype.find) {
+	    Object.defineProperty(Array.prototype, 'find', {
+	      configurable: true,
+	      writable: true,
+	      enumerable: false,
+	      value: function value(predicate) {
+	        if (this === null) {
+	          throw new TypeError('Array.prototype.find called on null or undefined');
+	        }
+	        if (typeof predicate !== 'function') {
+	          throw new TypeError('predicate must be a function');
+	        }
+	        var list = Object(this);
+	        var length = list.length >>> 0;
+	        var thisArg = arguments[1];
+	        var value;
+	
+	        for (var i = 0; i < length; i++) {
+	          value = list[i];
+	          if (predicate.call(thisArg, value, i, list)) {
+	            return value;
+	          }
+	        }
+	        return undefined;
+	      }
+	    });
+	  }
+	
+	  if (!Array.prototype.findIndex) {
+	    Object.defineProperty(Array.prototype, 'findIndex', {
+	      configurable: true,
+	      writable: true,
+	      enumerable: false,
+	      value: function value(predicate) {
+	        if (this === null) {
+	          throw new TypeError('Array.prototype.findIndex called on null or undefined');
+	        }
+	        if (typeof predicate !== 'function') {
+	          throw new TypeError('predicate must be a function');
+	        }
+	        var list = Object(this);
+	        var length = list.length >>> 0;
+	        var thisArg = arguments[1];
+	        var value;
+	
+	        for (var i = 0; i < length; i++) {
+	          value = list[i];
+	          if (predicate.call(thisArg, value, i, list)) {
+	            return i;
+	          }
+	        }
+	        return -1;
+	      }
+	    });
+	  }
+	}
+	
+	if (typeof FEATURE_NO_ES2016 === 'undefined' && !Array.prototype.includes) {
+	  Object.defineProperty(Array.prototype, 'includes', {
+	    configurable: true,
+	    writable: true,
+	    enumerable: false,
+	    value: function value(searchElement) {
+	      var O = Object(this);
+	      var len = parseInt(O.length) || 0;
+	      if (len === 0) {
+	        return false;
+	      }
+	      var n = parseInt(arguments[1]) || 0;
+	      var k;
+	      if (n >= 0) {
+	        k = n;
+	      } else {
+	        k = len + n;
+	        if (k < 0) {
+	          k = 0;
+	        }
+	      }
+	      var currentElement;
+	      while (k < len) {
+	        currentElement = O[k];
+	        if (searchElement === currentElement || searchElement !== searchElement && currentElement !== currentElement) {
+	          return true;
+	        }
+	        k++;
+	      }
+	      return false;
+	    }
+	  });
+	}
+	
+	if (typeof FEATURE_NO_ES2015 === 'undefined') {
+	
+	  (function () {
+	    var needsFix = false;
+	
+	    try {
+	      var s = Object.keys('a');
+	      needsFix = s.length !== 1 || s[0] !== '0';
+	    } catch (e) {
+	      needsFix = true;
+	    }
+	
+	    if (needsFix) {
+	      Object.keys = function () {
+	        var hasOwnProperty = Object.prototype.hasOwnProperty,
+	            hasDontEnumBug = !{ toString: null }.propertyIsEnumerable('toString'),
+	            dontEnums = ['toString', 'toLocaleString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'constructor'],
+	            dontEnumsLength = dontEnums.length;
+	
+	        return function (obj) {
+	          if (obj === undefined || obj === null) {
+	            throw TypeError('Cannot convert undefined or null to object');
+	          }
+	
+	          obj = Object(obj);
+	
+	          var result = [],
+	              prop,
+	              i;
+	
+	          for (prop in obj) {
+	            if (hasOwnProperty.call(obj, prop)) {
+	              result.push(prop);
+	            }
+	          }
+	
+	          if (hasDontEnumBug) {
+	            for (i = 0; i < dontEnumsLength; i++) {
+	              if (hasOwnProperty.call(obj, dontEnums[i])) {
+	                result.push(dontEnums[i]);
+	              }
+	            }
+	          }
+	
+	          return result;
+	        };
+	      }();
+	    }
+	  })();
+	
+	  (function (O) {
+	    if ('assign' in O) {
+	      return;
+	    }
+	
+	    O.defineProperty(O, 'assign', {
+	      configurable: true,
+	      writable: true,
+	      value: function () {
+	        var gOPS = O.getOwnPropertySymbols,
+	            pIE = O.propertyIsEnumerable,
+	            filterOS = gOPS ? function (self) {
+	          return gOPS(self).filter(pIE, self);
+	        } : function () {
+	          return Array.prototype;
+	        };
+	
+	        return function assign(where) {
+	          if (gOPS && !(where instanceof O)) {
+	            console.warn('problematic Symbols', where);
+	          }
+	
+	          function set(keyOrSymbol) {
+	            where[keyOrSymbol] = arg[keyOrSymbol];
+	          }
+	
+	          for (var i = 1, ii = arguments.length; i < ii; ++i) {
+	            var arg = arguments[i];
+	
+	            if (arg === null || arg === undefined) {
+	              continue;
+	            }
+	
+	            O.keys(arg).concat(filterOS(arg)).forEach(set);
+	          }
+	
+	          return where;
+	        };
+	      }()
+	    });
+	  })(Object);
+	
+	  if (!Object.is) {
+	    Object.is = function (x, y) {
+	      if (x === y) {
+	        return x !== 0 || 1 / x === 1 / y;
+	      } else {
+	        return x !== x && y !== y;
+	      }
+	    };
+	  }
+	}
+	
+	if (typeof FEATURE_NO_ES2015 === 'undefined') {
+	
+	  (function (global) {
+	    var i;
+	
+	    var defineProperty = Object.defineProperty,
+	        is = function is(a, b) {
+	      return a === b || a !== a && b !== b;
+	    };
+	
+	    if (typeof WeakMap == 'undefined') {
+	      global.WeakMap = createCollection({
+	        'delete': sharedDelete,
+	
+	        clear: sharedClear,
+	
+	        get: sharedGet,
+	
+	        has: mapHas,
+	
+	        set: sharedSet
+	      }, true);
+	    }
+	
+	    if (typeof Map == 'undefined' || typeof new Map().values !== 'function' || !new Map().values().next) {
+	      var _createCollection;
+	
+	      global.Map = createCollection((_createCollection = {
+	        'delete': sharedDelete,
+	
+	        has: mapHas,
+	
+	        get: sharedGet,
+	
+	        set: sharedSet,
+	
+	        keys: sharedKeys,
+	
+	        values: sharedValues,
+	
+	        entries: mapEntries,
+	
+	        forEach: sharedForEach,
+	
+	        clear: sharedClear
+	      }, _createCollection[Symbol.iterator] = mapEntries, _createCollection));
+	    }
+	
+	    if (typeof Set == 'undefined' || typeof new Set().values !== 'function' || !new Set().values().next) {
+	      var _createCollection2;
+	
+	      global.Set = createCollection((_createCollection2 = {
+	        has: setHas,
+	
+	        add: sharedAdd,
+	
+	        'delete': sharedDelete,
+	
+	        clear: sharedClear,
+	
+	        keys: sharedValues,
+	        values: sharedValues,
+	
+	        entries: setEntries,
+	
+	        forEach: sharedForEach
+	      }, _createCollection2[Symbol.iterator] = sharedValues, _createCollection2));
+	    }
+	
+	    if (typeof WeakSet == 'undefined') {
+	      global.WeakSet = createCollection({
+	        'delete': sharedDelete,
+	
+	        add: sharedAdd,
+	
+	        clear: sharedClear,
+	
+	        has: setHas
+	      }, true);
+	    }
+	
+	    function createCollection(proto, objectOnly) {
+	      function Collection(a) {
+	        if (!this || this.constructor !== Collection) return new Collection(a);
+	        this._keys = [];
+	        this._values = [];
+	        this._itp = [];
+	        this.objectOnly = objectOnly;
+	
+	        if (a) init.call(this, a);
+	      }
+	
+	      if (!objectOnly) {
+	        defineProperty(proto, 'size', {
+	          get: sharedSize
+	        });
+	      }
+	
+	      proto.constructor = Collection;
+	      Collection.prototype = proto;
+	
+	      return Collection;
+	    }
+	
+	    function init(a) {
+	      var i;
+	
+	      if (this.add) a.forEach(this.add, this);else a.forEach(function (a) {
+	          this.set(a[0], a[1]);
+	        }, this);
+	    }
+	
+	    function sharedDelete(key) {
+	      if (this.has(key)) {
+	        this._keys.splice(i, 1);
+	        this._values.splice(i, 1);
+	
+	        this._itp.forEach(function (p) {
+	          if (i < p[0]) p[0]--;
+	        });
+	      }
+	
+	      return -1 < i;
+	    };
+	
+	    function sharedGet(key) {
+	      return this.has(key) ? this._values[i] : undefined;
+	    }
+	
+	    function has(list, key) {
+	      if (this.objectOnly && key !== Object(key)) throw new TypeError("Invalid value used as weak collection key");
+	
+	      if (key != key || key === 0) for (i = list.length; i-- && !is(list[i], key);) {} else i = list.indexOf(key);
+	      return -1 < i;
+	    }
+	
+	    function setHas(value) {
+	      return has.call(this, this._values, value);
+	    }
+	
+	    function mapHas(value) {
+	      return has.call(this, this._keys, value);
+	    }
+	
+	    function sharedSet(key, value) {
+	      this.has(key) ? this._values[i] = value : this._values[this._keys.push(key) - 1] = value;
+	      return this;
+	    }
+	
+	    function sharedAdd(value) {
+	      if (!this.has(value)) this._values.push(value);
+	      return this;
+	    }
+	
+	    function sharedClear() {
+	      (this._keys || 0).length = this._values.length = 0;
+	    }
+	
+	    function sharedKeys() {
+	      return sharedIterator(this._itp, this._keys);
+	    }
+	
+	    function sharedValues() {
+	      return sharedIterator(this._itp, this._values);
+	    }
+	
+	    function mapEntries() {
+	      return sharedIterator(this._itp, this._keys, this._values);
+	    }
+	
+	    function setEntries() {
+	      return sharedIterator(this._itp, this._values, this._values);
+	    }
+	
+	    function sharedIterator(itp, array, array2) {
+	      var _ref;
+	
+	      var p = [0],
+	          done = false;
+	      itp.push(p);
+	      return _ref = {}, _ref[Symbol.iterator] = function () {
+	        return this;
+	      }, _ref.next = function next() {
+	        var v,
+	            k = p[0];
+	        if (!done && k < array.length) {
+	          v = array2 ? [array[k], array2[k]] : array[k];
+	          p[0]++;
+	        } else {
+	          done = true;
+	          itp.splice(itp.indexOf(p), 1);
+	        }
+	        return { done: done, value: v };
+	      }, _ref;
+	    }
+	
+	    function sharedSize() {
+	      return this._values.length;
+	    }
+	
+	    function sharedForEach(callback, context) {
+	      var it = this.entries();
+	      for (;;) {
+	        var r = it.next();
+	        if (r.done) break;
+	        callback.call(context, r.value[1], r.value[0], this);
+	      }
+	    }
+	  })(_aureliaPal.PLATFORM.global);
+	}
+	
+	if (typeof FEATURE_NO_ES2015 === 'undefined') {
+	  (function () {
+	
+	    var bind = Function.prototype.bind;
+	
+	    if (typeof _aureliaPal.PLATFORM.global.Reflect === 'undefined') {
+	      _aureliaPal.PLATFORM.global.Reflect = {};
+	    }
+	
+	    if (typeof Reflect.defineProperty !== 'function') {
+	      Reflect.defineProperty = function (target, propertyKey, descriptor) {
+	        if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) === 'object' ? target === null : typeof target !== 'function') {
+	          throw new TypeError('Reflect.defineProperty called on non-object');
+	        }
+	        try {
+	          Object.defineProperty(target, propertyKey, descriptor);
+	          return true;
+	        } catch (e) {
+	          return false;
+	        }
+	      };
+	    }
+	
+	    if (typeof Reflect.construct !== 'function') {
+	      Reflect.construct = function (Target, args) {
+	        if (args) {
+	          switch (args.length) {
+	            case 0:
+	              return new Target();
+	            case 1:
+	              return new Target(args[0]);
+	            case 2:
+	              return new Target(args[0], args[1]);
+	            case 3:
+	              return new Target(args[0], args[1], args[2]);
+	            case 4:
+	              return new Target(args[0], args[1], args[2], args[3]);
+	          }
+	        }
+	
+	        var a = [null];
+	        a.push.apply(a, args);
+	        return new (bind.apply(Target, a))();
+	      };
+	    }
+	
+	    if (typeof Reflect.ownKeys !== 'function') {
+	      Reflect.ownKeys = function (o) {
+	        return Object.getOwnPropertyNames(o).concat(Object.getOwnPropertySymbols(o));
+	      };
+	    }
+	  })();
+	}
+	
+	if (typeof FEATURE_NO_ESNEXT === 'undefined') {
+	  (function () {
+	
+	    var emptyMetadata = Object.freeze({});
+	    var metadataContainerKey = '__metadata__';
+	
+	    if (typeof Reflect.getOwnMetadata !== 'function') {
+	      Reflect.getOwnMetadata = function (metadataKey, target, targetKey) {
+	        if (target.hasOwnProperty(metadataContainerKey)) {
+	          return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+	        }
+	      };
+	    }
+	
+	    if (typeof Reflect.defineMetadata !== 'function') {
+	      Reflect.defineMetadata = function (metadataKey, metadataValue, target, targetKey) {
+	        var metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : target[metadataContainerKey] = {};
+	        var targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+	        targetContainer[metadataKey] = metadataValue;
+	      };
+	    }
+	
+	    if (typeof Reflect.metadata !== 'function') {
+	      Reflect.metadata = function (metadataKey, metadataValue) {
+	        return function (target, targetKey) {
+	          Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+	        };
+	      };
+	    }
+	  })();
+	}
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -6747,27 +7635,27 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	exports.generateId = generateId;
 	
-	var _core = __webpack_require__(47);
+	var _core = __webpack_require__(48);
 	
-	var _sandbox = __webpack_require__(50);
+	var _sandbox = __webpack_require__(51);
 	
-	var _component = __webpack_require__(52);
+	var _component = __webpack_require__(53);
 	
-	var _pjax = __webpack_require__(62);
+	var _pjax = __webpack_require__(63);
 	
-	var _modal = __webpack_require__(66);
+	var _modal = __webpack_require__(67);
 	
-	var _service = __webpack_require__(72);
+	var _service = __webpack_require__(73);
 	
-	var _module = __webpack_require__(73);
+	var _module = __webpack_require__(74);
 	
-	var _hyperelement = __webpack_require__(74);
+	var _hyperelement = __webpack_require__(75);
 	
 	var _pagelet = __webpack_require__(76);
 	
 	var _aureliaDependencyInjection = __webpack_require__(41);
 	
-	var _tools = __webpack_require__(61);
+	var _tools = __webpack_require__(62);
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
@@ -6915,7 +7803,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}(_core.Core);
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6937,9 +7825,9 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	                                                                                                                                                                                                                                                                               * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
 	                                                                                                                                                                                                                                                                               */
 	
-	var _mediator = __webpack_require__(48);
+	var _mediator = __webpack_require__(49);
 	
-	var _tasks = __webpack_require__(49);
+	var _tasks = __webpack_require__(50);
 	
 	var _tasks2 = _interopRequireDefault(_tasks);
 	
@@ -7338,7 +8226,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	Core.initClass();
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7360,7 +8248,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
 	
-	var _tasks = __webpack_require__(49);
+	var _tasks = __webpack_require__(50);
 	
 	var _tasks2 = _interopRequireDefault(_tasks);
 	
@@ -7757,7 +8645,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}();
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -7954,7 +8842,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.getArgumentNames = getArgumentNames;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7964,7 +8852,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.Sandbox = Sandbox;
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -7994,7 +8882,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -18364,7 +19252,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18383,43 +19271,45 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.corelessSandbox = corelessSandbox;
 	exports.startComponent = startComponent;
 	
-	var _injection = __webpack_require__(46);
+	var _injection = __webpack_require__(47);
 	
-	var _mediator = __webpack_require__(48);
+	var _mediator = __webpack_require__(49);
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
-	var _dom = __webpack_require__(54);
+	var _dom = __webpack_require__(55);
 	
 	var _dom2 = _interopRequireDefault(_dom);
 	
-	var _util = __webpack_require__(55);
+	var _util = __webpack_require__(56);
 	
 	var _util2 = _interopRequireDefault(_util);
 	
-	var _mvc = __webpack_require__(56);
+	var _mvc = __webpack_require__(57);
 	
 	var _mvc2 = _interopRequireDefault(_mvc);
 	
-	var _microtemplate = __webpack_require__(58);
+	var _microtemplate = __webpack_require__(59);
 	
 	var _microtemplate2 = _interopRequireDefault(_microtemplate);
 	
-	var _cookie = __webpack_require__(59);
+	var _cookie = __webpack_require__(60);
 	
 	var _cookie2 = _interopRequireDefault(_cookie);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
 	var _decorators = __webpack_require__(3);
 	
-	var _tasks = __webpack_require__(49);
+	var _tasks = __webpack_require__(50);
 	
 	var _tasks2 = _interopRequireDefault(_tasks);
 	
-	var _tools = __webpack_require__(61);
+	var _tools = __webpack_require__(62);
+	
+	var _aureliaDependencyInjection = __webpack_require__(41);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -18432,7 +19322,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	//Todo: attach observable on root for all bubbled events and parent subscription
 	
 	function corelessSandbox() {
-	  this.instanceId = _tools.uniqueId;
+	  this.instanceId = "instance-" + (0, _tools.uniqueId)();
 	  this.options = {};
 	  this.moduleId = this.instanceId;
 	
@@ -18444,21 +19334,35 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  this.render = _tools.noop;
 	};
 	
+	/**
+	 * Test
+	 * var c = hyperjs.startComponent(document.body, hyperjs.Component({})(function(){}))
+	 * c.stop()
+	 */
 	function startComponent(selector, creator) {
 	  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 	
-	  var container = new Container();
+	  var cb = function cb() {};
+	  var container = new _aureliaDependencyInjection.Container();
 	  container.registerResolver(creator, new _injection.HyperResolver());
 	  options["domNode"] = (0, _jquery2.default)(selector).get(0);
 	  var inst = container.get(creator);
-	  // it will be coreless or rather the "core" will that which started it
-	  inst._preInit(); //will use  coreless sandbox
-	  inst.start = function (cb) {
+	
+	  var sb = new corelessSandbox();
+	  sb.instance = options["domNode"];
+	  inst._preInit(sb);
+	
+	  inst.start = function () {
+	    var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+	
 	    inst.init(options, cb);
 	  };
-	  inst.stop = function (cb) {
-	    inst.destroy(options, cb);
+	  inst.stop = function () {
+	    var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+	
+	    inst.destroy(cb);
 	  };
+	
 	  return inst.init(options, cb);
 	}
 	
@@ -19350,7 +20254,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19367,11 +20271,11 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.stopListenToRoot = stopListenToRoot;
 	exports.addCustomEventToRoot = addCustomEventToRoot;
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _tasks = __webpack_require__(49);
+	var _tasks = __webpack_require__(50);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -19461,7 +20365,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	function addCustomEventToRoot() {}
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -19502,7 +20406,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -19708,7 +20612,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19718,7 +20622,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.default = mvc;
 	
-	var _tinyMvc = __webpack_require__(57);
+	var _tinyMvc = __webpack_require__(58);
 	
 	function mvc(core) {
 	  core.Model = _tinyMvc.Model;
@@ -19738,7 +20642,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	;
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19752,7 +20656,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _mediator = __webpack_require__(48);
+	var _mediator = __webpack_require__(49);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -19935,7 +20839,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -19968,7 +20872,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}).call(undefined);
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19978,7 +20882,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	});
 	exports.default = cookie;
 	
-	var _cookie = __webpack_require__(60);
+	var _cookie = __webpack_require__(61);
 	
 	function cookie(core) {
 	  var cookies = new _cookie.Cookies();
@@ -19992,7 +20896,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -20072,7 +20976,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	;
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -20206,7 +21110,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20221,15 +21125,15 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	exports.createPjaxComponent = createPjaxComponent;
 	
-	var _component = __webpack_require__(52);
+	var _component = __webpack_require__(53);
 	
-	var _hypermodel = __webpack_require__(63);
+	var _hypermodel = __webpack_require__(64);
 	
 	var _decorators = __webpack_require__(3);
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -20346,7 +21250,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20367,15 +21271,15 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.$html = $html;
 	exports.extractPjaxContent = extractPjaxContent;
 	
-	var _mediator = __webpack_require__(48);
+	var _mediator = __webpack_require__(49);
 	
-	var _aureliaHttpClient = __webpack_require__(64);
+	var _aureliaHttpClient = __webpack_require__(65);
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
-	var _tools = __webpack_require__(61);
+	var _tools = __webpack_require__(62);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -20798,7 +21702,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}(_mediator.Mediator);
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20821,7 +21725,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.createJSONPRequestMessageProcessor = createJSONPRequestMessageProcessor;
 	exports.createHttpRequestMessageProcessor = createHttpRequestMessageProcessor;
 	
-	var _aureliaPath = __webpack_require__(65);
+	var _aureliaPath = __webpack_require__(66);
 	
 	var _aureliaPal = __webpack_require__(43);
 	
@@ -21646,7 +22550,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}();
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -21861,7 +22765,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21876,19 +22780,19 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	exports.createModalComponent = createModalComponent;
 	
-	var _component = __webpack_require__(52);
+	var _component = __webpack_require__(53);
 	
 	var _decorators = __webpack_require__(3);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
-	var _tingle = __webpack_require__(67);
+	var _tingle = __webpack_require__(68);
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
-	__webpack_require__(68);
+	__webpack_require__(69);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22017,22 +22921,22 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function(t,o){ true?!(__WEBPACK_AMD_DEFINE_FACTORY__ = (o), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof exports?module.exports=o():t.tingle=o()}(this,function(){function t(t){var o={onClose:null,onOpen:null,beforeOpen:null,beforeClose:null,stickyFooter:!1,footer:!1,cssClass:[],closeLabel:"Close",closeMethods:["overlay","button","escape"]};this.opts=r({},o,t),this.init()}function o(){this.modalBoxFooter&&(this.modalBoxFooter.style.width=this.modalBox.clientWidth+"px",this.modalBoxFooter.style.left=this.modalBox.offsetLeft+"px")}function e(){this.modal=document.createElement("div"),this.modal.classList.add("tingle-modal"),0!==this.opts.closeMethods.length&&this.opts.closeMethods.indexOf("overlay")!==-1||this.modal.classList.add("tingle-modal--noOverlayClose"),this.modal.style.display="none",this.opts.cssClass.forEach(function(t){"string"==typeof t&&this.modal.classList.add(t)},this),this.opts.closeMethods.indexOf("button")!==-1&&(this.modalCloseBtn=document.createElement("button"),this.modalCloseBtn.classList.add("tingle-modal__close"),this.modalCloseBtnIcon=document.createElement("span"),this.modalCloseBtnIcon.classList.add("tingle-modal__closeIcon"),this.modalCloseBtnIcon.innerHTML="×",this.modalCloseBtnLabel=document.createElement("span"),this.modalCloseBtnLabel.classList.add("tingle-modal__closeLabel"),this.modalCloseBtnLabel.innerHTML=this.opts.closeLabel,this.modalCloseBtn.appendChild(this.modalCloseBtnIcon),this.modalCloseBtn.appendChild(this.modalCloseBtnLabel)),this.modalBox=document.createElement("div"),this.modalBox.classList.add("tingle-modal-box"),this.modalBoxContent=document.createElement("div"),this.modalBoxContent.classList.add("tingle-modal-box__content"),this.modalBox.appendChild(this.modalBoxContent),this.opts.closeMethods.indexOf("button")!==-1&&this.modal.appendChild(this.modalCloseBtn),this.modal.appendChild(this.modalBox)}function s(){this.modalBoxFooter=document.createElement("div"),this.modalBoxFooter.classList.add("tingle-modal-box__footer"),this.modalBox.appendChild(this.modalBoxFooter)}function i(){this._events={clickCloseBtn:this.close.bind(this),clickOverlay:l.bind(this),resize:this.checkOverflow.bind(this),keyboardNav:n.bind(this)},this.opts.closeMethods.indexOf("button")!==-1&&this.modalCloseBtn.addEventListener("click",this._events.clickCloseBtn),this.modal.addEventListener("mousedown",this._events.clickOverlay),window.addEventListener("resize",this._events.resize),document.addEventListener("keydown",this._events.keyboardNav)}function n(t){this.opts.closeMethods.indexOf("escape")!==-1&&27===t.which&&this.isOpen()&&this.close()}function l(t){this.opts.closeMethods.indexOf("overlay")!==-1&&!d(t.target,"tingle-modal")&&t.clientX<this.modal.clientWidth&&this.close()}function d(t,o){for(;(t=t.parentElement)&&!t.classList.contains(o););return t}function a(){this.opts.closeMethods.indexOf("button")!==-1&&this.modalCloseBtn.removeEventListener("click",this._events.clickCloseBtn),this.modal.removeEventListener("mousedown",this._events.clickOverlay),window.removeEventListener("resize",this._events.resize),document.removeEventListener("keydown",this._events.keyboardNav)}function r(){for(var t=1;t<arguments.length;t++)for(var o in arguments[t])arguments[t].hasOwnProperty(o)&&(arguments[0][o]=arguments[t][o]);return arguments[0]}function h(){var t,o=document.createElement("tingle-test-transition"),e={transition:"transitionend",OTransition:"oTransitionEnd",MozTransition:"transitionend",WebkitTransition:"webkitTransitionEnd"};for(t in e)if(void 0!==o.style[t])return e[t]}var c=h();return t.prototype.init=function(){this.modal||(e.call(this),i.call(this),document.body.insertBefore(this.modal,document.body.firstChild),this.opts.footer&&this.addFooter())},t.prototype.destroy=function(){null!==this.modal&&(a.call(this),this.modal.parentNode.removeChild(this.modal),this.modal=null)},t.prototype.open=function(){var t=this;"function"==typeof t.opts.beforeOpen&&t.opts.beforeOpen(),this.modal.style.removeProperty?this.modal.style.removeProperty("display"):this.modal.style.removeAttribute("display"),this._scrollPosition=window.pageYOffset,document.body.classList.add("tingle-enabled"),document.body.style.top=-this._scrollPosition+"px",this.setStickyFooter(this.opts.stickyFooter),this.modal.classList.add("tingle-modal--visible"),c?this.modal.addEventListener(c,function o(){"function"==typeof t.opts.onOpen&&t.opts.onOpen.call(t),t.modal.removeEventListener(c,o,!1)},!1):"function"==typeof t.opts.onOpen&&t.opts.onOpen.call(t),this.checkOverflow()},t.prototype.isOpen=function(){return!!this.modal.classList.contains("tingle-modal--visible")},t.prototype.close=function(){if("function"==typeof this.opts.beforeClose){var t=this.opts.beforeClose.call(this);if(!t)return}document.body.classList.remove("tingle-enabled"),window.scrollTo(0,this._scrollPosition),document.body.style.top=null,this.modal.classList.remove("tingle-modal--visible");var o=this;c?this.modal.addEventListener(c,function t(){o.modal.removeEventListener(c,t,!1),o.modal.style.display="none","function"==typeof o.opts.onClose&&o.opts.onClose.call(this)},!1):(o.modal.style.display="none","function"==typeof o.opts.onClose&&o.opts.onClose.call(this))},t.prototype.setContent=function(t){"string"==typeof t?this.modalBoxContent.innerHTML=t:(this.modalBoxContent.innerHTML="",this.modalBoxContent.appendChild(t))},t.prototype.getContent=function(){return this.modalBoxContent},t.prototype.addFooter=function(){s.call(this)},t.prototype.setFooterContent=function(t){this.modalBoxFooter.innerHTML=t},t.prototype.getFooterContent=function(){return this.modalBoxFooter},t.prototype.setStickyFooter=function(t){this.isOverflow()||(t=!1),t?this.modalBox.contains(this.modalBoxFooter)&&(this.modalBox.removeChild(this.modalBoxFooter),this.modal.appendChild(this.modalBoxFooter),this.modalBoxFooter.classList.add("tingle-modal-box__footer--sticky"),o.call(this),this.modalBoxContent.style["padding-bottom"]=this.modalBoxFooter.clientHeight+20+"px"):this.modalBoxFooter&&(this.modalBox.contains(this.modalBoxFooter)||(this.modal.removeChild(this.modalBoxFooter),this.modalBox.appendChild(this.modalBoxFooter),this.modalBoxFooter.style.width="auto",this.modalBoxFooter.style.left="",this.modalBoxContent.style["padding-bottom"]="",this.modalBoxFooter.classList.remove("tingle-modal-box__footer--sticky")))},t.prototype.addFooterBtn=function(t,o,e){var s=document.createElement("button");return s.innerHTML=t,s.addEventListener("click",e),"string"==typeof o&&o.length&&o.split(" ").forEach(function(t){s.classList.add(t)}),this.modalBoxFooter.appendChild(s),s},t.prototype.resize=function(){console.warn("Resize is deprecated and will be removed in version 1.0")},t.prototype.isOverflow=function(){var t=window.innerHeight,o=this.modalBox.clientHeight;return o>=t},t.prototype.checkOverflow=function(){this.modal.classList.contains("tingle-modal--visible")&&(this.isOverflow()?this.modal.classList.add("tingle-modal--overflow"):this.modal.classList.remove("tingle-modal--overflow"),!this.isOverflow()&&this.opts.stickyFooter?this.setStickyFooter(!1):this.isOverflow()&&this.opts.stickyFooter&&(o.call(this),this.setStickyFooter(!0)))},{modal:t}});
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(69);
+	var content = __webpack_require__(70);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(71)(content, {});
+	var update = __webpack_require__(72)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -22049,10 +22953,10 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	}
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(70)();
+	exports = module.exports = __webpack_require__(71)();
 	// imports
 	
 	
@@ -22063,7 +22967,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports) {
 
 	/*
@@ -22119,7 +23023,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -22371,7 +23275,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22384,15 +23288,15 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	
 	exports.createService = createService;
 	
-	var _tools = __webpack_require__(61);
+	var _tools = __webpack_require__(62);
 	
 	var _decorators = __webpack_require__(3);
 	
-	var _tasks = __webpack_require__(49);
+	var _tasks = __webpack_require__(50);
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -22433,7 +23337,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22447,21 +23351,21 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.startModule = startModule;
 	exports.createModule = createModule;
 	
-	var _injection = __webpack_require__(46);
+	var _injection = __webpack_require__(47);
 	
-	var _tools = __webpack_require__(61);
+	var _tools = __webpack_require__(62);
 	
 	var _decorators = __webpack_require__(3);
 	
-	var _tasks = __webpack_require__(49);
+	var _tasks = __webpack_require__(50);
 	
 	var _bootstrap = __webpack_require__(45);
 	
-	var _hyperelement = __webpack_require__(74);
+	var _hyperelement = __webpack_require__(75);
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
@@ -22679,7 +23583,7 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22695,21 +23599,19 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.startCustomElement = startCustomElement;
 	exports.createCustomElement = createCustomElement;
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
 	var _decorators = __webpack_require__(3);
 	
-	var _tasks = __webpack_require__(49);
+	var _tasks = __webpack_require__(50);
 	
 	var _tasks2 = _interopRequireDefault(_tasks);
 	
-	var _tools = __webpack_require__(61);
-	
-	var _mixwith = __webpack_require__(75);
+	var _tools = __webpack_require__(62);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22718,6 +23620,8 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	//import { mix } from 'mixwith'
 	
 	// shim
 	(function () {
@@ -22783,107 +23687,6 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	};
 
 /***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict';
-	
-	(function (global, factory) {
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  } else if (typeof exports !== "undefined") {
-	    factory(exports);
-	  } else {
-	    var mod = {
-	      exports: {}
-	    };
-	    factory(mod.exports);
-	    global.mixwith = mod.exports;
-	  }
-	})(this, function (exports) {
-	  Object.defineProperty(exports, "__esModule", {
-	    value: true
-	  });
-	
-	  const _cachedApplicationRef = exports._cachedApplicationRef = Symbol('_cachedApplicationRef');
-	
-	  const _mixinRef = exports._mixinRef = Symbol('_mixinRef');
-	
-	  const _originalMixin = exports._originalMixin = Symbol('_originalMixin');
-	
-	  const wrap = exports.wrap = (mixin, wrapper) => {
-	    Object.setPrototypeOf(wrapper, mixin);
-	    if (!mixin[_originalMixin]) {
-	      mixin[_originalMixin] = mixin;
-	    }
-	    return wrapper;
-	  };
-	
-	  const Cached = exports.Cached = mixin => wrap(mixin, superclass => {
-	    // Get or create a symbol used to look up a previous application of mixin
-	    // to the class. This symbol is unique per mixin definition, so a class will have N
-	    // applicationRefs if it has had N mixins applied to it. A mixin will have
-	    // exactly one _cachedApplicationRef used to store its applications.
-	    let applicationRef = mixin[_cachedApplicationRef];
-	    if (!applicationRef) {
-	      applicationRef = mixin[_cachedApplicationRef] = Symbol(mixin.name);
-	    }
-	    // Look up an existing application of `mixin` to `c`, return it if found.
-	    if (superclass.hasOwnProperty(applicationRef)) {
-	      return superclass[applicationRef];
-	    }
-	    // Apply the mixin
-	    let application = mixin(superclass);
-	    // Cache the mixin application on the superclass
-	    superclass[applicationRef] = application;
-	    return application;
-	  });
-	
-	  const HasInstance = exports.HasInstance = mixin => {
-	    if (Symbol.hasInstance && !mixin.hasOwnProperty(Symbol.hasInstance)) {
-	      Object.defineProperty(mixin, Symbol.hasInstance, {
-	        value: function (o) {
-	          const originalMixin = this[_originalMixin];
-	          while (o != null) {
-	            if (o.hasOwnProperty(_mixinRef) && o[_mixinRef] === originalMixin) {
-	              return true;
-	            }
-	            o = Object.getPrototypeOf(o);
-	          }
-	          return false;
-	        }
-	      });
-	    }
-	    return mixin;
-	  };
-	
-	  const BareMixin = exports.BareMixin = mixin => wrap(mixin, superclass => {
-	    // Apply the mixin
-	    let application = mixin(superclass);
-	
-	    // Attach a reference from mixin applition to wrapped mixin for RTTI
-	    // mixin[@@hasInstance] should use this.
-	    application.prototype[_mixinRef] = mixin[_originalMixin];
-	    return application;
-	  });
-	
-	  const Mixin = exports.Mixin = mixin => Cached(HasInstance(BareMixin(mixin)));
-	
-	  const mix = exports.mix = superClass => new MixinBuilder(superClass);
-	
-	  class MixinBuilder {
-	    constructor(superclass) {
-	      this.superclass = superclass;
-	    }
-	
-	    with() {
-	      return Array.from(arguments).reduce((c, m) => m(c), this.superclass);
-	    }
-	
-	  }
-	});
-
-/***/ }),
 /* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22903,15 +23706,15 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	exports.createShadowDom = createShadowDom;
 	exports.createPagelet = createPagelet;
 	
-	var _component = __webpack_require__(52);
+	var _component = __webpack_require__(53);
 	
-	var _jquery = __webpack_require__(51);
+	var _jquery = __webpack_require__(52);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	
 	var _decorators = __webpack_require__(3);
 	
-	var _listeners = __webpack_require__(53);
+	var _listeners = __webpack_require__(54);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23640,6 +24443,64 @@ define("hyperjs", [], function() { return /******/ (function(modules) { // webpa
 	  });
 	}
 
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _mediator = __webpack_require__(49);
+	
+	Object.keys(_mediator).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _mediator[key];
+	    }
+	  });
+	});
+	
+	var _hypermodel = __webpack_require__(64);
+	
+	Object.keys(_hypermodel).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _hypermodel[key];
+	    }
+	  });
+	});
+	
+	var _listeners = __webpack_require__(54);
+	
+	Object.keys(_listeners).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _listeners[key];
+	    }
+	  });
+	});
+	
+	var _tasks = __webpack_require__(50);
+	
+	Object.keys(_tasks).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _tasks[key];
+	    }
+	  });
+	});
+
 /***/ })
-/******/ ])});;
+/******/ ]);
 //# sourceMappingURL=hyperjs.js.map

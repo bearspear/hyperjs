@@ -21,7 +21,7 @@ var config = {
 		path: __dirname + '/dist',
 		filename: outputFile,
 		library: libraryName,
-		libraryTarget: 'amd',
+		libraryTarget: 'var',
 		umdNamedDefine: true
 	},
 	module: {

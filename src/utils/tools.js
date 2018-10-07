@@ -74,9 +74,7 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function noop() {
-
-}
+export function noop() { }
 
 const authErrors = ['SAS Rejected', 'Invalid Session'];
 

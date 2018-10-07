@@ -1,17 +1,22 @@
-import { Component, Dependencies, Service, Pjax, Modal, CustomElement } from './decorators'
-import { bootstrap } from './'
-import { startComponent } from './src/core/component'
+import { Component, Module, Dependencies, Service, Pjax, Modal, CustomElement } from './decorators';
+import { bootstrap, startRootCore, createAppCore, $ } from './';
+import { startComponent } from './src/core/component';
+import { listenToRoot, stopListenToRoot, Mediator } from './utils';
+import { mixin } from './src/utils/mixins'
+import tasks from './src/utils/tasks';
 
+const utils = {
+    listen: listenToRoot,
+    stopListen: stopListenToRoot,
+    Mediator: Mediator,
+    doForAll: tasks.doForAll,
+    runParallel: tasks.runParallel,
+    runSeries: tasks.runSeries,
+    runWaterfall: tasks.runWaterfall,
+    getArgumentNames: tasks.getArgumentNames,
+    hasArgument: tasks.hasArgument
+};
 
-const api = {
-    bootstrap: bootstrap,
-    startComponent: startComponent,
-    Component: Component,
-    Dependencies: Dependencies,
-    Service: Service,
-    Pjax: Pjax,
-    Modal: Modal,
-    CustomElement: CustomElement
+export {
+    bootstrap, createAppCore, startRootCore, startComponent, Component, Module, Dependencies, Service, Pjax, Modal, CustomElement, $
 }
-
-window.hyperjs = api;

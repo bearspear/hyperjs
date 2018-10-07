@@ -1,3 +1,4 @@
+import 'aurelia-polyfills';
 import { InjectionCore } from './core/injection';
 import { createModule } from './core/module';
 import { initialize } from 'aurelia-pal-browser';
@@ -50,6 +51,7 @@ export function startRootCore(rootComponent, rootNode, done = () => { }) {
     });
     return core;
 }
+
 
 export function bootstrap(rootComponent, rootNode, options) {
     if (typeof options === 'string') {

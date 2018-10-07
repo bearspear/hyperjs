@@ -10,12 +10,13 @@ import $ from 'jquery';
 import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators';
 import util from '../utils/tasks';
 import { uniqueId, noop } from '../utils/tools';
+import { Container } from 'aurelia-dependency-injection';
 
 
 //Todo: attach observable on root for all bubbled events and parent subscription
 
 export function corelessSandbox() {
-  this.instanceId = uniqueId;
+  this.instanceId = "instance-" + uniqueId();
   this.options = {};
   this.moduleId = this.instanceId;
 
@@ -27,19 +28,30 @@ export function corelessSandbox() {
   this.render = noop;
 };
 
+
+/**
+ * Test
+ * var c = hyperjs.startComponent(document.body, hyperjs.Component({})(function(){}))
+ * c.stop()
+ */
 export function startComponent(selector, creator, options = {}) {
+  let cb = () => { };
   const container = new Container();
   container.registerResolver(creator, new HyperResolver());
   options["domNode"] = $(selector).get(0);
   const inst = container.get(creator);
-  // it will be coreless or rather the "core" will that which started it
-  inst._preInit(); //will use  coreless sandbox
-  inst.start = (cb) => {
+
+  let sb = new corelessSandbox();
+  sb.instance = options["domNode"];
+  inst._preInit(sb);
+
+  inst.start = (cb = () => { }) => {
     inst.init(options, cb);
   }
-  inst.stop = (cb) => {
-    inst.destroy(options, cb);
+  inst.stop = (cb = () => { }) => {
+    inst.destroy(cb);
   }
+
   return inst.init(options, cb);
 }
 

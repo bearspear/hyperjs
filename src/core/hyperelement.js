@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { ANNOTATIONS, PROP_METADATA } from '../utils/decorators';
 import util from '../utils/tasks';
 import { uniqueId, noop } from '../utils/tools';
-import { mix } from 'mixwith'
+//import { mix } from 'mixwith'
 
 // shim
 (function () {
